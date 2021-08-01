@@ -16,11 +16,19 @@
                     <p>Dashboard </p>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="#">
-                    <i class="material-icons">person</i>
-                    <p>Banner Management</p>
-                </a>
+            <li class="nav-item">
+                <div class="dropdown show">
+                    <a class="nav-link" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <i class="material-icons">dashboard</i>
+                        Banner Management
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="">
+                        <a class="dropdown-item" href="{{route('banner.index')}}">All Benner</a>
+                        <a class="dropdown-item" href="{{route('banner.create')}}">Add banner</a>
+                    </div>
+                </div>
             </li>
             <li class="nav-item ">
                 <a class="nav-link" href="#">
@@ -66,25 +74,25 @@
             </li>
             <li class="nav-item  ">
                 <a class="nav-link" href="#">
-                    <i class="material-icons">unarchive</i>
+                    <i class="material-icons">credit_card</i>
                     <p>Coupon Management</p>
                 </a>
             </li>
             <li class="nav-item  ">
                 <a class="nav-link" href="#">
-                    <i class="material-icons">unarchive</i>
+                    <i class="material-icons">groups</i>
                     <p>User Management</p>
                 </a>
             </li>
             <li class="nav-item  ">
                 <a class="nav-link" href="#">
-                    <i class="material-icons">unarchive</i>
+                    <i class="material-icons">rate_review</i>
                     <p>Review Management</p>
                 </a>
             </li>
-            <li class="nav-item active-pro">
+            <li class="nav-item ">
                 <a class="nav-link" href="#">
-                    <i class="material-icons">unarchive</i>
+                    <i class="material-icons">settings</i>
                     <p>Setting</p>
                 </a>
             </li>
