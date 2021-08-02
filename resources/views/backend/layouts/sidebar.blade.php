@@ -1,5 +1,5 @@
 <div class="sidebar" data-color="purple" data-background-color="white"
-    data-image="{{ asset('public/backend/assets/img/sidebar-1.jpg') }}">
+    data-image="{{ asset('backend/assets/img/sidebar-1.jpg') }}">
     <!--
       Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -17,17 +17,16 @@
                 </a>
             </li>
             <li class="nav-item">
-                <div class="dropdown show">
-                    <a class="nav-link" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                <div class="show dropend">
+                    <a class="nav-link " href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
                         <i class="material-icons">dashboard</i>
                         Banner Management
                     </a>
-
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="">
                         <a class="dropdown-item" href="{{route('banner.index')}}">All Benner</a>
                         <a class="dropdown-item" href="{{route('banner.create')}}">Add banner</a>
-                    </div>
+                    </ul>
                 </div>
             </li>
             <li class="nav-item ">

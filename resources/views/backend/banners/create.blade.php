@@ -74,6 +74,28 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- file laravel manager --}}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>About Me</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <a id="lfm" data-input="thumbnail" data-preview="holder"
+                                                        class="btn btn-primary">
+                                                        <i class="fa fa-picture-o"></i> Choose
+                                                    </a>
+                                                </span> 
+                                                <input id="thumbnail" class="form-control" type="text" name="filepath">
+                                                <label class="bmd-label-floating"></label>
+                                            </div>
+                                            <img id="holder" style="margin-top:15px;max-height:100px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- END file laravel manager --}}
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -96,7 +118,7 @@
                     <div class="card card-profile">
                         <div class="card-avatar">
                             <a href="javascript:;">
-                                <img class="img" src="{{asset('public/backend/assets/img/faces/marc.jpg')}}" />
+                                <img class="img" src="{{ asset('backend/assets/img/faces/marc.jpg') }}" />
                             </a>
                         </div>
                         <div class="card-body">
@@ -113,4 +135,11 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{asset('vendor/laravel-filemanager/js/stand-alone-button.js')}}"></script>
+<script>
+     $('#lfm').filemanager('image');
+</script>
 @endsection
