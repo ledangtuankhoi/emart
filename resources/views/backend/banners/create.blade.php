@@ -1,3 +1,4 @@
+
 @extends('backend.layouts.master');
 
 @section('content')
@@ -11,7 +12,7 @@
                             <p class="card-category">Complete your profile</p>
                         </div>
                         <div class="card-body">
-                            <form>
+                            <form method="POST">
                                 <div class="row">
                                     <div class="col-md-5">
                                         <div class="form-group">
@@ -76,23 +77,25 @@
                                 </div>
                                 {{-- file laravel manager --}}
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-10 pe-0">
                                         <div class="form-group">
                                             <label>About Me</label>
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <span class="input-group-btn">
                                                         <a id="lfm" data-input="thumbnail" data-preview="holder"
-                                                        class="btn btn-primary">
-                                                        <i class="fa fa-picture-o"></i> Choose
-                                                    </a>
-                                                </span> 
-                                                <input id="thumbnail" class="form-control" type="text" name="filepath">
-                                                <label class="bmd-label-floating"></label>
-                                            </div>
-                                            <img id="holder" style="margin-top:15px;max-height:100px;">
+                                                            class="btn btn-primary">
+                                                            <i class="fa fa-picture-o"></i> Choose
+                                                        </a>
+                                                    </span>
+                                                    <input id="thumbnail" class="form-control" type="text" name="filepath">
+                                                    <label class="bmd-label-floating"></label>
+                                                </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-md-2 ps-0">
+                                        <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                                     </div>
                                 </div>
                                 {{-- END file laravel manager --}}
@@ -103,7 +106,7 @@
                                             <div class="form-group">
                                                 <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so
                                                     thirsty, I'm in that two seat Lambo.</label>
-                                                <textarea class="form-control" rows="5"></textarea>
+                                                <textarea id="description" class="form-control"  rows="5"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -137,9 +140,20 @@
     </div>
 @endsection
 
+
+
 @section('scripts')
-    <script src="{{asset('vendor/laravel-filemanager/js/stand-alone-button.js')}}"></script>
-<script>
-     $('#lfm').filemanager('image');
-</script>
+    <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
+    <script src="{{asset('backend\assets\summernote\summernote-bs4.min.js')}}"></script>
+
+    {{-- summernote editor --}}
+    <script>
+        $(document).ready(function() {
+            $('#description').summernote();
+        });
+    </script>
+    {{-- file manager of unishape --}}
+    <script>
+        $('#lfm').filemanager('image');
+    </script>
 @endsection

@@ -33,8 +33,10 @@
       </div>
     </div>
   </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  {{-- summernote --}}
+  <script src="{{asset('backend\assets\summernote\summernote-bs4.min.js')}}"></script>
+{{-- boostrap 5.0.2 --}}
+  {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> --}}
   <!--   Core JS Files   -->
   <script src="{{asset('backend/assets/js/core/jquery.min.js')}}"></script>
   <script src="{{asset('backend/assets/js/core/popper.min.js')}}"></script>
@@ -65,11 +67,11 @@
   <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
   <script src="{{asset('backend/assets/js/plugins/nouislider.min.js')}}"></script>
   <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js')}}"></script>
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js')}}"></script> --}}
   <!-- Library for adding dinamically elements -->
   <script src="{{asset('backend/assets/js/plugins/arrive.min.js')}}"></script>
   <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE')}}"></script>
+  {{-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE')}}"></script> --}}
   <!-- Chartist JS -->
   <script src="{{asset('backend/assets/js/plugins/chartist.min.js')}}"></script>
   <!--  Notifications Plugin    -->

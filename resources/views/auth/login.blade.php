@@ -10,12 +10,12 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="{{ asset('public/backend/assets_login/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/assets_login/css/style.css') }}">
 
 </head>
 
 <body class="img js-fullheight"
-    style="background-image: url({{ asset('public/backend/assets_login/images/bg.jpg') }});">
+    style="background-image: url({{ asset('backend/assets_login/images/bg.jpg') }});">
     <section class="ftco-section">
         <div class="container">
             <div class="row justify-content-center">
@@ -82,10 +82,10 @@
         </div>
     </section>
 
-    <script src="{{ asset('public/backend/assets_login/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('public/backend/assets_login/js/popper.js') }}"></script>
-    <script src="{{ asset('public/backend/assets_login/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('public/backend/assets_login/js/main.js') }}"></script>
+    <script src="{{ asset('backend/assets_login/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('backend/assets_login/js/popper.js') }}"></script>
+    <script src="{{ asset('backend/assets_login/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('backend/assets_login/js/main.js') }}"></script>
 
 </body>
 
