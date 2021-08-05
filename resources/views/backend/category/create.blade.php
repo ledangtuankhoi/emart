@@ -9,6 +9,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
+
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header card-header-primary">
@@ -67,8 +68,8 @@
                                             <label for="">condition</label>
                                             <select class="form-select" name="condition"
                                                 aria-label="Default select example">
-                                                <option value="promo" >Promote</option>
-                                                <option value="banner " >Banner</option>
+                                                <option value="promo" {{old('condition')==promo? 'selected':' '}}>Promote</option>
+                                                <option value="banner " {{old('condition')==banner? 'selected':' '}}>Banner</option>
                                             </select>
                                         </div>
                                     </div>
@@ -77,8 +78,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <select class="form-select" name="status" aria-label="Default select example">
-                                                <option value="active" >Active</option>
-                                                <option value="inactive" >Inactive</option>
+                                                <option value="active" {{old('status')==active? 'selected':' '}}elected>Active</option>
+                                                <option value="inactive" {{old('status')==inactive? 'selected':' '}}>Inactive</option>
                                             </select>
                                         </div>
                                     </div>

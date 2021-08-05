@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,5 +34,8 @@ Route::group(['prefix' => 'admin', 'middelware' => 'auth'], function () {
     Route::resource('banner', BannerController::class);
     Route::get('banner_status',[BannerController::class,'bannerStatus'])->name('banner.status');
     
+     // Category section
+     Route::resource('category', CategoryController::class);
+     Route::get('category_status',[CategoryController::class,'categoryStatus'])->name('category.status');
 });
  

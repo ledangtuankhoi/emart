@@ -30,10 +30,17 @@
                 </div>
             </li>
             <li class="nav-item ">
-                <a class="nav-link" href="#">
-                    <i class="material-icons">content_paste</i>
-                    <p>Category Management</p>
-                </a>
+                <div class="show dropend">
+                    <a class="nav-link " href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <i class="material-icons">content_paste</i>
+                        Category Management
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="">
+                        <a class="dropdown-item" href="{{route('category.index')}}">All Category</a>
+                        <a class="dropdown-item" href="{{route('category.create')}}">Add Category</a>
+                    </ul>
+                </div>
             </li>
             <li class="nav-item ">
                 <a class="nav-link" href="#">

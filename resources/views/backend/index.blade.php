@@ -1,6 +1,6 @@
-@extends('backend.layouts.master');
+@extends('backend.layouts.master')
 
-@section('content');
+@section('content')
     <div class="content">
         <div class="container-fluid">
             <div class="row">

@@ -14,13 +14,13 @@
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <div class="d-flex justify-content-between">
-                               <div>
-                                <h4 class="card-title ">Simple Table</h4>
-                                <p class="card-category"> Here is a subtitle for this table</p>
-                               </div>
-                               <div>
-                                   <p>Total anner:{{App\Models\Banner::count() }}</p>
-                               </div>
+                                <div>
+                                    <h4 class="card-title ">Simple Table</h4>
+                                    <p class="card-category"> Here is a subtitle for this table</p>
+                                </div>
+                                <div>
+                                    <p>Total anner:{{ App\Models\Category::count() }}</p>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
@@ -34,13 +34,13 @@
                                             Title
                                         </th>
                                         <th>
-                                            Description
+                                            photo
                                         </th>
                                         <th>
-                                            Photo
+                                            Is parent
                                         </th>
                                         <th>
-                                            Condision
+                                            Parents
                                         </th>
                                         <th>
                                             Status
@@ -50,27 +50,7 @@
                                         </th>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                Dakota Rice
-                                            </td>
-                                            <td>
-                                                Niger
-                                            </td>
-                                            <td>
-                                                Oud-Turnhout
-                                            </td>
-                                            <td class="text-primary">
-                                                $36,738
-                                            </td>
-                                            <td class="text-primary">
-                                                $36,738
-                                            </td>
-                                        </tr>
-                                        @foreach ($banners as $item)
+                                        @foreach ($categories as $item)
                                             <tr>
                                                 <td>
                                                     {{ $loop->iteration }}
@@ -78,20 +58,20 @@
                                                 <td>
                                                     {{ $item->title }}
                                                 </td>
-                                                <td>
-                                                    {{ $item->description }}
-                                                </td>
                                                 <td class="m-auto">
                                                     <img src="{{ $item->photo }}" alt="" height="60">
                                                 </td>
                                                 <td>
                                                     @php
-                                                        if ($item->condition == 'promo') {
-                                                            echo "<p class='border border-info rounded text-center text-info mx-1'>promo</p>";
-                                                        } elseif ($item->condition == 'banner') {
-                                                            echo "<p class='border border-primary rounded text-center  text-primary mx-1'>banner</p>";
+                                                        if ($item->is_parent === 1) {
+                                                            echo "<p class='border border-info rounded text-center text-info mx-1'>Yes</p>";
+                                                        } elseif ($item->is_parent === 0) {
+                                                            echo "<p class='border border-danger  rounded text-center  text-danger mx-1'>No</p>";
                                                         }
                                                     @endphp
+                                                </td>
+                                                <td>
+                                                    {{ $item->parent_id }}
                                                 </td>
                                                 <td>
                                                     <input name="toggle" value="{{ $item->id }}" class="toggle-tow"
@@ -102,11 +82,13 @@
 
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('banner.edit', $item->id) }}" data-toggle="tooltip"
-                                                        title="Edit" class=" float-left btn btn-sm btn-outline-warning">
+                                                    <a href="{{ route('category.edit', $item->id) }}"
+                                                        data-toggle="tooltip" title="Edit"
+                                                        class=" float-left btn btn-sm btn-outline-warning">
                                                         <span class="material-icons">edit</span>
                                                     </a>
-                                                    <form action="{{ route('banner.destroy', $item->id) }}" method="post">
+                                                    <form action="{{ route('category.destroy', $item->id) }}"
+                                                        method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <a href="" data-toggle="tooltip" title="delete"
@@ -170,7 +152,7 @@
                 var id = $(this).val();
                 // alert(mode);
                 $.ajax({
-                    URL: "{{route('banner.status')}}",
+                    URL: "{{route('category.status')}}",
                     type: "POST",
                     data: {
                         _token: '{{csrf_token()}}',
@@ -179,10 +161,14 @@
                     },
                     success: function(response) {
                         if (response.status) {
-                            alert(response.msg)
+                            alert(response.msg);
                         } else {
-                            alert('try again')
+                            // console.log(response);
+                            alert('try again');
                         }
+                    },
+                    error:function(response){
+                        console.log(response);
                     }
                 })
             });
