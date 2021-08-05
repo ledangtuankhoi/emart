@@ -31,5 +31,7 @@ Route::group(['prefix' => 'admin', 'middelware' => 'auth'], function () {
 
     // banner section
     Route::resource('banner', BannerController::class);
+    Route::get('banner_status',[BannerController::class,'bannerStatus'])->name('banner.status');
+    
 });
  

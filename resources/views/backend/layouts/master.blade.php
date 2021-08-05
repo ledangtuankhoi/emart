@@ -39,7 +39,7 @@ The above copyright notice and this permission notice shall be included in all c
   </div>
 
   {{-- plugin --}}
-  @include('backend.layouts.plugin')
+  {{-- @include('backend.layouts.plugin') --}}
   {{-- end plugin --}}
 
 </body>

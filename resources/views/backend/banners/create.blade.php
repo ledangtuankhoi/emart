@@ -13,7 +13,7 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Edit Profile</h4>
+                            <h4 class="card-title">Creat Banner</h4>
                             <p class="card-category">Complete your profile</p>
                             {{-- error --}}
                             @if ($errors->any())
@@ -34,7 +34,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Title</label>
-                                            <input type="text" name="title" class="form-control">
+                                            <input type="text" name="title" value="{{old('title')}}" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -52,7 +52,7 @@
                                                             <i class="fa fa-picture-o"></i> Choose
                                                         </a>
                                                     </span>
-                                                    <input id="thumbnail" class="form-control" type="text" name="photo">
+                                                    <input id="thumbnail" class="form-control" type="text" name="photo" value="{{old('photo')}}">
                                                     <label class="bmd-label-floating"></label>
                                                 </div>
                                             </div>
@@ -68,8 +68,8 @@
                                             <label for="">condition</label>
                                             <select class="form-select" name="condition"
                                                 aria-label="Default select example">
-                                                <option value="promo" selected>Promote</option>
-                                                <option value="banner ">Banner</option>
+                                                <option value="promo" {{old('condition')==promo? 'selected':' '}}>Promote</option>
+                                                <option value="banner " {{old('condition')==banner? 'selected':' '}}>Banner</option>
                                             </select>
                                         </div>
                                     </div>
@@ -78,8 +78,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <select class="form-select" name="status" aria-label="Default select example">
-                                                <option value="active" selected>Active</option>
-                                                <option value="inactive">Inactive</option>
+                                                <option value="active" {{old('status')==active? 'selected':' '}}elected>Active</option>
+                                                <option value="inactive" {{old('status')==inactive? 'selected':' '}}>Inactive</option>
                                             </select>
                                         </div>
                                     </div>
@@ -93,7 +93,7 @@
                                                 <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so
                                                     thirsty, I'm in that two seat Lambo.</label>
                                                 <textarea id="description" name="description" class="form-control"
-                                                    rows="5"></textarea>
+                                                    rows="5">{{old('description')}}</textarea>
                                             </div>
                                         </div>
                                     </div>
