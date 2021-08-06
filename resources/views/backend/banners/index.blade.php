@@ -14,13 +14,19 @@
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <div class="d-flex justify-content-between">
-                               <div>
-                                <h4 class="card-title ">Simple Table</h4>
-                                <p class="card-category"> Here is a subtitle for this table</p>
-                               </div>
-                               <div>
-                                   <p>Total anner:{{App\Models\Banner::count() }}</p>
-                               </div>
+                                <div>
+                                    <div>
+                                        <h4 class="card-title ">Banner Table 
+                                            <a class="btn btn-outline-success" href="{{route('category.create')}}" role="button">
+                                                <span class="material-icons mx-1">
+                                                    add_circle_outline
+                                                    </span>
+                                                            Crete
+                                            </a>
+                                        </h4>
+                                        <p class="card-category"> Here is a subtitle for this table</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">

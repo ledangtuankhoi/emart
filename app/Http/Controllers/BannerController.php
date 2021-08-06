@@ -66,7 +66,7 @@ class BannerController extends Controller
         $data['slug'] = $slug;
         $status = Banner::create($data);
         if ($status) {
-            return redirect()->route('banner.index')->with('success', 'Succsess');
+            return redirect()->route('banner.index')->with('success', 'Banner Succsessfully create');
         } else {
             return back()->with('errors', 'Somthing went wrong');
         }

@@ -1,7 +1,6 @@
 @section('styles')
     {{-- sumernote --}}
     <link rel="stylesheet" href="{{ asset('backend\assets\summernote\summernote-bs4.min.css') }}">
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> --}}
 @endsection
 @extends('backend.layouts.master')
 
@@ -13,7 +12,7 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Creat Banner</h4>
+                            <h4 class="card-title">Creat Category</h4>
                             <p class="card-category">Complete your profile</p>
                             {{-- error --}}
                             @if ($errors->any())
@@ -28,7 +27,7 @@
                             
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('banner.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
@@ -38,7 +37,51 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                {{-- editor summernote --}}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Summary</label>
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so
+                                                    thirsty, I'm in that two seat Lambo.</label>
+                                                <textarea id="summary" name="summary" class="form-control"
+                                                    rows="5">{{old('summary')}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="">Is Parent: </label>
+                                        <input type="checkbox" name="is_parent" id="is_parent" name=" is_parent" value="1" checked> Yes
+                                    </div>
+                                </div>
+                                <div class="row d-none" id="parent_cat_div">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Parent</label>
+                                            <select class="custom-select" name="parent_id" id="parent_id"
+                                            aria-label="Default select example">
+                                                <option value="" >>-----Parent Category----<</option>
+                                                @foreach ($parent_cat as $pcats)
+                                                    <option value="{{$pcats->id}}" {{old('parent_id')==$pcats->id?'selelecd':''}}>{{$pcats->title}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="status"> Status</label>
+                                            <select class="custom-select" name="status" aria-label="Default select example">
+                                                <option value="active" {{old('status')=='active'?'selected':''}} >Active</option>
+                                                <option value="inactive" {{old('status')=='inactive'?'selected':''}}>Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 {{-- file laravel manager --}}
                                 <div class="row">
                                     <div class="col-md-10 pe-0">
@@ -60,42 +103,6 @@
                                     </div>
                                     <div class="col-md-2 ps-0">
                                         <div id="holder" style="margin-top:15px;max-height:100px;"></div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="">condition</label>
-                                            <select class="form-select" name="condition"
-                                                aria-label="Default select example">
-                                                <option value="promo" {{old('condition')==promo? 'selected':' '}}>Promote</option>
-                                                <option value="banner " {{old('condition')==banner? 'selected':' '}}>Banner</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <select class="form-select" name="status" aria-label="Default select example">
-                                                <option value="active" {{old('status')==active? 'selected':' '}}elected>Active</option>
-                                                <option value="inactive" {{old('status')==inactive? 'selected':' '}}>Inactive</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- editor summernote --}}
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Description</label>
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so
-                                                    thirsty, I'm in that two seat Lambo.</label>
-                                                <textarea id="description" name="description" class="form-control"
-                                                    rows="5">{{old('description')}}</textarea>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -136,11 +143,25 @@
     {{-- summernote editor --}}
     <script>
         $(document).ready(function() {
-            $('#description').summernote();
+            $('#summary').summernote('focus');
         });
     </script>
     {{-- file manager of unishape --}}
     <script>
         $('#lfm').filemanager('image');
+    </script>
+    {{-- is_parent --}}
+    <script>
+        $('#is_parent').change(function(e){
+            e.preventDefault();
+            var is_checked = $(this).prop('checked');
+            if (is_checked) {
+                $('#parent_cat_div').addClass('d-none');
+                $('#parent_cat_div').val(' ');
+                // $('#is_parent').val('');
+            }else{
+                $('#parent_cat_div').removeClass('d-none');
+            }
+        });
     </script>
 @endsection

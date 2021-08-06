@@ -35,8 +35,12 @@
   </footer>
   {{-- summernote --}}
   <script src="{{asset('backend\assets\summernote\summernote-bs4.min.js')}}"></script>
-{{-- boostrap 5.0.2 --}}
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  
+{{-- boostrap 4.4 --}}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
   <!--   Core JS Files   -->
   <script src="{{asset('backend/assets/js/core/jquery.min.js')}}"></script>
   <script src="{{asset('backend/assets/js/core/popper.min.js')}}"></script>

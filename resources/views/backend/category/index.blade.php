@@ -15,9 +15,20 @@
                         <div class="card-header card-header-primary">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <h4 class="card-title ">Simple Table</h4>
-                                    <p class="card-category"> Here is a subtitle for this table</p>
+                                    <div>
+                                        <h4 class="card-title ">Category Table 
+                                            <a class="btn btn-outline-success" href="{{route('category.create')}}" role="button">
+                                                <span class="material-icons mx-1">
+                                                    add_circle_outline
+                                                    </span>
+                                                            Crete
+                                            </a>
+                                        </h4>
+                                        <p class="card-category"> Here is a subtitle for this table</p>
+                                    </div>
                                 </div>
+
+
                                 <div>
                                     <p>Total anner:{{ App\Models\Category::count() }}</p>
                                 </div>
@@ -65,13 +76,13 @@
                                                     @php
                                                         if ($item->is_parent === 1) {
                                                             echo "<p class='border border-info rounded text-center text-info mx-1'>Yes</p>";
-                                                        } elseif ($item->is_parent === 0) {
+                                                        } else{
                                                             echo "<p class='border border-danger  rounded text-center  text-danger mx-1'>No</p>";
                                                         }
                                                     @endphp
                                                 </td>
                                                 <td>
-                                                    {{ $item->parent_id }}
+                                                    {{ App\Models\Category::where('parent_id',$item->parent_id)->value('title') }}
                                                 </td>
                                                 <td>
                                                     <input name="toggle" value="{{ $item->id }}" class="toggle-tow"
