@@ -79,10 +79,10 @@
                                                     <img src="{{ $item->photo }}" alt="" height="60">
                                                 </td>
                                                 <td>
-                                                    {{ $item->price }}
+                                                    {{ number_format($item->price,2)}}
                                                 </td>
                                                 <td>
-                                                    {{ round($item->discount,2)}}
+                                                    {{ number_format($item->discount,2)}}
                                                 </td>
                                                 <td>
                                                     {{ $item->size}}
