@@ -70,8 +70,10 @@ class CategoryController extends Controller
         $data['slug'] = $slug; 
         if($request->input('is_parent') == 1){
             $data['parent_id'] = null;
+            $data['is_parent'] = 1;
         }else{
             $data['parent_id'] = $request->input('parent_id');
+            $data['is_parent'] = 0;
         } 
  
 
