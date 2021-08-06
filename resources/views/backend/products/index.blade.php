@@ -16,8 +16,8 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <div>
-                                        <h4 class="card-title ">Category Table 
-                                            <a class="btn btn-outline-success" href="{{route('brand.create')}}" role="button">
+                                        <h4 class="card-title ">Product Table 
+                                            <a class="btn btn-outline-success" href="{{route('product.create')}}" role="button">
                                                 <span class="material-icons mx-1">
                                                     add_circle_outline
                                                     </span>
@@ -30,7 +30,7 @@
 
 
                                 <div>
-                                    <p>Total anner:{{ App\Models\Brand::count() }}</p>
+                                    <p>Total anner:{{ App\Models\Product::count() }}</p>
                                 </div>
                             </div>
                         </div>
@@ -39,17 +39,26 @@
                                 <table class="table">
                                     <thead class=" text-primary">
                                         <th>
-                                            ID
+                                            S.N
                                         </th>
                                         <th>
                                             Title
                                         </th>
                                         <th>
-                                            Slug
+                                            Photo
                                         </th>
                                         <th>
-                                            Photo
+                                            Price
                                         </th> 
+                                        <th>
+                                            Discout
+                                        </th>
+                                        <th>
+                                            Size
+                                        </th>
+                                        <th>
+                                            Condition
+                                        </th>
                                         <th>
                                             Status
                                         </th>
@@ -57,28 +66,8 @@
                                             Actions
                                         </th>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                Dakota Rice
-                                            </td>
-                                            <td>
-                                                Niger
-                                            </td>
-                                            <td>
-                                                Oud-Turnhout
-                                            </td>
-                                            <td class="text-primary">
-                                                $36,738
-                                            </td>
-                                            <td class="text-primary">
-                                                $36,738
-                                            </td>
-                                        </tr>
-                                        @foreach ($brands as $item)
+                                    <tbody> 
+                                        @foreach ($product as $item)
                                             <tr>
                                                 <td>
                                                     {{ $loop->iteration }}
@@ -86,12 +75,29 @@
                                                 <td>
                                                     {{ $item->title }}
                                                 </td>
-                                                <td>
-                                                    {{ $item->slug }}
-                                                </td>
                                                 <td class="m-auto">
                                                     <img src="{{ $item->photo }}" alt="" height="60">
+                                                </td>
+                                                <td>
+                                                    {{ $item->price }}
+                                                </td>
+                                                <td>
+                                                    {{ round($item->discount,2)}}
+                                                </td>
+                                                <td>
+                                                    {{ $item->size}}
                                                 </td> 
+                                                <td>
+                                                    @php
+                                                        if ($item->condition == 'new') {
+                                                            echo "<p class='border border-primary rounded text-center text-primary mx-1'>New</p>";
+                                                        } elseif ($item->condition == 'popular') {
+                                                            echo "<p class='border border-danger rounded text-center  text-danger mx-1'>Popular</p>";
+                                                        }elseif ($item->condition == 'winter') {
+                                                            echo "<p class='border border-secondary rounded text-center  text-secondary mx-1'>Winter</p>";
+                                                        }
+                                                    @endphp
+                                                </td>
                                                 <td>
                                                     <input name="toggle" value="{{ $item->id }}" class="toggle-tow"
                                                         type="checkbox" data-toggle="toggle" data-on="Active"
@@ -101,11 +107,11 @@
 
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('brand.edit', $item->id) }}" data-toggle="tooltip"
+                                                    <a href="{{ route('product.edit', $item->id) }}" data-toggle="tooltip"
                                                         title="Edit" class=" float-left btn btn-sm btn-outline-warning">
                                                         <span class="material-icons">edit</span>
                                                     </a>
-                                                    <form action="{{ route('brand.destroy', $item->id) }}" method="post">
+                                                    <form action="{{ route('product.destroy', $item->id) }}" method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <a href="" data-toggle="tooltip" title="delete"
@@ -169,7 +175,7 @@
                 var id = $(this).val();
                 // alert(mode);
                 $.ajax({
-                    URL: "{{route('brand.status')}}",
+                    URL: "{{route('product.status')}}",
                     type: "POST",
                     data: {
                         _token: '{{csrf_token()}}',
