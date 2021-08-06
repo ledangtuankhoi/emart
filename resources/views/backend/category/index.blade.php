@@ -82,7 +82,7 @@
                                                     @endphp
                                                 </td>
                                                 <td>
-                                                    {{ App\Models\Category::where('parent_id',$item->parent_id)->value('title') }}
+                                                    {{ App\Models\Category::where('id',$item->parent_id)->value('title') }}
                                                 </td>
                                                 <td>
                                                     <input name="toggle" value="{{ $item->id }}" class="toggle-tow"

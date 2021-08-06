@@ -132,13 +132,16 @@ class CategoryController extends Controller
                 'title'=>'string|required',
                 'summary'=>'string|nullable',
                 'is_parent'=>'sometimes|in:1',
-                'parent'=>'nullable',
+                'parent_id'=>'nullable|exists:categories,id',
                 'status'=>'nullable|in:active,inactive'
             ]);
 
             $data = $request->all();
-             
+                
+            
             $status = $category->fill($data)->save();
+
+            // return dd($request->all(),$data,$status);
             if ($status) {
                 return redirect()->route('category.index')->with('success', 'Succsess  update banner');
             } else {
@@ -158,9 +161,13 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
+        $child_cat_id = Category::where('parent_id',$id)->pluck('id');
         if ($category) {
             $status = $category->delete();
             if ($status) {
+                if(count($child_cat_id)>0){
+                    Category::shiftChild($child_cat_id);
+                }
                 return redirect()->route('category.index')->with('success', 'Succsess  category deleted');
             } else {
                 return back()->with('errors', 'Somthing went wrong');

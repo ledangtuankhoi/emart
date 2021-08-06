@@ -9,4 +9,8 @@ class Category extends Model
 {
     use HasFactory;
     protected $fillable = ['title','slug','photo', 'summany','is_parent','parent_id','status'];
+
+    public static function shiftChild($cat_id){
+         return Category::where('id',$cat_id)->update(['is_parent'=>1]);
+    }
 }

@@ -38,7 +38,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- editor summernote --}}
+                                {{-- editor summernote
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -51,7 +51,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label for="">Is Parent: </label>
@@ -64,7 +64,7 @@
                                             <label for="">Parent</label>
                                             <select class="custom-select" name="parent_id" id="parent_id"
                                             aria-label="Default select example">
-                                                <option value=" " >>-----Parent Category----<</option> 
+                                                <option value=" " selected>>-----Parent Category----<</option> 
                                                 @foreach ($parent_cat as $pcats)
                                                     <option value="{{$pcats->id}}" {{$pcats->id==$category->parent_id?'selected':''}}>{{$pcats->title}}</option>
                                                 @endforeach
