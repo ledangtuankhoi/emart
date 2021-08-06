@@ -65,7 +65,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="">condition</label>
-                                            <select class="form-select" name="condition"
+                                            <select class="custom-select" name="condition"
                                                 aria-label="Default select example">
                                                 <option value="promo" >Promote</option>
                                                 <option value="banner " >Banner</option>
@@ -76,7 +76,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <select class="form-select" name="status" aria-label="Default select example">
+                                            <select class="custom-select" name="status" aria-label="Default select example">
                                                 <option value="active" >Active</option>
                                                 <option value="inactive" >Inactive</option>
                                             </select>

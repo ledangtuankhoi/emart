@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Brand;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class BrandController extends Controller
 {
@@ -18,14 +20,25 @@ class BrandController extends Controller
         return view('backend.brands.index',compact('brands'));
     }
 
+    
+    public function brandStatus(Request $request)
+    {
+        if ($request->mode == true) {
+            DB::table('brands')->where('id', $request->id)->update(['status' => 'active']);
+        } else {
+            DB::table('brands')->where('id', $request->id)->update(['status' => 'inactive']);
+        }
+        return response()->json(['msg' => 'Successfully update status Category ', 'status' => true]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    { 
+        return view('backend.brands.create' );
     }
 
     /**
@@ -35,8 +48,28 @@ class BrandController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    { 
+        $this->validate($request,[
+        'title'=>'string|required',   
+        'photo'=>'required',
+        'status'=>'nullable|in:active,inactive'
+    ]);
+    
+    $data = $request->all();
+    $slug = Str::slug($request->input('title'));
+    $slug_count = Brand::where('slug', $slug)->count();
+    if ($slug_count > 0) {
+        $slug .= time() . "-" . $slug;
+    }
+    $data['slug'] = $slug;
+    $status = Brand::create($data);
+    if ($status) {
+        return redirect()->route('brand.index')->with('success', 'Brand Succsessfully create ');
+    } else {
+        return back()->with('errors', 'Somthing went wrong');
+    }
+
+    return $request->all();
     }
 
     /**
@@ -57,8 +90,13 @@ class BrandController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    { 
+        $brand = Brand::find($id);
+        if ($brand) {
+            return view('backend.brands.edit', compact('brand'));
+        } else {
+            return back()->with('error', 'data not found');
+        }
     }
 
     /**
@@ -70,7 +108,25 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $brand = Brand::find($id);
+        if ($brand) {
+            $this->validate($request, [
+                'title' => 'string|required', 
+                'photo' => 'required', 
+                'status' => 'nullable|in:active,inactive',
+            ]);
+
+            $data = $request->all();
+             
+            $status = $brand->fill($data)->save();
+            if ($status) {
+                return redirect()->route('brand.index')->with('success', 'Succsess  update banner');
+            } else {
+                return back()->with('errors', 'Somthing went wrong');
+            }
+        } else {
+            return back()->with('error', 'data not found');
+        }
     }
 
     /**
@@ -81,6 +137,16 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $brand = Brand::find($id);
+        if ($brand) {
+            $status = $brand->delete();
+            if ($status) {
+                return redirect()->route('brand.index')->with('success', 'Succsess  Brand deleted');
+            } else {
+                return back()->with('errors', 'Somthing went wrong');
+            }
+        } else {
+            return back()->with('error', 'data not found');
+        }
     }
 }

@@ -6,6 +6,8 @@
     Material Dashboard by Creative Tim
 </title>
 <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+
 
 <!--     Fonts and icons     -->
 <link rel="stylesheet" type="text/css"
@@ -14,7 +16,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 
 <!-- CSS Files -->
-    
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link href="{{ asset('backend/assets/css/material-dashboard.css?v=2.1.2') }}" rel="stylesheet" />

@@ -27,7 +27,7 @@
                             
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('banner.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('brand.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
@@ -60,43 +60,17 @@
                                     <div class="col-md-2 ps-0">
                                         <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                                     </div>
-                                </div>
+                                </div> 
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="">condition</label>
-                                            <select class="form-select" name="condition"
-                                                aria-label="Default select example">
-                                                <option value="promo" >Promote</option>
-                                                <option value="banner " >Banner</option>
+                                            <select class="custom-select" name="status" aria-label="Default select example">
+                                                <option value="active" {{old('status')=='active'?'selected':''}} >Active</option>
+                                                <option value="inactive"{{old('status')=='inactive'?'selected':''}}  >Inactive</option>
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <select class="form-select" name="status" aria-label="Default select example">
-                                                <option value="active" >Active</option>
-                                                <option value="inactive" >Inactive</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- editor summernote --}}
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Description</label>
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so
-                                                    thirsty, I'm in that two seat Lambo.</label>
-                                                <textarea id="description" name="description" class="form-control"
-                                                    rows="5">{{old('description')}}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div> 
 
                                 <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
                             </form>

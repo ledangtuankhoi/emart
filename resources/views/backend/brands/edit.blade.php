@@ -28,14 +28,14 @@
                             
                         </div>
                         <div class="card-body">
-                            <form action="{{route('banner.update',$banner->id)}}" method="POST" enctype="multipart/form-data">
+                            <form action="{{route('brand.update',$brand->id)}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('patch')
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Title</label>
-                                            <input type="text" name="title" class="form-control" value="{{$banner->title}}">
+                                            <input type="text" name="title" class="form-control" value="{{$brand->title}}">
                                         </div>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                                                             <i class="fa fa-picture-o"></i> Choose
                                                         </a>
                                                     </span>
-                                                    <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$banner->photo}}">
+                                                    <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$brand->photo}}">
                                                     <label class="bmd-label-floating"></label>
                                                 </div>
                                             </div>
@@ -62,43 +62,17 @@
                                     <div class="col-md-2 ps-0">
                                         <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                                     </div>
-                                </div>
+                                </div> 
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="">condition</label>
-                                            <select class="form-select" name="condition"
-                                                aria-label="Default select example">
-                                                <option value="promo" {{$banner->condition=='promo'? 'selected':' '}} >Promote</option>
-                                                <option value="banner " {{$banner->condition=='banner'? 'selected':' '}}>Banner</option>
+                                            <select class="custom-select" name="status" aria-label="Default select example">
+                                                <option value="active" {{$brand->status=='active'? 'selected':' '}}>Active</option>
+                                                <option value="inactive" {{$brand->status=='inactive'? 'selected':' '}}>Inactive</option>
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <select class="form-select" name="status" aria-label="Default select example">
-                                                <option value="active" {{$banner->status=='active'? 'selected':' '}}>Active</option>
-                                                <option value="inactive" {{$banner->status=='inactive'? 'selected':' '}}>Inactive</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- editor summernote --}}
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Description</label>
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so
-                                                    thirsty, I'm in that two seat Lambo.</label>
-                                                <textarea id="description" name="description" class="form-control"
-                                                    rows="5">{{$banner->description}}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div> 
 
                                 <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
                             </form>

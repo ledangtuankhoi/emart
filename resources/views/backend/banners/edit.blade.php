@@ -1,7 +1,6 @@
 @section('styles')
     {{-- sumernote --}}
     <link rel="stylesheet" href="{{ asset('backend\assets\summernote\summernote-bs4.min.css') }}">
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> --}}
 @endsection
 @extends('backend.layouts.master')
 
@@ -67,7 +66,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="">condition</label>
-                                            <select class="form-select" name="condition"
+                                            <select class="custom-select" name="condition"
                                                 aria-label="Default select example">
                                                 <option value="promo" {{$banner->condition=='promo'? 'selected':' '}} >Promote</option>
                                                 <option value="banner " {{$banner->condition=='banner'? 'selected':' '}}>Banner</option>

@@ -33,14 +33,14 @@ Route::group(['prefix' => 'admin', 'middelware' => 'auth'], function () {
 
     // banner section
     Route::resource('banner', BannerController::class);
-    Route::get('banner_status',[BannerController::class,'bannerStatus'])->name('banner.status');
+    Route::post('banner_status',[BannerController::class,'bannerStatus'])->name('banner.status');
     
      // Category section
      Route::resource('category', CategoryController::class);
-     Route::get('category_status',[CategoryController::class,'categoryStatus'])->name('category.status');
+     Route::post('category_status',[CategoryController::class,'categoryStatus'])->name('category.status');
 
      // Brand section
      Route::resource('brand', BrandController::class);
-     Route::get('brand_status',[BrandController::class,'brandStatus'])->name('brand.status');
+     Route::post('brand_status',[BrandController::class,'brandStatus'])->name('brand.status');
 });
  
