@@ -249,6 +249,8 @@
     <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
     <script src="{{ asset('backend\assets\summernote\summernote-bs4.min.js') }}"></script>
 
+    
+
     {{-- summernote editor --}}
     <script>
         $(document).ready(function() {

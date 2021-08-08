@@ -16,12 +16,13 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <div>
-                                        <h4 class="card-title ">Product Table 
-                                            <a class="btn btn-outline-success" href="{{route('product.create')}}" role="button">
+                                        <h4 class="card-title ">Product Table
+                                            <a class="btn btn-outline-success" href="{{ route('product.create') }}"
+                                                role="button">
                                                 <span class="material-icons mx-1">
                                                     add_circle_outline
-                                                    </span>
-                                                            Crete
+                                                </span>
+                                                Crete
                                             </a>
                                         </h4>
                                         <p class="card-category"> Here is a subtitle for this table</p>
@@ -49,7 +50,7 @@
                                         </th>
                                         <th>
                                             Price
-                                        </th> 
+                                        </th>
                                         <th>
                                             Discout
                                         </th>
@@ -66,34 +67,34 @@
                                             Actions
                                         </th>
                                     </thead>
-                                    <tbody> 
+                                    <tbody>
                                         @foreach ($product as $item)
                                             <tr>
                                                 <td>
                                                     {{ $loop->iteration }}
                                                 </td>
-                                                <td>
+                                                <td class="title" data="{{$item->id}}">
                                                     {{ $item->title }}
                                                 </td>
                                                 <td class="m-auto">
                                                     <img srproduct c="{{ $item->photo }}" alt="" height="60">
                                                 </td>
                                                 <td>
-                                                    {{ number_format($item->price,2)}}
+                                                    {{ number_format($item->price, 2) }}
                                                 </td>
                                                 <td>
-                                                    {{ number_format($item->discount,2)}}
+                                                    {{ number_format($item->discount, 2) }}
                                                 </td>
                                                 <td>
-                                                    {{ $item->size}}
-                                                </td> 
+                                                    {{ $item->size }}
+                                                </td>
                                                 <td>
                                                     @php
                                                         if ($item->condition == 'new') {
                                                             echo "<p class='border border-primary rounded text-center text-primary mx-1'>New</p>";
                                                         } elseif ($item->condition == 'popular') {
                                                             echo "<p class='border border-danger rounded text-center  text-danger mx-1'>Popular</p>";
-                                                        }elseif ($item->condition == 'winter') {
+                                                        } elseif ($item->condition == 'winter') {
                                                             echo "<p class='border border-secondary rounded text-center  text-secondary mx-1'>Winter</p>";
                                                         }
                                                     @endphp
@@ -107,11 +108,13 @@
 
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('product.edit', $item->id) }}" data-toggle="tooltip"
-                                                        title="Edit" class=" float-left btn btn-sm btn-outline-warning">
+                                                    <a href="{{ route('product.edit', $item->id) }}"
+                                                        data-toggle="tooltip" title="Edit"
+                                                        class=" float-left btn btn-sm btn-outline-warning">
                                                         <span class="material-icons">edit</span>
                                                     </a>
-                                                    <form action="{{ route('product.destroy', $item->id) }}" method="post">
+                                                    <form action="{{ route('product.destroy', $item->id) }}"
+                                                        method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <a href="" data-toggle="tooltip" title="delete"
@@ -131,12 +134,39 @@
                 </div>
             </div>
         </div>
+        <style>
+            #cursor{
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                border: 2px solid #000;
+                /* box-sizing: border-box; */
+                transition: 0.1s;
+                transform: translate(-50%,-50%);
+                pointer-events: none;
+            }
+
+        </style>
+    <div id="cursor d-none">sdf</div>
+
     @endsection
     @section('scripts')
         <script src="{{ asset('vendor/bootstrap-toggle-master/js/bootstrap-toggle.min.js') }}"></script>
         {{-- cdn show alert --}}
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+        {{-- show info product --}}
+        <script>
+            var cursor = document.getElementById('cursor');
+            // document.addEventListener(mouse)
+            document.addEventListener('mousemove',function(e) {
+                // values: e.clientX, e.clientY, e.pageX, e.pageY
+                var x = e.clientX;
+                var y = e.clientY;
+                cursor.style.left = x + "px";
+                cursor.style.top = y + "px";
+            });
+        </script>
 
         <script>
             $.ajaxSetup({
@@ -175,10 +205,10 @@
                 var id = $(this).val();
                 // alert(mode);
                 $.ajax({
-                    URL: "{{route('product.status')}}",
+                    URL: "{{ route('product.status') }}",
                     type: "POST",
                     data: {
-                        _token: '{{csrf_token()}}',
+                        _token: '{{ csrf_token() }}',
                         mode: mode,
                         id: id,
                     },
@@ -189,7 +219,7 @@
                             alert('try again')
                         }
                     },
-                    error:function(response){
+                    error: function(response) {
                         console.log(response);
                     }
                 })
