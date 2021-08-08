@@ -91,7 +91,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Discount</label>
-                                            <input type="number" name="discount" value="{{ old('discount') }}"
+                                            <input min="0" max="100" type="number" name="discount" value="{{ old('discount') }}"
                                                 class="form-control">
                                         </div>
                                     </div>

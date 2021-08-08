@@ -4,6 +4,12 @@
 @extends('backend.layouts.master')
 
 @section('content')
+    <style>
+        .material-icons {
+            font-size: 12px !important;
+        }
+
+    </style>
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -73,11 +79,11 @@
                                                 <td>
                                                     {{ $loop->iteration }}
                                                 </td>
-                                                <td class="title" data="{{$item->id}}">
+                                                <td  >
                                                     {{ $item->title }}
                                                 </td>
                                                 <td class="m-auto">
-                                                    <img srproduct c="{{ $item->photo }}" alt="" height="60">
+                                                    <img srproduct src="{{ $item->photo }}" alt="" height="60">
                                                 </td>
                                                 <td>
                                                     {{ number_format($item->price, 2) }}
@@ -107,24 +113,111 @@
                                                         {{ $item->status == 'active' ? 'checked' : ' ' }}>
 
                                                 </td>
-                                                <td>
-                                                    <a href="{{ route('product.edit', $item->id) }}"
-                                                        data-toggle="tooltip" title="Edit"
-                                                        class=" float-left btn btn-sm btn-outline-warning">
-                                                        <span class="material-icons">edit</span>
-                                                    </a>
-                                                    <form action="{{ route('product.destroy', $item->id) }}"
-                                                        method="post">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <a href="" data-toggle="tooltip" title="delete"
-                                                            data-id="{{ $item->id }}"
-                                                            class="dltBtn btn btn-sm btn-outline-danger">
-                                                            <span class="material-icons">delete</span>
+                                                <td class="m-0 p-0">
+                                                    <div class="d-flex justify-content-center">
+
+
+                                                        <a href="javascript:void(0);" title="View" data-toggle="modal"
+                                                            data-target="#productID{{ $item->id }}"
+                                                            class=" float-left btn btn-sm btn-outline-primary">
+                                                            <span class="  material-icons">visibility</span>
                                                         </a>
-                                                    </form>
+                                                        <a href="{{ route('product.edit', $item->id) }}"
+                                                            data-toggle="tooltip" title="Edit"
+                                                            class=" float-left btn btn-sm btn-outline-warning">
+                                                            <span class="material-icons">edit</span>
+                                                        </a>
+
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+
+                                                        <form action="{{ route('product.destroy', $item->id) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <a href="" data-toggle="tooltip" title="delete"
+                                                                data-id="{{ $item->id }}"
+                                                                class="dltBtn btn btn-sm btn-outline-danger">
+                                                                <span class="material-icons">delete</span>
+                                                            </a>
+                                                        </form>
+
+                                                    </div>
+
                                                 </td>
                                             </tr>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="productID{{ $item->id }}" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            @php
+                                                                $product = App\Models\Product::where('id',$item->id)->first();
+                                                            @endphp
+                                                            <h5 class="modal-title" id="exampleModalLabel">{{$product->title}}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <strong><b> Summary: </b></strong>
+                                                            <p>{!! html_entity_decode($product->summary)!!}</p>
+                                                            <strong><b> Description: </b></strong>
+                                                            <p>{!! html_entity_decode($product->description)!!}</p>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <strong><b>Price</b>:</strong>
+                                                                    <p>${{number_format($item->price,2)}}</p>
+                                                                </div>
+                                                                <div class="col-md-6">
+
+                                                                    <strong><b>Discount</b>:</strong>
+                                                                    <p>{{number_format($item->discount,2)}}%</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <strong><b>Category</b>:</strong>
+                                                                    <p>{{App\Models\Category::where('id',$product->cat_id)->value('title')}}</p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <strong><b>Child Category</b>:</strong>
+                                                                    <p>{{App\Models\Category::where('id',$product->child_cat_id)->value('title')}}</p>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <strong><b>Brand</b>:</strong>
+                                                                    <p>{{App\Models\Brand::where('id',$product->brand_id)->value('title')}}</p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <strong><b>size</b>:</strong>
+                                                                    <p class="btn btn-outline-primary btn-sm"> {{$product->size}}</p>
+
+                                                                </div>
+                                                            </div> 
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <strong><b>Condition</b>:</strong>
+                                                                    <p class="btn btn-outline-info btn-sm" >{{$product->condition}}</p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <strong><b>Status</b>:</strong>
+                                                                    <p class="btn btn-outline-secondary btn-sm"> {{$product->status}}</p>
+
+                                                                </div>
+                                                            </div> 
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -134,20 +227,6 @@
                 </div>
             </div>
         </div>
-        <style>
-            #cursor{
-                position: absolute;
-                width: 20px;
-                height: 20px;
-                border: 2px solid #000;
-                /* box-sizing: border-box; */
-                transition: 0.1s;
-                transform: translate(-50%,-50%);
-                pointer-events: none;
-            }
-
-        </style>
-    <div id="cursor d-none">sdf</div>
 
     @endsection
     @section('scripts')
@@ -155,18 +234,16 @@
         {{-- cdn show alert --}}
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-        {{-- show info product --}}
-        <script>
-            var cursor = document.getElementById('cursor');
-            // document.addEventListener(mouse)
-            document.addEventListener('mousemove',function(e) {
-                // values: e.clientX, e.clientY, e.pageX, e.pageY
-                var x = e.clientX;
-                var y = e.clientY;
-                cursor.style.left = x + "px";
-                cursor.style.top = y + "px";
-            });
-        </script>
+        {{-- view product ajax --}}
+        {{-- <script>
+            $('.view').click(function(e) {
+                var pro_id = $(this).attr('data').val();
+                console.log(pro_id);
+                e.preventDefault();
+            })
+        </script> --}}
+
+
 
         <script>
             $.ajaxSetup({
