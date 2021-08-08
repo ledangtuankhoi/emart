@@ -22,7 +22,9 @@ class CategoryController extends Controller
 
     public function categoryStatus(Request $request)
     {
+        dd("status",$request->all());
         // return dd($request);
+        dd($request);
         if ($request->mode == true) {
             DB::table('categories')->where('id', $request->id)->update(['status' => 'active']);
         } else {
@@ -51,6 +53,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     { 
+        // dd("store",$request->all());
         $this->validate($request,[
             'title'=>'string|required',
             'summary'=>'string|nullable',
@@ -58,7 +61,7 @@ class CategoryController extends Controller
             'is_parent'=>'sometimes|in:1',
             // validation 'exists' kiểm tra chỉ thuộc trong giá trị của bảng cate cột id
             'parent_id'=>'nullable|exists:categories,id',
-            'status'=>'nullable|in:active,inactive'
+            'status'=>'required|in:active,inactive'
         ]);
         
         $data = $request->all();
@@ -125,7 +128,6 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // return $request->all(); 
          $category = Category::find($id);
         if ($category) {
             $this->validate($request,[
@@ -175,5 +177,22 @@ class CategoryController extends Controller
         } else {
             return back()->with('error', 'data not found');
         }
+    }
+
+    public function getChildByParentID(Request $request, $id){
+        // return "asdf"+$id; 
+        // dd($id,$request->all());
+        $category = Category::find($request->id);
+        $child_id = Category::getChildByParentID($request->id);
+        if($category){
+            if (count($child_id)<=0) {
+                return response()->json(['status'=>false,'data'=>null,'msg'=>'']);
+            }
+            return response()->json(['status'=>true,'data'=>$child_id,'msg'=>'']);
+            
+        }else{
+            return response()->json(['status'=>false,'data'=>null,'msg'=>' Category Not Found']);   
+        }
+        
     }
 }

@@ -76,7 +76,7 @@
                                                     {{ $item->title }}
                                                 </td>
                                                 <td class="m-auto">
-                                                    <img src="{{ $item->photo }}" alt="" height="60">
+                                                    <img srproduct c="{{ $item->photo }}" alt="" height="60">
                                                 </td>
                                                 <td>
                                                     {{ number_format($item->price,2)}}
@@ -188,6 +188,9 @@
                         } else {
                             alert('try again')
                         }
+                    },
+                    error:function(response){
+                        console.log(response);
                     }
                 })
             });

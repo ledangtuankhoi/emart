@@ -38,7 +38,7 @@
                                     </div>
                                 </div>
                                 {{-- editor summernote --}}
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Summary</label>
@@ -50,7 +50,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label for="">Is Parent: </label>
@@ -76,6 +76,7 @@
                                         <div class="form-group">
                                             <label for="status"> Status</label>
                                             <select class="custom-select" name="status" aria-label="Default select example">
+                                                <option value=""  >>--Status------<</option>
                                                 <option value="active" {{old('status')=='active'?'selected':''}} >Active</option>
                                                 <option value="inactive" {{old('status')=='inactive'?'selected':''}}>Inactive</option>
                                             </select>

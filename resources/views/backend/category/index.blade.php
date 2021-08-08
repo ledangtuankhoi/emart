@@ -163,22 +163,14 @@
                 var id = $(this).val();
                 // alert(mode);
                 $.ajax({
-                    URL: "{{route('category.status')}}",
-                    type: "POST",
-                    data: {
-                        _token: '{{csrf_token()}}',
-                        mode: mode,
-                        id: id,
+                    URL:"{{route('category.status')}}",  
+                    type:"POST",
+                    data:{
+                        _token:'{{csrf_token()}}',
+                        id:id,
+                        mode:mode,
                     },
-                    success: function(response) {
-                        if (response.status) {
-                            alert(response.msg);
-                        } else {
-                            // console.log(response);
-                            alert('try again');
-                        }
-                    },
-                    error:function(response){
+                    success:function(response){
                         console.log(response);
                     }
                 })

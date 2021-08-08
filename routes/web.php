@@ -6,6 +6,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,7 +39,9 @@ Route::group(['prefix' => 'admin', 'middelware' => 'auth'], function () {
     
      // Category section
      Route::resource('category', CategoryController::class);
-     Route::post('category_status',[CategoryController::class,'categoryStatus'])->name('category.status');
+     Route::post('category/category_status',[CategoryController::class,'categoryStatus'])->name("category.status");
+
+     Route::post('category/{id}/child',[CategoryController::class,'getChildByParentID']);
 
      // Brand section
      Route::resource('brand', BrandController::class);
