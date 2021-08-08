@@ -192,7 +192,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="">Vendor</label>
-                                            <select class="custom-select" name="vendor" aria-label="Default select example">
+                                            <select class="custom-select" name="vendor_id" aria-label="Default select example">
                                                 <option value="">---Vendor ---</option>
                                                 @foreach (App\Models\User::get() as $vendor)
                                                     <option value="{{ $vendor->id }}">{{ $vendor->full_name }}</option>

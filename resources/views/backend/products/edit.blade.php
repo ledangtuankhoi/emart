@@ -9,11 +9,10 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Edit Profile</h4>
+                            <h4 class="card-title">Edit Product</h4>
                             <p class="card-category">Complete your profile</p>
                             {{-- error --}}
                             @if ($errors->any())
@@ -25,21 +24,78 @@
                                     </ul>
                                 </div>
                             @endif
-                            
+
                         </div>
                         <div class="card-body">
-                            <form action="{{route('brand.update',$brand->id)}}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('product.update', $product->id) }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('patch')
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Title</label>
-                                            <input type="text" name="title" class="form-control" value="{{$brand->title}}">
+                                            <input type="text" name="title" value="{{ $product->title }}"
+                                                class="form-control">
                                         </div>
                                     </div>
                                 </div>
 
+                                {{-- editor summernote --}}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Summary</label>
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating"> </label>
+                                                <textarea id="summary" name="summary" class="form-control"
+                                                    rows="5">{{ $product->summary }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- editor summernote --}}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating"></label>
+                                                <textarea id="description" name="description" class="form-control"
+                                                    rows="5">{{ $product->description }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Stock</label>
+                                            <input type="number" name="stock" value="{{ $product->stock }}"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Price</label>
+                                            <input type="number" name="price" value="{{ $product->price }}"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Discount</label>
+                                            <input min="0" max="100" type="number" name="discount"
+                                                value="{{ $product->discount }}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
                                 {{-- file laravel manager --}}
                                 <div class="row">
                                     <div class="col-md-10 pe-0">
@@ -53,7 +109,8 @@
                                                             <i class="fa fa-picture-o"></i> Choose
                                                         </a>
                                                     </span>
-                                                    <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$brand->photo}}">
+                                                    <input id="thumbnail" class="form-control" type="text" name="photo"
+                                                        value="{{ $product->photo }}">
                                                     <label class="bmd-label-floating"></label>
                                                 </div>
                                             </div>
@@ -62,17 +119,122 @@
                                     <div class="col-md-2 ps-0">
                                         <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <select class="custom-select" name="status" aria-label="Default select example">
-                                                <option value="active" {{$brand->status=='active'? 'selected':' '}}>Active</option>
-                                                <option value="inactive" {{$brand->status=='inactive'? 'selected':' '}}>Inactive</option>
+                                            <label class="">Brand</label>
+                                            <select class="custom-select" name="brand_id"
+                                                aria-label="Default select example">
+                                                <option value="">---Brand---</option>
+                                                @foreach (App\Models\Brand::get() as $brand)
+                                                    @php
+                                                        if ($brand->id == $product->brand_id) {
+                                                            echo '<option value=' . $brand->id . ' selected> ' . $brand->title . '</option>';
+                                                        } else {
+                                                            echo '<option value=' . $brand->id . '> ' . $brand->title . '</option>';
+                                                        }
+                                                    @endphp
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Category</label>
+                                            <select class="custom-select" id="cat_id" name="cat_id"
+                                                aria-label="Default select example">
+                                                <option value="">---Category ---</option>
+                                                @foreach (App\Models\Category::get() as $cat)@php
+                                                    if ($cat->id == $product->cat_id) {
+                                                        echo '<option value=' . $cat->id . ' selected> ' . $cat->title . '</option>';
+                                                    } else {
+                                                        echo '<option value=' . $cat->id . '> ' . $cat->title . '</option>';
+                                                    }
+                                                @endphp
+                                                    {{-- <option value="{{ $cat->id }}">{{ $cat->title }}</option> --}}
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row d-none" id="child_cat_id_div">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Category Child</label>
+                                            <select class="custom-select" name="child_cat_id" id="child_cat_id"
+                                                aria-label="Default select example">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="">Size</label>
+                                            <select class="custom-select" name="size" aria-label="Default select example">
+                                                <option value="S" {{ $product->size == 'S' ? 'selected' : '' }}>S
+                                                </option>
+                                                <option value="M" {{ $product->size == 'M' ? 'selected' : '' }}>M
+                                                </option>
+                                                <option value="L" {{ $product->size == 'L' ? 'selected' : '' }}>L
+                                                </option>
+                                                <option value="XL" {{ $product->size == 'XL' ? 'selected' : '' }}>XL
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="">Condition</label>
+                                        <div class="form-group">
+                                            <select class="custom-select" name="condition"
+                                                aria-label="Default select example">
+                                                <option value="new" {{ $product->condition == 'new' ? 'selected' : '' }}>
+                                                    new</option>
+                                                <option value="popular"
+                                                    {{ $product->condition == 'popular' ? 'selected' : '' }}>
+                                                    popular</option>
+                                                <option value="winter"
+                                                    {{ $product->condition == 'winter' ? 'selected' : '' }}>
+                                                    winter</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Vendor</label>
+                                            <select class="custom-select" name="vendor_id" aria-label="Default select example">
+                                                <option value="">---Vendor ---</option>
+                                                @foreach (App\Models\User::get() as $vendor) 
+                                                    <option value="{{ $vendor->id }}" {{$vendor->id == $product->vendor_id ? 'selected':'' }}>{{ $vendor->full_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Status</label>
+                                            <select class="custom-select" name="status" aria-label="Default select example">
+                                                <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>
+                                                    Active
+                                                </option>
+                                                <option value="inactive"
+                                                    {{ old('status') == 'inactive' ? 'selected' : '' }}>
+                                                    Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
                             </form>
@@ -108,14 +270,61 @@
     <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
     <script src="{{ asset('backend\assets\summernote\summernote-bs4.min.js') }}"></script>
 
+
+
     {{-- summernote editor --}}
     <script>
         $(document).ready(function() {
             $('#description').summernote();
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#summary').summernote();
+        });
+    </script>
+
     {{-- file manager of unishape --}}
     <script>
         $('#lfm').filemanager('image');
     </script>
+
+    <script>
+            var child_cat_id = "{{$product->child_cat_id}}";
+        $('#cat_id').change(function() {
+            var cat_id = $(this).val();
+            // alert(cat_id);
+            if (cat_id != null) {
+                $.ajax({
+                    url: "/admin/category/" + cat_id + "/child",
+                    type: "POST",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        cat_id: cat_id,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        var html_option = "<option value='' >>---Child Category----<</option>";
+                        if (response.status) {
+                            $('#child_cat_id_div').removeClass('d-none');
+                            $.each(response.data, function(id, title) {
+
+                                html_option += "<option value='" + id + "' "+(child_cat_id==id?'selected':'')+" >" + title +
+                                    "</option>"
+                            });
+                        } else {
+                            $('#child_cat_id_div').addClass('d-none');
+                        }
+                        $('#child_cat_id').html(html_option);
+
+                    }
+                })
+            }
+        })
+        if (child_cat_id!=null) {
+            $('#cat_id').change();
+        }
+    </script>
+
 @endsection

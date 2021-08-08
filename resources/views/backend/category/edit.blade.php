@@ -12,7 +12,7 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Creat Category</h4>
+                            <h4 class="card-title">Edit Category</h4>
                             <p class="card-category">Complete your profile</p>
                             {{-- error --}}
                             @if ($errors->any())
