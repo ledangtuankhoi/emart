@@ -5,11 +5,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Fontend\IndexController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth; 
 
 /*
 |--------------------------------------------------------------------------
@@ -21,10 +22,13 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// fontend section
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[IndexController::class,'home'])->name('home');
+
+// End fontend section
+
+ 
 
 Auth::routes(["register" => false]);
 
