@@ -52,7 +52,7 @@
                             <i class="icon-bars"></i>
                         </button>
                         
-                        <a href="index.html" class="logo">
+                        <a href="{{route('home')}}" class="logo">
                             <img src="{{asset('fontend/assets/images/demos/demo-2/logo.png')}}" alt="Molla Logo" width="105" height="25">
                         </a>
                     </div><!-- End .header-left -->

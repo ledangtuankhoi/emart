@@ -33,9 +33,9 @@ Route::get('product-category/{slug}',[IndexController::class,'productCategory'])
 
  
 
-Auth::routes(["register" => false]);
+// Auth::routes(["register" => false]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // admin dashboard
 Route::group(['prefix' => 'admin', 'middelware' => 'auth'], function () {

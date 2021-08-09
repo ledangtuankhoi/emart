@@ -233,6 +233,7 @@
     {{-- quangr cao --}}
     {{-- @include('fontend.layouts.adv') --}}
     {{-- END quangr cao --}}
+    
     @include('fontend.layouts.script')
 </body>
 

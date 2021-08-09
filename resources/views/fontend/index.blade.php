@@ -141,7 +141,11 @@
         <div class="container">
             <ul class="nav nav-pills nav-border-anim nav-big justify-content-center mb-3" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="products-featured-link" data-toggle="tab" href="#products-featured-tab"
+                    <a class="nav-link active" id="products-new-link" data-toggle="tab" href="#products-new-tab"
+                        role="tab" aria-controls="products-new-tab" aria-selected="true">New</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  " id="products-featured-link" data-toggle="tab" href="#products-featured-tab"
                         role="tab" aria-controls="products-featured-tab" aria-selected="true">Featured</a>
                 </li>
                 <li class="nav-item">
@@ -157,6 +161,87 @@
 
         <div class="container-fluid">
             <div class="tab-content tab-content-carousel">
+                
+                {{-- New Product --}}
+                <div class="tab-pane p-0 fade show active" id="products-new-tab" role="tabpanel"
+                    aria-labelledby="products-new-link">
+                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                        data-owl-options='{
+                            "nav": false, 
+                            "dots": true,
+                            "margin": 20,
+                            "loop": false,
+                            "responsive": {
+                                "0": {
+                                    "items":2
+                                },
+                                "480": {
+                                    "items":2
+                                },
+                                "768": {
+                                    "items":3
+                                },
+                                "992": {
+                                    "items":4
+                                },
+                                "1200": {
+                                    "items":5
+                                },
+                                "1600": {
+                                    "items":6,
+                                    "nav": true
+                                }
+                            }
+                        }'>
+
+                         @php
+                             $new_products = App\Models\Product::where(['status'=>'active','condition'=>'new'])->orderBy('id','DESC')->limit('10')->get();
+                         @endphp
+                         @if (count($new_products)>0)
+                            @foreach ($new_products as $item )
+                            @php
+                             $photo = explode(',',$item->photo);
+                            @endphp
+                            <div class="product product-11 text-center">
+                                <figure class="product-media">
+                                    <a href="product.html">
+                                <span class="product-label label-circle label-new">New</span>
+                                        <img src="{{$photo[0]}}"
+                                            alt="{{$item->title}}" class="product-image">
+                                            @php
+                                                if(array_key_exists('1',$photo)){
+                                                    echo '<img src="'.$photo[1].'"
+                                            alt="{{$item->title}}" class="product-image-hover">';
+                                                }
+                                            @endphp
+                                        
+                                    </a>
+    
+                                    <div class="product-action-vertical">
+                                        <a href="#" class="btn-product-icon btn-wishlist"><span>add to wishlist</span></a>
+                                    </div><!-- End .product-action-vertical -->
+    
+                                </figure><!-- End .product-media -->
+    
+                                <div class="product-body">
+                                    <h3 class="product-title"><a href="product.html">{{ucfirst($item->title)}}</a></h3>
+                                    <!-- End .product-title -->
+                                    <div class="product-price">
+                                    ${{number_format($item->offer_price,2)}} (<small><del class="text-danger">${{number_format($item->price,2)}}</del></small>)
+                                    </div><!-- End .product-price -->
+                                </div><!-- End .product-body -->
+                                <div class="product-action">
+                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                </div><!-- End .product-action -->
+                            </div><!-- End .product -->
+                                
+                            @endforeach
+                            @else
+                            <p>Not Product New</p>
+                         @endif
+                    </div><!-- End .owl-carousel -->
+                </div><!-- .End .tab-pane -->
+
                 <div class="tab-pane p-0 fade show active" id="products-featured-tab" role="tabpanel"
                     aria-labelledby="products-featured-link">
                     <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
