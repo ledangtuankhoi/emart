@@ -77,7 +77,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <select class="form-select" name="status" aria-label="Default select example">
+                                            <select class="custom-select" name="status" aria-label="Default select example">
                                                 <option value="active" {{$banner->status=='active'? 'selected':' '}}>Active</option>
                                                 <option value="inactive" {{$banner->status=='inactive'? 'selected':' '}}>Inactive</option>
                                             </select>

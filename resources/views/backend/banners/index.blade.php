@@ -17,7 +17,7 @@
                                 <div>
                                     <div>
                                         <h4 class="card-title ">Banner Table 
-                                            <a class="btn btn-outline-success" href="{{route('category.create')}}" role="button">
+                                            <a class="btn btn-outline-success" href="{{route('banner.create')}}" role="button">
                                                 <span class="material-icons mx-1">
                                                     add_circle_outline
                                                     </span>
