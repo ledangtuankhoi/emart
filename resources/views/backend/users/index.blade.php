@@ -9,6 +9,15 @@
             font-size: 12px !important;
         }
 
+        .lamgon {
+            overflow: hidden;
+            width: 105px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            height: 80px;
+        }
+
     </style>
     <div class="content">
         <div class="container-fluid">
@@ -46,7 +55,7 @@
                                 <table class="table">
                                     <thead class=" text-primary">
                                         <th>
-                                            
+
                                         </th>
                                         <th>
                                             Photo
@@ -65,7 +74,7 @@
                                         </th>
                                         <th>
                                             Role
-                                        </th> 
+                                        </th>
                                         <th>
                                             Status
                                         </th>
@@ -80,20 +89,21 @@
                                                     {{ $loop->iteration }}
                                                 </td>
                                                 <td class="m-auto">
-                                                    <img srproduct style="border-radius: 50%" src="{{ $item->photo }}" alt="" height="60">
+                                                    <img srproduct style="border-radius: 50%" src="{{ $item->photo }}"
+                                                        alt="" height="60">
                                                 </td>
-                                                <td  >
+                                                <td>
                                                     {{ $item->full_name }}
                                                 </td>
-                                                <td  >
+                                                <td>
                                                     {{ $item->email }}
                                                 </td>
-                                                <td  >
+                                                <td>
                                                     {{ $item->phone }}
                                                 </td>
-                                                <td  >
+                                                <td class="lamgon">
                                                     {{ $item->address }}
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     @php
                                                         if ($item->role == 'admin') {
@@ -122,7 +132,7 @@
                                                             class=" float-left btn btn-sm btn-outline-primary">
                                                             <span class="  material-icons">visibility</span>
                                                         </a>
-                                                        <a href="{{ route('product.edit', $item->id) }}"
+                                                        <a href="{{ route('user.edit', $item->id) }}"
                                                             data-toggle="tooltip" title="Edit"
                                                             class=" float-left btn btn-sm btn-outline-warning">
                                                             <span class="material-icons">edit</span>
@@ -131,7 +141,7 @@
                                                     </div>
                                                     <div class="d-flex justify-content-center">
 
-                                                        <form action="{{ route('product.destroy', $item->id) }}"
+                                                        <form action="{{ route('user.destroy', $item->id) }}"
                                                             method="post">
                                                             @csrf
                                                             @method('delete')
@@ -153,72 +163,81 @@
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             @php
-                                                                $user = App\Models\User::where('id',$item->id)->first();
+                                                                $user = App\Models\User::where('id', $item->id)->first();
                                                             @endphp
                                                             <div class="d-flex flex-row">
                                                                 <div class="p-2">
-                                                                    <img style="border-radius: 50%" src="{{$user->photo}}" alt="">
+                                                                    <img style="border-radius: 50%"
+                                                                        src="{{ $user->photo }}" alt="">
                                                                 </div>
                                                                 <div class="p-2">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">{{$user->full_name}}</h5>
-                                                                    <p class="modal-title" id="exampleModalLabel">{{$user->username}}</p>
+                                                                    <h5 class="modal-title" id="exampleModalLabel">
+                                                                        {{ $user->full_name }}</h5>
+                                                                    <p class="modal-title" id="exampleModalLabel">
+                                                                        {{ $user->username }}</p>
                                                                 </div>
-                                                              </div>
+                                                            </div>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-                                                        <div class="modal-body"> 
+                                                        <div class="modal-body">
                                                             <div class="row">
                                                                 <div class="col-md-3">
-                                                                    <strong><b class="text-capitalize">username</b>:</strong>
-                                                                    <p class=" " >{{$user->username}}</p>
+                                                                    <strong><b
+                                                                            class="text-capitalize">username</b>:</strong>
+                                                                    <p class=" ">{{ $user->username }}</p>
                                                                 </div>
                                                                 <div class="col-md-9">
                                                                     <strong><b class="text-capitalize">email</b>:</strong>
-                                                                    <p class=" " >{{$user->email}}</p>
+                                                                    <p class=" ">{{ $user->email }}</p>
                                                                 </div>
-                                                            </div> 
+                                                            </div>
                                                             <div class="row">
                                                                 <div class="col-md-3">
-                                                                    <strong><b class="text-capitalize">role</b>:</strong> @php
-                                                                    if ($item->role == 'admin') {
-                                                                        echo "<p class='border border-primary rounded text-center text-primary mx-1'>Admin</p>";
-                                                                    } elseif ($item->role == 'vendor') {
-                                                                        echo "<p class='border border-danger rounded text-center  text-danger mx-1'>Vendor</p>";
-                                                                    } elseif ($item->role == 'customer') {
-                                                                        echo "<p class='border border-secondary rounded text-center  text-secondary mx-1'>Customer</p>";
-                                                                    }
-                                                                @endphp
-                                                                </div>
-                                                                <div class="col-md-9">
-                                                                    <strong><b class="text-capitalize">phone</b>:</strong>
-                                                                    <p class=" " >{{$user->phone}}</p>
-                                                                </div>
-                                                            </div> 
-                                                            <div class="row">
-                                                                <div class="col-md-3">
-                                                                    <strong><b class="text-capitalize">status</b>:</strong>  
+                                                                    <strong><b class="text-capitalize">role</b>:</strong>
                                                                     @php
-                                                                        if ($item->status == 'active') {
-                                                                        echo "<p class='border border-primary rounded text-center text-primary mx-1'>Active</p>";
-                                                                    } elseif ($item->status == 'inactive') {
-                                                                        echo "<p class='border border-danger rounded text-center  text-danger mx-1'>Inacive</p>";
-                                                                    }  
+                                                                        if ($item->role == 'admin') {
+                                                                            echo "<p class='border border-primary rounded text-center text-primary mx-1'>Admin</p>";
+                                                                        } elseif ($item->role == 'vendor') {
+                                                                            echo "<p class='border border-danger rounded text-center  text-danger mx-1'>Vendor</p>";
+                                                                        } elseif ($item->role == 'customer') {
+                                                                            echo "<p class='border border-secondary rounded text-center  text-secondary mx-1'>Customer</p>";
+                                                                        }
                                                                     @endphp
                                                                 </div>
                                                                 <div class="col-md-9">
-                                                                    <strong><b class="text-capitalize">address</b>:</strong>
-                                                                    <p class=" " >{{$user->address}}</p>
+                                                                    <strong><b class="text-capitalize">phone</b>:</strong>
+                                                                    <p class=" ">{{ $user->phone }}</p>
                                                                 </div>
-                                                            </div> 
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <strong><b class="text-capitalize">status</b>:</strong>
+                                                                    @php
+                                                                        if ($item->status == 'active') {
+                                                                            echo "<p class='border border-primary rounded text-center text-primary mx-1'>Active</p>";
+                                                                        } elseif ($item->status == 'inactive') {
+                                                                            echo "<p class='border border-danger rounded text-center  text-danger mx-1'>Inacive</p>";
+                                                                        }
+                                                                    @endphp
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                    <style>
+
+                                                                    </style>
+                                                                    <strong><b
+                                                                            class="text-capitalize">address</b>:</strong>
+                                                                    <p class=" ">{{ $user->address }}</p>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary text-capitalize"
-                                                                data-dismiss="modal">export</button> 
+                                                                data-dismiss="modal">export</button>
                                                             <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Close</button> 
+                                                                data-dismiss="modal">Close</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -259,8 +278,7 @@
             $('.dltBtn').click(function(e) {
                 var form = $(this).closest('form');
                 var dataID = $(this).data('id');
-                e.preventDefault();
-                console.log('asd');
+                e.preventDefault(); 
                 swal({
                         title: "Are you sure?",
                         text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -287,7 +305,7 @@
                 var id = $(this).val();
                 // alert(mode);
                 $.ajax({
-                    URL: "{{ route('product.status') }}",
+                    URL: "{{ route('user.status') }}", 
                     type: "POST",
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -304,7 +322,8 @@
                     error: function(response) {
                         console.log(response);
                     }
-                })
+                });
             });
         </script>
+        
     @endsection

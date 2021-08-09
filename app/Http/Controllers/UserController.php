@@ -16,11 +16,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('id','DESC')->get();
-        return view('backend.users.index',compact('users'));
+        $users = User::orderBy('id', 'DESC')->get();
+        return view('backend.users.index', compact('users'));
     }
 
-    
+
     public function productStatus(Request $request)
     {
         if ($request->mode == true) {
@@ -48,23 +48,23 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
-        $this->validate($request,[
-            'full_name'=>'required|string',
-            'username'=>'required|string',
-            'email'=>'email|required|unique:users,email',
-            'address'=>'nullable|string',
-            'phone'=>'nullable| string',
-            'photo'=>'nullable|string',
-            'password'=>'min:4|required',
-            'role'=>'required|in:admin,customer,vendor',
-            'status'=>'required|in:active,inactive', 
+    {
+        $this->validate($request, [
+            'full_name' => 'required|string',
+            'username' => 'required|string',
+            'email' => 'email|required|unique:users,email',
+            'address' => 'nullable|string',
+            'phone' => 'nullable| string',
+            'photo' => 'nullable|string',
+            'password' => 'min:4|required',
+            'role' => 'required|in:admin,customer,vendor',
+            'status' => 'required|in:active,inactive',
         ]);
         // return $request->all();
         $data = $request->all();
         $data['password'] = Hash::make($request->password);
-        
- 
+
+
         // return $data;
         $status = User::create($data);
         if ($status) {
@@ -96,10 +96,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        if($user){
-            return view('backend.users.edit',compact('user' ));
-        }else{
-            return back()->with('error','data not found');
+        if ($user) {
+            return view('backend.users.edit', compact('user'));
+        } else {
+            return back()->with('error', 'data not found');
         }
     }
 
@@ -112,7 +112,34 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        if ($user) {
+            $this->validate($request, [
+                'full_name' => 'required|string',
+                'username' => 'required|string',
+                'email' => 'email|required|exists:users,email',
+                'address' => 'nullable|string',
+                'phone' => 'nullable| string',
+                'photo' => 'nullable|string',
+                'password' => 'min:4|required',
+                'role' => 'required|in:admin,customer,vendor',
+                'status' => 'required|in:active,inactive',
+            ]);
+ 
+            $data = $request->all();
+            $data['password'] = Hash::make($request->password);
+
+            $status = $user->fill($data)->save();
+
+            // return dd($request->all(),$data,$status);
+            if ($status) {
+                return redirect()->route('user.index')->with('success', 'Succsess  update banner');
+            } else {
+                return back()->with('errors', 'Somthing went wrong');
+            }
+        } else {
+            return back()->with('error', 'data not found');
+        }
     }
 
     /**
@@ -123,6 +150,16 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+         $user = User::find($id); 
+        if ($user) {
+            $status = $user->delete();
+            if ($status) { 
+                return redirect()->route('user.index')->with('success', 'Succsess  User deleted');
+            } else {
+                return back()->with('errors', 'Somthing went wrong');
+            }
+        } else {
+            return back()->with('error', 'data not found');
+        }
     }
 }

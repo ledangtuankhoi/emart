@@ -49,7 +49,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="bmd-label-floating text-capitalize">password</label>
-                                            <input type="password" name="password" value="{{ old('username') }}"
+                                            <input type="password" name="password" value=""
                                                 class="form-control">
                                         </div>
                                     </div>
