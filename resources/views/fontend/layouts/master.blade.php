@@ -3,6 +3,7 @@
 
 
 <!-- molla/index-1.html  22 Nov 2019 09:55:06 GMT -->
+
 <head>
     @include('fontend.layouts.head')
 </head>
@@ -12,7 +13,7 @@
         @include('fontend.layouts.header')
 
         @yield('content')
-@include('fontend.layouts.footer')
+        @include('fontend.layouts.footer')
     </div><!-- End .page-wrapper -->
     <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
 
@@ -22,24 +23,28 @@
     <div class="mobile-menu-container mobile-menu-light">
         <div class="mobile-menu-wrapper">
             <span class="mobile-menu-close"><i class="icon-close"></i></span>
-            
+
             <form action="#" method="get" class="mobile-search">
                 <label for="mobile-search" class="sr-only">Search</label>
-                <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search product ..." required>
+                <input type="search" class="form-control" name="mobile-search" id="mobile-search"
+                    placeholder="Search product ..." required>
                 <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
             </form>
 
             <ul class="nav nav-pills-mobile nav-border-anim" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="mobile-menu-link" data-toggle="tab" href="#mobile-menu-tab" role="tab" aria-controls="mobile-menu-tab" aria-selected="true">Menu</a>
+                    <a class="nav-link active" id="mobile-menu-link" data-toggle="tab" href="#mobile-menu-tab"
+                        role="tab" aria-controls="mobile-menu-tab" aria-selected="true">Menu</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="mobile-cats-link" data-toggle="tab" href="#mobile-cats-tab" role="tab" aria-controls="mobile-cats-tab" aria-selected="false">Categories</a>
+                    <a class="nav-link" id="mobile-cats-link" data-toggle="tab" href="#mobile-cats-tab" role="tab"
+                        aria-controls="mobile-cats-tab" aria-selected="false">Categories</a>
                 </li>
             </ul>
 
             <div class="tab-content">
-                <div class="tab-pane fade show active" id="mobile-menu-tab" role="tabpanel" aria-labelledby="mobile-menu-link">
+                <div class="tab-pane fade show active" id="mobile-menu-tab" role="tabpanel"
+                    aria-labelledby="mobile-menu-link">
                     <nav class="mobile-nav">
                         <ul class="mobile-menu">
                             <li class="active">
@@ -79,10 +84,12 @@
                                     <li><a href="category-2cols.html">Shop Grid 2 Columns</a></li>
                                     <li><a href="category.html">Shop Grid 3 Columns</a></li>
                                     <li><a href="category-4cols.html">Shop Grid 4 Columns</a></li>
-                                    <li><a href="category-boxed.html"><span>Shop Boxed No Sidebar<span class="tip tip-hot">Hot</span></span></a></li>
+                                    <li><a href="category-boxed.html"><span>Shop Boxed No Sidebar<span
+                                                    class="tip tip-hot">Hot</span></span></a></li>
                                     <li><a href="category-fullwidth.html">Shop Fullwidth No Sidebar</a></li>
                                     <li><a href="product-category-boxed.html">Product Category Boxed</a></li>
-                                    <li><a href="product-category-fullwidth.html"><span>Product Category Fullwidth<span class="tip tip-new">New</span></span></a></li>
+                                    <li><a href="product-category-fullwidth.html"><span>Product Category Fullwidth<span
+                                                    class="tip tip-new">New</span></span></a></li>
                                     <li><a href="cart.html">Cart</a></li>
                                     <li><a href="checkout.html">Checkout</a></li>
                                     <li><a href="wishlist.html">Wishlist</a></li>
@@ -94,7 +101,8 @@
                                 <ul>
                                     <li><a href="product.html">Default</a></li>
                                     <li><a href="product-centered.html">Centered</a></li>
-                                    <li><a href="product-extended.html"><span>Extended Info<span class="tip tip-new">New</span></span></a></li>
+                                    <li><a href="product-extended.html"><span>Extended Info<span
+                                                    class="tip tip-new">New</span></span></a></li>
                                     <li><a href="product-gallery.html">Gallery</a></li>
                                     <li><a href="product-sticky.html">Sticky Info</a></li>
                                     <li><a href="product-sidebar.html">Boxed With Sidebar</a></li>
@@ -221,13 +229,14 @@
     <!-- Sign in / Register Modal -->
     @include('fontend.layouts.signin_register')
     <!-- End .modal -->
-    
+
     {{-- quangr cao --}}
-    @include('fontend.layouts.adv')
+    {{-- @include('fontend.layouts.adv') --}}
     {{-- END quangr cao --}}
-@include('fontend.layouts.script')
+    @include('fontend.layouts.script')
 </body>
 
 
 <!-- molla/index-1.html  22 Nov 2019 09:55:32 GMT -->
+
 </html>

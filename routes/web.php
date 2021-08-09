@@ -26,6 +26,9 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/',[IndexController::class,'home'])->name('home');
 
+// product by category
+Route::get('product-category/{slug}',[IndexController::class,'productCategory'])->name('product.category');
+
 // End fontend section
 
  
