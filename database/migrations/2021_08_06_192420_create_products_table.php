@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('cat_id');
             $table->unsignedBigInteger('child_cat_id')->nullable();
-            $table->string('photo');
+            $table->longText('photo');
             $table->float('price')->default(0);
             $table->float('offer_price')->default(0);
             $table->float('discount')->default(0);

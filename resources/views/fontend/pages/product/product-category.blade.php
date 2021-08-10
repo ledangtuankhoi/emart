@@ -74,7 +74,7 @@
                                 <div class="product-cat">
                                     <a href="#">{{ucfirst(App\Models\Brand::where('id',$item->brand_id)->value('title'))}}</a>
                                 </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">{{ucfirst($item->title)}}</a></h3><!-- End .product-title -->
+                                <h3 class="product-title"><a href="{{route('product.detail',$item->slug)}}">{{ucfirst($item->title)}}</a></h3><!-- End .product-title -->
                                 <div class="product-price">
                                     ${{number_format($item->offer_price,2)}} (<small><del class="text-danger">${{number_format($item->price,2)}}</del></small>)
                                 </div><!-- End .product-price -->

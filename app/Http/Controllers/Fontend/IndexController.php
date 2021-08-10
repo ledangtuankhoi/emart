@@ -22,7 +22,16 @@ class IndexController extends Controller
 
     public function productCategory($slug){
         $categories = Category::with(['products'])->where('slug',$slug)->first();
-        return view('fontend.pages.product-category',compact('categories'));
+        return view('fontend.pages.product.product-category',compact('categories'));
+    }
 
+    public function productDetail($slug){
+        $product = Product::with('rel_prods')->where('slug',$slug)->first();
+        // return $product;
+        if($product){
+            return view('fontend.pages.product.product-detail',compact('product'));
+        }else{
+            return 'Product detail not found';
+        }
     }
 }

@@ -29,11 +29,14 @@ Route::get('/',[IndexController::class,'home'])->name('home');
 // product by category
 Route::get('product-category/{slug}',[IndexController::class,'productCategory'])->name('product.category');
 
+
+// Product Detail
+Route::get('product-detail/{slug}',[IndexController::class,'productDetail'])->name('product.detail');
 // End fontend section
 
  
 
-// Auth::routes(["register" => false]);
+Auth::routes(["register" => false]);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

@@ -50,6 +50,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // return dd($request->all());
         $this->validate($request,[
             'title'=>'string|required',
             'summary'=>'string|nullable',

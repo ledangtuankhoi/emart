@@ -204,7 +204,7 @@
                             @endphp
                             <div class="product product-11 text-center">
                                 <figure class="product-media">
-                                    <a href="product.html">
+                                    <a href="{{route('product.detail',$item->slug)}}">
                                 <span class="product-label label-circle label-new">New</span>
                                         <img src="{{$photo[0]}}"
                                             alt="{{$item->title}}" class="product-image">
@@ -224,7 +224,7 @@
                                 </figure><!-- End .product-media -->
     
                                 <div class="product-body">
-                                    <h3 class="product-title"><a href="product.html">{{ucfirst($item->title)}}</a></h3>
+                                    <h3 class="product-title"><a href="{{route('product.detail',$item->slug)}}">{{ucfirst($item->title)}}</a></h3>
                                     <!-- End .product-title -->
                                     <div class="product-price">
                                     ${{number_format($item->offer_price,2)}} (<small><del class="text-danger">${{number_format($item->price,2)}}</del></small>)
