@@ -14,7 +14,7 @@
                                 <h1 class="intro-title">{{ $cat->title }}<br>That Suits You.</h1>
                                 <!-- End .intro-title -->
 
-                                <a href="{{route('product.category',$cat->slug)}}" class="btn btn-primary">
+                                <a href="{{ route('product.category', $cat->slug) }}" class="btn btn-primary">
                                     <span>Shop Now</span>
                                     <i class="icon-long-arrow-right"></i>
                                 </a>
@@ -27,31 +27,31 @@
         </div><!-- End .intro-slider-container -->
 
         <div class="brands-border owl-carousel owl-simple" data-toggle="owl" data-owl-options='{
-                "nav": false, 
-                "dots": false,
-                "margin": 0,
-                "loop": false,
-                "responsive": {
-                    "0": {
-                        "items":2
-                    },
-                    "420": {
-                        "items":3
-                    },
-                    "600": {
-                        "items":4
-                    },
-                    "900": {
-                        "items":5
-                    },
-                    "1024": {
-                        "items":6
-                    },
-                    "1360": {
-                        "items":7
-                    }
-                }
-            }'>
+                        "nav": false, 
+                        "dots": false,
+                        "margin": 0,
+                        "loop": false,
+                        "responsive": {
+                            "0": {
+                                "items":2
+                            },
+                            "420": {
+                                "items":3
+                            },
+                            "600": {
+                                "items":4
+                            },
+                            "900": {
+                                "items":5
+                            },
+                            "1024": {
+                                "items":6
+                            },
+                            "1360": {
+                                "items":7
+                            }
+                        }
+                    }'>
 
             @if (count($brands) > 0)
                 @foreach ($brands as $brand)
@@ -141,8 +141,8 @@
         <div class="container">
             <ul class="nav nav-pills nav-border-anim nav-big justify-content-center mb-3" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="products-new-link" data-toggle="tab" href="#products-new-tab"
-                        role="tab" aria-controls="products-new-tab" aria-selected="true">New</a>
+                    <a class="nav-link active" id="products-new-link" data-toggle="tab" href="#products-new-tab" role="tab"
+                        aria-controls="products-new-tab" aria-selected="true">New</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link  " id="products-featured-link" data-toggle="tab" href="#products-featured-tab"
@@ -161,84 +161,92 @@
 
         <div class="container-fluid">
             <div class="tab-content tab-content-carousel">
-                
+
                 {{-- New Product --}}
                 <div class="tab-pane p-0 fade show active" id="products-new-tab" role="tabpanel"
                     aria-labelledby="products-new-link">
                     <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
                         data-owl-options='{
-                            "nav": false, 
-                            "dots": true,
-                            "margin": 20,
-                            "loop": false,
-                            "responsive": {
-                                "0": {
-                                    "items":2
-                                },
-                                "480": {
-                                    "items":2
-                                },
-                                "768": {
-                                    "items":3
-                                },
-                                "992": {
-                                    "items":4
-                                },
-                                "1200": {
-                                    "items":5
-                                },
-                                "1600": {
-                                    "items":6,
-                                    "nav": true
-                                }
-                            }
-                        }'>
+                                    "nav": false, 
+                                    "dots": true,
+                                    "margin": 20,
+                                    "loop": false,
+                                    "responsive": {
+                                        "0": {
+                                            "items":2
+                                        },
+                                        "480": {
+                                            "items":2
+                                        },
+                                        "768": {
+                                            "items":3
+                                        },
+                                        "992": {
+                                            "items":4
+                                        },
+                                        "1200": {
+                                            "items":5
+                                        },
+                                        "1600": {
+                                            "items":6,
+                                            "nav": true
+                                        }
+                                    }
+                                }'>
 
-                         @php
-                             $new_products = App\Models\Product::where(['status'=>'active','condition'=>'new'])->orderBy('id','DESC')->limit('10')->get();
-                         @endphp
-                         @if (count($new_products)>0)
-                            @foreach ($new_products as $item )
-                            @php
-                             $photo = explode(',',$item->photo);
-                            @endphp
-                            <div class="product product-11 text-center">
-                                <figure class="product-media">
-                                    <a href="{{route('product.detail',$item->slug)}}">
-                                <span class="product-label label-circle label-new">New</span>
-                                        <img src="{{$photo[0]}}"
-                                            alt="{{$item->title}}" class="product-image">
+                        @php
+                            $new_products = App\Models\Product::where(['status' => 'active', 'condition' => 'new'])
+                                ->orderBy('id', 'DESC')
+                                ->limit('10')
+                                ->get();
+                        @endphp
+                        @if (count($new_products) > 0)
+                            @foreach ($new_products as $item)
+                                @php
+                                    $photo = explode(',', $item->photo);
+                                @endphp
+                                <div class="product product-11 text-center">
+                                    <figure class="product-media">
+                                        <a href="{{ route('product.detail', $item->slug) }}">
+                                            <span
+                                                class="product-label label-circle label-new {{ $item->condition != 'new' ? 'd-none' : '' }}">{{ $item->condition == 'new' ? 'New' : '' }}</span>
+
+                                            <img src="{{ $photo[0] }}" alt="{{ $item->title }}"
+                                                class="product-image">
                                             @php
-                                                if(array_key_exists('1',$photo)){
-                                                    echo '<img src="'.$photo[1].'"
-                                            alt="{{$item->title}}" class="product-image-hover">';
+                                                if (array_key_exists('1', $photo)) {
+                                                    echo '<img src="' .$photo[1] .'"  alt="{{ $item->title }}" class="product-image-hover">';
                                                 }
                                             @endphp
-                                        
-                                    </a>
-    
-                                    <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist"><span>add to wishlist</span></a>
-                                    </div><!-- End .product-action-vertical -->
-    
-                                </figure><!-- End .product-media -->
-    
-                                <div class="product-body">
-                                    <h3 class="product-title"><a href="{{route('product.detail',$item->slug)}}">{{ucfirst($item->title)}}</a></h3>
-                                    <!-- End .product-title -->
-                                    <div class="product-price">
-                                    ${{number_format($item->offer_price,2)}} (<small><del class="text-danger">${{number_format($item->price,2)}}</del></small>)
-                                    </div><!-- End .product-price -->
-                                </div><!-- End .product-body -->
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product -->
-                                
+
+                                        </a>
+
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-wishlist"><span>add to
+                                                    wishlist</span></a>
+                                        </div><!-- End .product-action-vertical -->
+
+                                    </figure><!-- End .product-media -->
+
+                                    <div class="product-body">
+                                        <h3 class="product-title"><a
+                                                href="{{ route('product.detail', $item->slug) }}">{{ ucfirst($item->title) }}</a>
+                                        </h3>
+                                        <!-- End .product-title -->
+                                        <div class="product-price">
+                                            ${{ number_format($item->offer_price, 2) }} (<small><del
+                                                    class="text-danger">${{ number_format($item->price, 2) }}</del></small>)
+                                        </div><!-- End .product-price -->
+                                    </div><!-- End .product-body -->
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                    </div><!-- End .product-action -->
+                                </div><!-- End .product -->
+
                             @endforeach
-                            @else
+                        @else
                             <p>Not Product New</p>
-                         @endif
+                        @endif
                     </div><!-- End .owl-carousel -->
                 </div><!-- .End .tab-pane -->
 
@@ -246,32 +254,32 @@
                     aria-labelledby="products-featured-link">
                     <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
                         data-owl-options='{
-                            "nav": false, 
-                            "dots": true,
-                            "margin": 20,
-                            "loop": false,
-                            "responsive": {
-                                "0": {
-                                    "items":2
-                                },
-                                "480": {
-                                    "items":2
-                                },
-                                "768": {
-                                    "items":3
-                                },
-                                "992": {
-                                    "items":4
-                                },
-                                "1200": {
-                                    "items":5
-                                },
-                                "1600": {
-                                    "items":6,
-                                    "nav": true
-                                }
-                            }
-                        }'>
+                                    "nav": false, 
+                                    "dots": true,
+                                    "margin": 20,
+                                    "loop": false,
+                                    "responsive": {
+                                        "0": {
+                                            "items":2
+                                        },
+                                        "480": {
+                                            "items":2
+                                        },
+                                        "768": {
+                                            "items":3
+                                        },
+                                        "992": {
+                                            "items":4
+                                        },
+                                        "1200": {
+                                            "items":5
+                                        },
+                                        "1600": {
+                                            "items":6,
+                                            "nav": true
+                                        }
+                                    }
+                                }'>
                         <div class="product product-11 text-center">
                             <figure class="product-media">
                                 <a href="product.html">
@@ -484,32 +492,32 @@
                 <div class="tab-pane p-0 fade" id="products-sale-tab" role="tabpanel" aria-labelledby="products-sale-link">
                     <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
                         data-owl-options='{
-                            "nav": false, 
-                            "dots": true,
-                            "margin": 20,
-                            "loop": false,
-                            "responsive": {
-                                "0": {
-                                    "items":2
-                                },
-                                "480": {
-                                    "items":2
-                                },
-                                "768": {
-                                    "items":3
-                                },
-                                "992": {
-                                    "items":4
-                                },
-                                "1200": {
-                                    "items":5
-                                },
-                                "1600": {
-                                    "items":6,
-                                    "nav": true
-                                }
-                            }
-                        }'>
+                                    "nav": false, 
+                                    "dots": true,
+                                    "margin": 20,
+                                    "loop": false,
+                                    "responsive": {
+                                        "0": {
+                                            "items":2
+                                        },
+                                        "480": {
+                                            "items":2
+                                        },
+                                        "768": {
+                                            "items":3
+                                        },
+                                        "992": {
+                                            "items":4
+                                        },
+                                        "1200": {
+                                            "items":5
+                                        },
+                                        "1600": {
+                                            "items":6,
+                                            "nav": true
+                                        }
+                                    }
+                                }'>
                         <div class="product product-11 text-center">
                             <figure class="product-media">
                                 <a href="product.html">
@@ -601,32 +609,32 @@
                 <div class="tab-pane p-0 fade" id="products-top-tab" role="tabpanel" aria-labelledby="products-top-link">
                     <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
                         data-owl-options='{
-                            "nav": false, 
-                            "dots": true,
-                            "margin": 20,
-                            "loop": false,
-                            "responsive": {
-                                "0": {
-                                    "items":2
-                                },
-                                "480": {
-                                    "items":2
-                                },
-                                "768": {
-                                    "items":3
-                                },
-                                "992": {
-                                    "items":4
-                                },
-                                "1200": {
-                                    "items":5
-                                },
-                                "1600": {
-                                    "items":6,
-                                    "nav": true
-                                }
-                            }
-                        }'>
+                                    "nav": false, 
+                                    "dots": true,
+                                    "margin": 20,
+                                    "loop": false,
+                                    "responsive": {
+                                        "0": {
+                                            "items":2
+                                        },
+                                        "480": {
+                                            "items":2
+                                        },
+                                        "768": {
+                                            "items":3
+                                        },
+                                        "992": {
+                                            "items":4
+                                        },
+                                        "1200": {
+                                            "items":5
+                                        },
+                                        "1600": {
+                                            "items":6,
+                                            "nav": true
+                                        }
+                                    }
+                                }'>
                         <div class="product product-11 text-center">
                             <figure class="product-media">
                                 <a href="product.html">
@@ -1516,23 +1524,23 @@
                 <h2 class="title text-center">From Our Blog</h2><!-- End .title-lg text-center -->
 
                 <div class="owl-carousel owl-simple carousel-with-shadow" data-toggle="owl" data-owl-options='{
-                        "nav": false, 
-                        "dots": true,
-                        "items": 3,
-                        "margin": 20,
-                        "loop": false,
-                        "responsive": {
-                            "0": {
-                                "items":1
-                            },
-                            "600": {
-                                "items":2
-                            },
-                            "992": {
-                                "items":3
-                            }
-                        }
-                    }'>
+                                "nav": false, 
+                                "dots": true,
+                                "items": 3,
+                                "margin": 20,
+                                "loop": false,
+                                "responsive": {
+                                    "0": {
+                                        "items":1
+                                    },
+                                    "600": {
+                                        "items":2
+                                    },
+                                    "992": {
+                                        "items":3
+                                    }
+                                }
+                            }'>
                     <article class="entry entry-display">
                         <figure class="entry-media">
                             <a href="single.html">

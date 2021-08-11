@@ -26,18 +26,22 @@
 
                 <div class="toolbox-center">
                     <div class="toolbox-info">
-                        Showing <span>{{count($categories->products)}}</span> Products
+                        Showing <span>{{count($products)}}</span> Products
                     </div><!-- End .toolbox-info -->
                 </div><!-- End .toolbox-center -->
 
                 <div class="toolbox-right">
                     <div class="toolbox-sort">
-                        <label for="sortby">Sort by:</label>
+                        <label for="sortBy">Sort by:</label>
                         <div class="select-custom">
-                            <select name="sortby" id="sortby" class="form-control">
-                                <option value="popularity" selected="selected">Most Popular</option>
-                                <option value="rating">Most Rated</option>
-                                <option value="date">Date</option>
+                            <select name="sortBy" id="sortBy" class="form-control">
+                                <option  selected>Default Sort</option>
+                                <option value="priceAsc" {{old('sortBy')=='priceAsc'?'selected':''}}>Price - Lower to Higher</option>
+                                <option value="priceDesc">Price - Higher to Lower</option>
+                                <option value="titleAsc">Alphabetical Ascending</option>
+                                <option value="titleDesc">Alphabetical Descending</option>
+                                <option value="discAsc">Discount- Lower to Higher</option>
+                                <option value="discDesc">Discount- Higher to Lower</option>
                             </select>
                         </div>
                     </div><!-- End .toolbox-sort -->
@@ -46,61 +50,12 @@
 
             <div class="products">
                 <div class="row">
-                    @if(count($categories->products)>0)
-                    @foreach ($categories->products as $item)
-                    @php
-                        $photo = explode(',',$item->photo);
-                    @endphp
-                    <div class="col-6 col-md-4 col-lg-4 col-xl-3">
-                        <div class="product">
-                            <figure class="product-media">
-                                <span class="product-label label-new">{{ucfirst($item->condition)}}</span>
-                                <a href="product.html">
-                                    <img src="{{$photo[0]}}" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                </div><!-- End .product-action -->
-
-                                <div class="product-action action-icon-top">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                    <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    <a href="#" class="btn-product btn-compare" title="Compare"><span>compare</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">{{ucfirst(App\Models\Brand::where('id',$item->brand_id)->value('title'))}}</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="{{route('product.detail',$item->slug)}}">{{ucfirst($item->title)}}</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    ${{number_format($item->offer_price,2)}} (<small><del class="text-danger">${{number_format($item->price,2)}}</del></small>)
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 0 Reviews )</span>
-                                </div><!-- End .rating-container -->
-
-                                <div class="product-nav product-nav-dots">
-                                    <a href="#" style="background: #cc9966;"><span class="sr-only">Color name</span></a>
-                                    <a href="#" class="active" style="background: #ebebeb;"><span class="sr-only">Color name</span></a>
-                                </div><!-- End .product-nav -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-                    </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
-                    @endforeach
-                    @else
-                    <p>Product not found</p>
-                    @endif 
+                    @include('fontend.layouts._single-product')
                 </div><!-- End .row -->
 
-                <div class="load-more-container text-center">
-                    <a href="#" class="btn btn-outline-darker btn-load-more">More Products <i class="icon-refresh"></i></a>
-                </div><!-- End .load-more-container -->
+                 <div class="ajax-load text-center" style="display: none">
+                     <img src="{{asset('fontend/giphy-unscreen.gif')}}"style="width: 6% !important;">
+                 </div>
             </div><!-- End .products -->
 
             <div class="sidebar-filter-overlay"></div><!-- End .sidebar-filter-overlay -->
@@ -116,7 +71,6 @@
                                 Category
                             </a>
                         </h3><!-- End .widget-title -->
-
                         <div class="collapse show" id="widget-1">
                             <div class="widget-body">
                                 <div class="filter-items filter-items-count">
@@ -356,4 +310,15 @@
         </div><!-- End .container -->
     </div><!-- End .page-content -->
 </main><!-- End .main -->
+@endsection
+
+@section('scripts')
+    <script>
+        $('#sortBy').change(function (e) { 
+            e.preventDefault();
+            var sort = $('#sortBy').val(); 
+            // alert('{{$route}}')
+            window.location="{{url(''.$route.'')}}/{{$categories->slug}}?sort="+sort;
+        });
+    </script>
 @endsection

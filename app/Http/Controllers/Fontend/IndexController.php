@@ -27,9 +27,34 @@ class IndexController extends Controller
         return view('fontend.index',compact(['banners','brands','categories']));
     }
 
-    public function productCategory($slug){
+    public function productCategory(Request $request,$slug){
         $categories = Category::with(['products'])->where('slug',$slug)->first();
-        return view('fontend.pages.product.product-category',compact('categories'));
+        $sort = '';
+        if($request->sort != null){
+            $sort = $request->sort;
+        }
+        if($categories == null){
+            return view('errors.404');
+        }else{
+            if($sort=='priceAsc'){
+                $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderby('offer_price','asc')->paginate(12);
+            }elseif($sort=='priceDesc'){
+                $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderby('offer_price','DESC')->paginate(12);
+            }elseif($sort=='titleAsc'){
+                $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderby('title','Asc')->paginate(12);
+            }elseif($sort=='titleDesc'){
+                $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderby('title','DESC')->paginate(12);
+            }elseif($sort=='discAsc'){
+                $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderby('price','ASC')->paginate(12);
+            }elseif($sort=='discAsc'){
+                $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderby('price','DESC')->paginate(12);
+            }else{
+                $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->paginate(12);
+            }
+        }
+
+        $route = 'product-category';
+        return view('fontend.pages.product.product-category',compact(['categories','route','products']));
     }
 
     public function productDetail($slug){

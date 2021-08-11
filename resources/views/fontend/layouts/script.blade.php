@@ -12,3 +12,4 @@
     <!-- Main JS File -->
     <script src="{{asset('fontend/assets/js/main.js')}}"></script>
     <script src="{{asset('fontend/assets/js/demos/demo-2.js')}}"></script>
+    @yield('scripts')

@@ -14,7 +14,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    @include('backend.notification')
+                    @include('backend.layouts.notification')
                 </div>
                 <div class="col-md-12">
                     <div class="card">

@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->mediumText('summary');
+            $table->mediumText('summary')->nullable();
             $table->longText('description')->nullable();
             $table->integer('stock')->default(0);
             $table->unsignedBigInteger('brand_id');
