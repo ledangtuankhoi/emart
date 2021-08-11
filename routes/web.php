@@ -25,6 +25,17 @@ use Illuminate\Support\Facades\Auth;
 // fontend section
 // authentication
 Route::get('user/auth',[IndexController::class,'userAuth'])->name('user.auth');
+Route::get('user/info',[IndexController::class,'userInfo'])->name('user.info');
+Route::get('user/logout',[IndexController::class,'userLogout'])->name('user.logout');
+
+Route::post('user/login',[IndexController::class,'loginSumit'])->name('login.submit');
+Route::post('user/regiter',[IndexController::class,'regiterSumit'])->name('regiter.submit');
+
+
+
+
+
+
 
 // home
 Route::get('/',[IndexController::class,'home'])->name('home');
@@ -41,7 +52,7 @@ Route::get('product-detail/{slug}',[IndexController::class,'productDetail'])->na
 
 Auth::routes(["register" => false]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // admin dashboard
 Route::group(['prefix' => 'admin', 'middelware' => 'auth','admin'], function () {

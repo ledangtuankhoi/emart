@@ -12,6 +12,16 @@
     <div class="page-wrapper">
         @include('fontend.layouts.header')
 
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    @include('backend.layouts.notification')
+                </div>
+            </div>
+        </div>
+
+
         @yield('content')
         @include('fontend.layouts.footer')
     </div><!-- End .page-wrapper -->
@@ -233,7 +243,7 @@
     {{-- quangr cao --}}
     {{-- @include('fontend.layouts.adv') --}}
     {{-- END quangr cao --}}
-    
+
     @include('fontend.layouts.script')
 </body>
 

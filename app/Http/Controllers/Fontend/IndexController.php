@@ -7,7 +7,14 @@ use App\Models\Banner;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class IndexController extends Controller
 {
@@ -38,5 +45,64 @@ class IndexController extends Controller
 
     public function userAuth(){
         return view('fontend.auth.auth');
+    }
+
+    public function loginSumit(Request $request){
+        // return $request->all();
+        $this->validate($request,[
+            'email'=>'required|email|exists:users,email',
+            'password'=>'required|min:4',
+        ]);
+
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password,'status'=>'active'])){
+            Session::put('user',$request->email);
+
+            if(Session::get('url.intended')){
+                return Redirect::to(Session::get('url.intended'));
+            }
+            else{ 
+                return redirect()->route('home')->with('success','Succsessfully Login ' );
+            }
+        }else{ 
+            return back()->with('error','Invalid email & password');
+        }
+    }
+    
+    public function regiterSumit(Request $request){ 
+        $this->validate($request,[
+            'full_name'=>'required|string',
+            'username'=>'nullable|string',
+            'email'=>'required|email|unique:users,email',
+            'password'=>'required|min:4|confirmed',
+        ]);
+        
+        $data = $request->all();
+        $check = $this->create($data);
+        Session::put('user',$data['email']);
+        Auth::login($check);
+        if($check){
+            return redirect()->route('home')->with('success','Register Successfully and login');
+        }else{
+            return back()->with('error','please check Your credential');
+        }
+    }
+
+    private function create(array $data){
+        return User::create([
+            'full_name'=>$data['full_name'],
+            'username'=>$data['username'],
+            'email'=>$data['email'],
+            'password'=>Hash::make($data['password']),
+        ]);
+    }
+
+    public function userLogout(){
+        Session::forget('user');
+        Auth::logout();
+        return redirect()->route('home')->with('success','Successfully Logout');
+    }
+
+    public function userInfo(){
+        return view('fontend.layouts.user_info');
     }
 }
