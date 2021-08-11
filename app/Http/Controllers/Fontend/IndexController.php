@@ -42,7 +42,7 @@ class IndexController extends Controller
                 $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderby('offer_price','DESC')->paginate(12);
             }elseif($sort=='titleAsc'){
                 $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderby('title','Asc')->paginate(12);
-            }elseif($sort=='titleDesc'){
+            }elseif($sort=='titleDesc'){ 
                 $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderby('title','DESC')->paginate(12);
             }elseif($sort=='discAsc'){
                 $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderby('price','ASC')->paginate(12);
@@ -54,6 +54,11 @@ class IndexController extends Controller
         }
 
         $route = 'product-category';
+
+        if($request->ajax()){
+            $view = view('fontend.layouts._single-product',compact('products'))->render();
+            return response()->json(['html'=>$view]);
+        }
         return view('fontend.pages.product.product-category',compact(['categories','route','products']));
     }
 

@@ -26,7 +26,15 @@
 
                 <div class="toolbox-center">
                     <div class="toolbox-info">
-                        Showing <span>{{count($products)}}</span> Products
+                        {{-- tinhs count product cos trong cate --}}
+                        @php
+                            $count = 0;
+                            foreach($categories->products as $item){
+                                if($item->status == 'active')
+                                    $count ++;
+                            }
+                        @endphp
+                        Showing <span>{{$count}}</span> Products
                     </div><!-- End .toolbox-info -->
                 </div><!-- End .toolbox-center -->
 
@@ -48,15 +56,15 @@
                 </div><!-- End .toolbox-right -->
             </div><!-- End .toolbox -->
 
-            <div class="products">
-                <div class="row">
+            <div class="products" >
+                <div class="row" id="product-data">
                     @include('fontend.layouts._single-product')
                 </div><!-- End .row -->
-
-                 <div class="ajax-load text-center" style="display: none">
-                     <img src="{{asset('fontend/giphy-unscreen.gif')}}"style="width: 6% !important;">
-                 </div>
             </div><!-- End .products -->
+            
+                             <div class="ajax-load text-center" style="display: none">
+                                 <img src="{{asset('fontend/giphy-unscreen.gif')}}"style="width: 6% !important;">
+                             </div>
 
             <div class="sidebar-filter-overlay"></div><!-- End .sidebar-filter-overlay -->
             <aside class="sidebar-shop sidebar-filter">
@@ -320,5 +328,34 @@
             // alert('{{$route}}')
             window.location="{{url(''.$route.'')}}/{{$categories->slug}}?sort="+sort;
         });
+    </script>
+    <script>
+        function loadmoreData (page) {
+            $.ajax({
+                type: "get",
+                url: "?page="+page, 
+                beforeSend:function(){
+                    $('.ajax-load').show();
+                }, 
+            })
+            .done(function(data){ 
+                if(data.html==''){ 
+                    $('.ajax-load').html('No more product availabe');
+                    return;
+                } 
+                $('.ajax-load').hide();
+                $('#product-data').append(data.html); 
+            })
+            .fail(function(){
+                alert('somthing went wrong! please try again')
+            });
+          }
+        var page = 1; 
+        $(window).scroll(function(){
+            if($(window).scrollTop()+$(window).height()+300 >= $(document).height()){
+                page ++; 
+                loadmoreData(page);
+            }
+        })
     </script>
 @endsection
