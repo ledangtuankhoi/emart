@@ -34,4 +34,9 @@ class IndexController extends Controller
             return 'Product detail not found';
         }
     }
+
+
+    public function userAuth(){
+        return view('fontend.auth.auth');
+    }
 }

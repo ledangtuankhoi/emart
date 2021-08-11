@@ -23,7 +23,10 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 // fontend section
+// authentication
+Route::get('user/auth',[IndexController::class,'userAuth'])->name('user.auth');
 
+// home
 Route::get('/',[IndexController::class,'home'])->name('home');
 
 // product by category
@@ -38,10 +41,10 @@ Route::get('product-detail/{slug}',[IndexController::class,'productDetail'])->na
 
 Auth::routes(["register" => false]);
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // admin dashboard
-Route::group(['prefix' => 'admin', 'middelware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'middelware' => 'auth','admin'], function () {
     Route::get('/', [AdminController::class, 'admin'])->name('admin');
 
     // banner section
@@ -67,3 +70,8 @@ Route::group(['prefix' => 'admin', 'middelware' => 'auth'], function () {
      Route::post('user_status',[UserController::class,'userStatus'])->name('user.status');
 });
  
+
+// admin dashboard
+Route::group(['prefix' => 'seller', 'middelware' => 'auth','seller'], function () {
+    Route::get('/', [AdminController::class, 'admin'])->name('seller');
+});
