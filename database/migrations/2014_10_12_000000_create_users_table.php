@@ -21,8 +21,22 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('photo')->nullable();
-            $table->string('phone')->nullable();
+            $table->string('phone')->nullable(); 
+
+
+            $table->string('country')->nullable();
+            $table->string('city')->nullable();
+            $table->string('postcode')->nullable();
+            $table->string('state')->nullable();
             $table->string('address')->nullable();
+
+            $table->string('scountry')->nullable();
+            $table->string('scity')->nullable();
+            $table->string('spostcode')->nullable();
+            $table->string('sstate')->nullable();
+            $table->string('saddress')->nullable();
+
+
             $table->enum('role',['admin','seller','customer'])->default('customer');
             $table->enum('status',['inactive','active'])->default('active');
             $table->rememberToken();

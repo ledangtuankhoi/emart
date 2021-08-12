@@ -1,5 +1,5 @@
-<header class="header header-2 header-intro-clearance"> 
- 
+<header class="header header-2 header-intro-clearance">
+
     <div class="header-middle">
         <div class="container">
             <div class="header-left">
@@ -30,25 +30,51 @@
             </div>
 
             <div class="header-right">
-                @auth
-                <div class="account">
-                    <a href="{{route('user.info')}}" title="My account">
-                        <div class="icon">
-                            <i class="icon-user"></i>
-                        </div>
-                        <p></p>
-                    </a>
-                </div><!-- End .compare-dropdown -->
-                    @else
+                @auth  
                     <div class="account">
-                        <a href="{{route('user.auth')}}" title="My account">
+                        <a href="{{ route('user.dashboard') }}" title="My account">
+                            <style>
+                                .image-cropper {
+                                    width: 50px;
+                                    height: 50px;
+                                    position: relative;
+                                    overflow: hidden;
+                                    border-radius: 50%;
+                                }
+
+                                .image-cropper img {
+                                    display: inline;
+                                    margin: 0 auto;
+                                    height: 100%;
+                                    width: auto;
+                                }
+
+                            </style>
+                            
+                            @if ($user->photo != null)
+                                <div class="image-cropper  text-center">
+                                    <img src="{{ $user->photo }}" class="rounded" />
+                                    <p>{{ $user->full_name }}</p>
+                                </div>
+                            @else
+                                <div class="icon text-center">
+                                    <i class="icon-user"></i>
+                                    <p>{{ $user->full_name }}</p>
+                                </div>
+                            @endif
+                            <p></p>
+                        </a>
+                    </div><!-- End .compare-dropdown -->
+                @else
+                    <div class="account">
+                        <a href="{{ route('user.auth') }}" title="My account">
                             <div class="icon">
                                 <i class="icon-user"></i>
                             </div>
-                            <p>Account</p>
+                            <p>Login</p>
                         </a>
                     </div><!-- End .compare-dropdown -->
-    
+
                 @endauth
                 <div class="wishlist">
                     <a href="wishlist.html" title="Wishlist">
@@ -61,7 +87,7 @@
                 </div><!-- End .compare-dropdown -->
 
                 <div class="dropdown cart-dropdown">
-                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                    <a href="{{route('user.order')}}" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false" data-display="static">
                         <div class="icon">
                             <i class="icon-shopping-cart"></i>
@@ -122,7 +148,7 @@
                         </div><!-- End .dropdown-cart-total -->
 
                         <div class="dropdown-cart-action">
-                            <a href="cart.html" class="btn btn-primary">View Cart</a>
+                            <a href="{{route('user.order')}}" class="btn btn-primary">View Cart</a>
                             <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i
                                     class="icon-long-arrow-right"></i></a>
                         </div><!-- End .dropdown-cart-total -->
@@ -435,7 +461,8 @@
 
                                                 <div class="banner-content banner-content-top">
                                                     <div class="banner-title text-white">Last
-                                                        <br>Chance<br><span><strong>Sale</strong></span></div>
+                                                        <br>Chance<br><span><strong>Sale</strong></span>
+                                                    </div>
                                                     <!-- End .banner-title -->
                                                 </div><!-- End .banner-content -->
                                             </a>

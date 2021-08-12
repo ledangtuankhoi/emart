@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
         <strong> {{ session('error') }} </strong>
         {{-- error --}}
         @if ($errors->any())
-            <div class="alert alert-danger">
+            <div class="alert alert-danger text-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>

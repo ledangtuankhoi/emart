@@ -23,8 +23,9 @@ class IndexController extends Controller
         $categories = Category::where(['status'=>'active','is_parent'=>1])->orderBy('id','DESC')->limit('3')->get();
         $brands = Brand::where(['status'=>'active'])->orderBy('id','DESC')->limit('10')->get();
         // dd($categories);
-
-        return view('fontend.index',compact(['banners','brands','categories']));
+        
+        $user = Auth::user();  
+        return view('fontend.index',compact(['banners','brands','categories','user']));
     }
 
     public function productCategory(Request $request,$slug){
@@ -87,10 +88,10 @@ class IndexController extends Controller
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password,'status'=>'active'])){
             Session::put('user',$request->email);
 
-            if(Session::get('url.intended')){
+            if(Session::get('url.intended')){ 
                 return Redirect::to(Session::get('url.intended'));
             }
-            else{ 
+            else{  
                 return redirect()->route('home')->with('success','Succsessfully Login ' );
             }
         }else{ 
@@ -132,7 +133,22 @@ class IndexController extends Controller
         return redirect()->route('home')->with('success','Successfully Logout');
     }
 
-    public function userInfo(){
-        return view('fontend.layouts.user_info');
+    public function userDashboard(){
+        $user = Auth::user(); 
+        return view('fontend.user.dashboard',compact(['user']));
+    }
+
+    public function userAddress (){
+        $user = Auth::user(); 
+        return view('fontend.user.address',compact(['user']));
+    }
+
+    public function userAccount (){
+        $user = Auth::user(); 
+        return view('fontend.user.account',compact(['user']));
+    }
+    public function userOrder (){
+        $user = Auth::user(); 
+        return view('fontend.user.order',compact(['user']));
     }
 }

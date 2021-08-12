@@ -24,8 +24,7 @@ use Illuminate\Support\Facades\Auth;
 */
 // fontend section
 // authentication
-Route::get('user/auth',[IndexController::class,'userAuth'])->name('user.auth');
-Route::get('user/info',[IndexController::class,'userInfo'])->name('user.info');
+Route::get('user/auth',[IndexController::class,'userAuth'])->name('user.auth'); 
 Route::get('user/logout',[IndexController::class,'userLogout'])->name('user.logout');
 
 Route::post('user/login',[IndexController::class,'loginSumit'])->name('login.submit');
@@ -55,7 +54,8 @@ Auth::routes(["register" => false]);
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // admin dashboard
-Route::group(['prefix' => 'admin', 'middelware' => 'auth','admin'], function () {
+Route::group(['prefix' => 'admin', 'middelware' => ['auth','admin']], function () {
+    // dd(auth());
     Route::get('/', [AdminController::class, 'admin'])->name('admin');
 
     // banner section
@@ -82,7 +82,17 @@ Route::group(['prefix' => 'admin', 'middelware' => 'auth','admin'], function () 
 });
  
 
-// admin dashboard
-Route::group(['prefix' => 'seller', 'middelware' => 'auth','seller'], function () {
+// seller dashboard
+Route::group(['prefix' => 'seller', 'middelware' => ['auth','seller']], function () {
     Route::get('/', [AdminController::class, 'admin'])->name('seller');
+});
+
+
+// user dashboard
+Route::group(['prefix'=>'user'],function(){
+    Route::get('/dashboard',[IndexController::class,'userDashboard'])->name('user.dashboard');
+    Route::get('/order',[IndexController::class,'userOrder'])->name('user.order');
+    Route::get('/address',[IndexController::class,'userAddress'])->name('user.address');
+    Route::get('/account-detail',[IndexController::class,'userAccount'])->name('user.account');
+    Route::get('/order',[IndexController::class,'userOrder'])->name('user.order');
 });
