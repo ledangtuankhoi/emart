@@ -1,5 +1,23 @@
-<header class="header header-2 header-intro-clearance">
+@section('styles')
+<style>
+    .image-cropper {
+        width: 50px;
+        height: 50px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+    }
 
+    .image-cropper img {
+        display: inline;
+        margin: 0 auto;
+        height: 100%;
+        width: auto;
+    }
+
+</style>
+@endsection
+<header class="header header-2 header-intro-clearance">
     <div class="header-middle">
         <div class="container">
             <div class="header-left">
@@ -33,24 +51,6 @@
                 @auth  
                     <div class="account">
                         <a href="{{ route('user.dashboard') }}" title="My account">
-                            <style>
-                                .image-cropper {
-                                    width: 50px;
-                                    height: 50px;
-                                    position: relative;
-                                    overflow: hidden;
-                                    border-radius: 50%;
-                                }
-
-                                .image-cropper img {
-                                    display: inline;
-                                    margin: 0 auto;
-                                    height: 100%;
-                                    width: auto;
-                                }
-
-                            </style>
-                            
                             @if ($user->photo != null)
                                 <div class="image-cropper  text-center">
                                     <img src="{{ $user->photo }}" class="rounded" />
