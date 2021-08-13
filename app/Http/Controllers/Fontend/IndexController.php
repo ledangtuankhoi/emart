@@ -183,6 +183,42 @@ class IndexController extends Controller
     }
 
     public function accountUpdate (Request $request, $id){
-        return $request->all();
+        $this->validate($request,[
+            'newpassword'=>'min:4|nullable',
+            'oldpassword'=>'min:4|nullable',
+            'full_name'=>'string|required',
+            'username'=>'string|required',
+            'phone'=>'numeric|required',
+            'email'=>'email|nullable',
+        ]);
+        $hashpassword = Auth::user()->password;
+        if($request->oldpassword==null && $request->newpassword==null){
+            User::where('id',$id)->update([
+                'full_name'=>$request->full_name,
+                'username'=>$request->username,
+                'phone'=>$request->phone,
+                'email'=>$request->email,
+            ]);
+            return back()->with('success','Password update successfully');
+
+        }else{
+            if(Hash::check($request->oldpassword, $hashpassword)){
+                if(!Hash::check($request->newpassword, $hashpassword)){
+                    User::where('id',$id)->update([
+                        'full_name'=>$request->full_name,
+                        'username'=>$request->username,
+                        'phone'=>$request->phone,
+                        'email'=>$request->email,
+                        'password'=>Hash::make($request->newpassword)
+                    ]);
+                    return back()->with('success','Password update successfully');
+                }else{
+                    return back()->with('error','new Password can same old password');
+                    
+                }
+            }else{
+                return back()->with('error','Password does not match');
+            }
+        }
     }
 }

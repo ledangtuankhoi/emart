@@ -2,7 +2,7 @@
 @section('content')
 
 <main class="main">
-    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+    <div class="page-header text-center" style="background-image: url('{{asset('fontend/assets/images/page-header-bg.jpg')}}')"> 
         <div class="container"> 
             <h1 class="page-title">{{ucfirst($user->full_name)}}<span>{{ucfirst($user->role)}}</span></h1>
         </div><!-- End .container -->
@@ -33,25 +33,40 @@
                                         <div class="col-sm-6">
                                             <label>Full Name </label>
                                             <input type="text" class="form-control"  placeholder="{{$user->full_name}}" name="full_name" value="{{$user->full_name}}"  required>
+                                            @error('full_name')
+                                                <p class="text-danger">{{$message}}</p>
+                                            @enderror
                                         </div><!-- End .col-sm-6 -->
 
                                         <div class="col-sm-6">
                                             <label>User Name *</label>
                                             <input type="text" class="form-control"  placeholder="{{$user->username}}" name="username" value="{{$user->username}}" required>
+                                            @error('username')
+                                                <p class="text-danger">{{$message}}</p>
+                                            @enderror
                                         </div><!-- End .col-sm-6 -->
                                     </div><!-- End .row -->
  
                                     <label>Email address *</label>
                                     <input type="email" class="form-control"  placeholder="{{$user->email}}" name="email" value="{{$user->email}}" required>
+                                    @error('email')
+                                                <p class="text-danger">{{$message}}</p>
+                                            @enderror
  
                                     <label>Phone </label>
-                                    <input type="phone" class="form-control"  placeholder="{{$user->phone}}" name="phone" required>
+                                    <input type="phone" class="form-control"  placeholder="{{$user->phone}}" name="phone" value="{{$user->phone}}" required>
+                                    @error('phone')
+                                                <p class="text-danger">{{$message}}</p>
+                                            @enderror
  
                                     <label>Current password (leave blank to leave unchanged)</label>
                                     <input type="password" class="form-control" name="oldpassword">
 
                                     <label>New password (leave blank to leave unchanged)</label>
                                     <input type="password" class="form-control" name="newpassword">
+                                    @error('newpassword')
+                                                <p class="text-danger">{{$message}}</p>
+                                            @enderror
  
 
                                     <button type="submit" class="btn btn-outline-primary-2">

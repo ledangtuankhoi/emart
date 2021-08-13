@@ -4,7 +4,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 @endphp
 @if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert">
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert" id="alert">
         <strong> {{ session('success') }} </strong>
         Create item
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
     </div>
 
 @elseif (session('error'))
-    <div class="alert alert-error alert-dismissible fade show" role="alert" id="alert">
+    <div class="alert alert-error alert-dismissible fade show text-center" role="alert" id="alert">
         <strong> {{ session('error') }} </strong>
         {{-- error --}}
         @if ($errors->any())

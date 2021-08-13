@@ -2,7 +2,7 @@
 @section('content')
 
     <main class="main">
-        <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+    <div class="page-header text-center" style="background-image: url('{{asset('fontend/assets/images/page-header-bg.jpg')}}')">
             <div class="container">
                 <h1 class="page-title">{{ ucfirst($user->full_name) }}<span>{{ ucfirst($user->role) }}</span></h1>
             </div><!-- End .container -->
@@ -66,7 +66,7 @@
                                                                             <input type="text" name="address" id="address"
                                                                                 class="form-control " placeholder="address"
                                                                                 aria-describedby="address"
-                                                                                style="border-radius: 20px" value="{{$user->address}}">
+                                                                                style="border-radius: 20px" value="{{$user->address}}" required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="" class="text-capitalize">
@@ -74,7 +74,7 @@
                                                                             <input type="text" name="state" id="state"
                                                                                 class="form-control " placeholder="state"
                                                                                 aria-describedby="address"
-                                                                                style="border-radius: 20px" value="{{$user->state}}">
+                                                                                style="border-radius: 20px" value="{{$user->state}}" required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="" class="text-capitalize">
@@ -82,7 +82,7 @@
                                                                             <input type="text" name="country" id="country"
                                                                                 class="form-control " placeholder="country"
                                                                                 aria-describedby="address"
-                                                                                style="border-radius: 20px" value="{{$user->country}}">
+                                                                                style="border-radius: 20px" value="{{$user->country}}" required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="" class="text-capitalize">
@@ -90,10 +90,10 @@
                                                                             <input type="text" name="city" id="city"
                                                                                 class="form-control " placeholder="city"
                                                                                 aria-describedby="address"
-                                                                                style="border-radius: 20px" value="{{$user->city}}">
+                                                                                style="border-radius: 20px" value="{{$user->city}}" required>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label for="" class="text-capitalize">
+                                                                            <label for="" class="text-capitalize" required>
                                                                                 postcode</label>
                                                                             <input type="number" name="postcode" id="postcode"
                                                                                 class="form-control " placeholder="postcode"
@@ -152,7 +152,7 @@
                                                                             <input type="text" name="saddress" id="saddress"
                                                                                 class="form-control " placeholder="saddress"
                                                                                 aria-describedby="saddress"
-                                                                                style="border-radius: 20px" value="{{$user->saddress}}">
+                                                                                style="border-radius: 20px" value="{{$user->saddress}}" required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="" class="text-capitalize">
@@ -160,7 +160,7 @@
                                                                             <input type="text" name="sstate" id="sstate"
                                                                                 class="form-control " placeholder="sstate"
                                                                                 aria-describedby="address"
-                                                                                style="border-radius: 20px" value="{{$user->sstate}}">
+                                                                                style="border-radius: 20px" value="{{$user->sstate}}"required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="" class="text-capitalize">
@@ -168,7 +168,7 @@
                                                                             <input type="text" name="scountry" id="scountry"
                                                                                 class="form-control " placeholder="scountry"
                                                                                 aria-describedby="saddress"
-                                                                                style="border-radius: 20px" value="{{$user->scountry}}">
+                                                                                style="border-radius: 20px" value="{{$user->scountry}}" required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="" class="text-capitalize">
@@ -176,7 +176,7 @@
                                                                             <input type="text" name="scity" id="scity"
                                                                                 class="form-control " placeholder="scity"
                                                                                 aria-describedby="address"
-                                                                                style="border-radius: 20px" value="{{$user->scity}}">
+                                                                                style="border-radius: 20px" value="{{$user->scity}}" required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="" class="text-capitalize">
@@ -184,7 +184,7 @@
                                                                             <input type="number" name="spostcode" id="spostcode"
                                                                                 class="form-control " placeholder="spostcode"
                                                                                 aria-describedby="address"
-                                                                                style="border-radius: 20px" value="{{$user->spostcode}}">
+                                                                                style="border-radius: 20px" value="{{$user->spostcode}}" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
