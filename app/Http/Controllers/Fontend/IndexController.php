@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Laravel\Ui\Presets\React;
 
 class IndexController extends Controller
 {
@@ -150,5 +151,9 @@ class IndexController extends Controller
     public function userOrder (){
         $user = Auth::user(); 
         return view('fontend.user.order',compact(['user']));
+    }
+
+    public function billingAddress(Request $request, $id){
+        return $id; 
     }
 }
