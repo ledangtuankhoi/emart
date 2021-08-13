@@ -33,14 +33,12 @@
                                             <div class="card card-dashboard">
                                                 <div class="card-body">
                                                     <h3 class="card-title">Billing Address</h3><!-- End .card-title -->
-
-                                                    <p>{{ $user->username }}<br>
-                                                        User Company<br>
-                                                        {{ ucfirst($user->full_name) }}<br>
-                                                        {{ ucfirst($user->address) }}<br>
-                                                        {{ ucfirst($user->phonr) }}<br>
-                                                        {{ ucfirst($user->email) }}<br>
-                                                    </p>
+                                                    <p>{{ucwords($user->country )}}<br>
+                                                        {{ucwords($user->state)}},
+                                                        {{ucwords($user->city)}}<br>
+                                                        {{ucwords($user->country)}}<br>
+                                                        {{ $user->postcode}}<br>
+                                                         </p>
                                                     <!-- Button trigger modal -->
                                                     <button type="button" class="btn btn-primary" data-toggle="modal"
                                                         data-target="#editAddress">
@@ -68,23 +66,7 @@
                                                                             <input type="text" name="address" id="address"
                                                                                 class="form-control " placeholder="address"
                                                                                 aria-describedby="address"
-                                                                                style="border-radius: 20px">
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label for="" class="text-capitalize">
-                                                                                country</label>
-                                                                            <input type="text" name="country" id="country"
-                                                                                class="form-control " placeholder="country"
-                                                                                aria-describedby="address"
-                                                                                style="border-radius: 20px">
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label for="" class="text-capitalize">
-                                                                                postcode</label>
-                                                                            <input type="text" name="postcode" id="postcode"
-                                                                                class="form-control " placeholder="postcode"
-                                                                                aria-describedby="address"
-                                                                                style="border-radius: 20px">
+                                                                                style="border-radius: 20px" value="{{$user->address}}">
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="" class="text-capitalize">
@@ -92,7 +74,15 @@
                                                                             <input type="text" name="state" id="state"
                                                                                 class="form-control " placeholder="state"
                                                                                 aria-describedby="address"
-                                                                                style="border-radius: 20px">
+                                                                                style="border-radius: 20px" value="{{$user->state}}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="" class="text-capitalize">
+                                                                                country</label>
+                                                                            <input type="text" name="country" id="country"
+                                                                                class="form-control " placeholder="country"
+                                                                                aria-describedby="address"
+                                                                                style="border-radius: 20px" value="{{$user->country}}">
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="" class="text-capitalize">
@@ -100,7 +90,15 @@
                                                                             <input type="text" name="city" id="city"
                                                                                 class="form-control " placeholder="city"
                                                                                 aria-describedby="address"
-                                                                                style="border-radius: 20px">
+                                                                                style="border-radius: 20px" value="{{$user->city}}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="" class="text-capitalize">
+                                                                                postcode</label>
+                                                                            <input type="number" name="postcode" id="postcode"
+                                                                                class="form-control " placeholder="postcode"
+                                                                                aria-describedby="address"
+                                                                                style="border-radius: 20px" value="{{$user->postcode}}">
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -121,10 +119,13 @@
                                             <div class="card card-dashboard">
                                                 <div class="card-body">
                                                     <h3 class="card-title">Shipping Address</h3><!-- End .card-title -->
-
-                                                    <p>You have not set up this type of address yet.<br> 
-                                                    </p>
-                                                    <!-- Button trigger modal -->
+                                                    <p>{{ucwords($user->scountry )}}<br>
+                                                        {{ucwords($user->sstate)}},
+                                                        {{ucwords($user->scity)}}<br>
+                                                        {{ucwords($user->scountry)}}<br>
+                                                        {{ $user->spostcode}}<br>
+                                                         </p>
+                                                     <!-- Button trigger modal -->
                                                     <button type="button" class="btn btn-primary" data-toggle="modal"
                                                         data-target="#editSAddress">
                                                         Edit
@@ -142,53 +143,54 @@
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
                                                                 </div>
-                                                                <form action="">
+                                                                <form action="{{route('shiping.address',$user->id)}}" method="POST">
+                                                                    @csrf
                                                                     <div class="modal-body px-2">
                                                                         <div class="form-group">
                                                                             <label for="" class="text-capitalize">
                                                                                 address</label>
-                                                                            <input type="text" name="saddress" id="address"
-                                                                                class="form-control " placeholder="address"
-                                                                                aria-describedby="address"
-                                                                                style="border-radius: 20px">
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label for="" class="text-capitalize">
-                                                                                country</label>
-                                                                            <input type="text" name="scountry" id="country"
-                                                                                class="form-control " placeholder="country"
-                                                                                aria-describedby="address"
-                                                                                style="border-radius: 20px">
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label for="" class="text-capitalize">
-                                                                                postcode</label>
-                                                                            <input type="text" name="spostcode" id="postcode"
-                                                                                class="form-control " placeholder="postcode"
-                                                                                aria-describedby="address"
-                                                                                style="border-radius: 20px">
+                                                                            <input type="text" name="saddress" id="saddress"
+                                                                                class="form-control " placeholder="saddress"
+                                                                                aria-describedby="saddress"
+                                                                                style="border-radius: 20px" value="{{$user->saddress}}">
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="" class="text-capitalize">
                                                                                 state</label>
-                                                                            <input type="text" name="sstate" id="state"
-                                                                                class="form-control " placeholder="state"
+                                                                            <input type="text" name="sstate" id="sstate"
+                                                                                class="form-control " placeholder="sstate"
                                                                                 aria-describedby="address"
-                                                                                style="border-radius: 20px">
+                                                                                style="border-radius: 20px" value="{{$user->sstate}}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="" class="text-capitalize">
+                                                                                country</label>
+                                                                            <input type="text" name="scountry" id="scountry"
+                                                                                class="form-control " placeholder="scountry"
+                                                                                aria-describedby="saddress"
+                                                                                style="border-radius: 20px" value="{{$user->scountry}}">
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="" class="text-capitalize">
                                                                                 city</label>
-                                                                            <input type="text" name="scity" id="city"
-                                                                                class="form-control " placeholder="city"
+                                                                            <input type="text" name="scity" id="scity"
+                                                                                class="form-control " placeholder="scity"
                                                                                 aria-describedby="address"
-                                                                                style="border-radius: 20px">
+                                                                                style="border-radius: 20px" value="{{$user->scity}}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="" class="text-capitalize">
+                                                                                postcode</label>
+                                                                            <input type="number" name="spostcode" id="spostcode"
+                                                                                class="form-control " placeholder="spostcode"
+                                                                                aria-describedby="address"
+                                                                                style="border-radius: 20px" value="{{$user->spostcode}}">
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary"
                                                                             data-dismiss="modal">Close</button>
-                                                                        <button type="button" class="btn btn-primary">Save
+                                                                        <button type="submit" class="btn btn-primary">Save
                                                                             changes</button>
                                                                     </div>
                                                                 </form>

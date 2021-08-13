@@ -27,36 +27,32 @@
                         <div class="tab-content"> 
 
                             <div class="tab-pane fade show active" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
-                                <form action="#">
+                                <form action="{{route('account.update',$user->id)}}" method="POST">
+                                    @csrf
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label>Full Name </label>
-                                            <input type="text" class="form-control"  placeholder="{{$user->full_name}}" name="full_name"  required>
+                                            <input type="text" class="form-control"  placeholder="{{$user->full_name}}" name="full_name" value="{{$user->full_name}}"  required>
                                         </div><!-- End .col-sm-6 -->
 
                                         <div class="col-sm-6">
                                             <label>User Name *</label>
-                                            <input type="text" class="form-control"  placeholder="{{$user->username}}" name="username" required>
+                                            <input type="text" class="form-control"  placeholder="{{$user->username}}" name="username" value="{{$user->username}}" required>
                                         </div><!-- End .col-sm-6 -->
                                     </div><!-- End .row -->
  
                                     <label>Email address *</label>
-                                    <input type="email" class="form-control"  placeholder="{{$user->email}}" name="email" required>
-
-                                    <label>Address</label>
-                                    <input type="text" class="form-control"  placeholder="{{$user->address}}" name="address" required>
-
+                                    <input type="email" class="form-control"  placeholder="{{$user->email}}" name="email" value="{{$user->email}}" required>
+ 
                                     <label>Phone </label>
-                                    <input type="text" class="form-control"  placeholder="{{$user->phone}}" name="phone" required>
+                                    <input type="phone" class="form-control"  placeholder="{{$user->phone}}" name="phone" required>
  
                                     <label>Current password (leave blank to leave unchanged)</label>
-                                    <input type="password" class="form-control">
+                                    <input type="password" class="form-control" name="oldpassword">
 
                                     <label>New password (leave blank to leave unchanged)</label>
-                                    <input type="password" class="form-control">
-
-                                    <label>Confirm new password</label>
-                                    <input type="password" class="form-control mb-2">
+                                    <input type="password" class="form-control" name="newpassword">
+ 
 
                                     <button type="submit" class="btn btn-outline-primary-2">
                                         <span>SAVE CHANGES</span>

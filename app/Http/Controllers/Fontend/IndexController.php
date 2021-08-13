@@ -154,6 +154,35 @@ class IndexController extends Controller
     }
 
     public function billingAddress(Request $request, $id){
-        return $id; 
+        $user = User::where('id',$id)->update([
+            'country'=>$request->country,
+            'city'=>$request->city,
+            'postcode'=>$request->postcode,
+            'state'=>$request->state,
+            'address'=>$request->address,
+        ]);
+        if($user){
+            return back()->with('success','Successfully update address ');
+        }else{
+            return back()->with('error','update error');
+        } 
+    }
+    public function shipingAddress(Request $request, $id){
+        $user = User::where('id',$id)->update([
+            'scountry'=>$request->scountry,
+            'scity'=>$request->scity,
+            'spostcode'=>$request->spostcode,
+            'sstate'=>$request->sstate,
+            'saddress'=>$request->saddress,
+        ]);
+        if($user){
+            return back()->with('success','Successfully update ship address ');
+        }else{
+            return back()->with('error','update error');
+        } 
+    }
+
+    public function accountUpdate (Request $request, $id){
+        return $request->all();
     }
 }
