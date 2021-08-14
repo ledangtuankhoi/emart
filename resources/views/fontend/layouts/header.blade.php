@@ -47,21 +47,21 @@
                 </div><!-- End .header-search -->
             </div>
 
-            <div class="header-right">
+            <div class="header-right"> 
                 @auth  
                     <div class="account">
                         <a href="{{ route('user.dashboard') }}" title="My account">
-                            @if ($user->photo != null)
-                                <div class="image-cropper  text-center">
-                                    <img src="{{ $user->photo }}" class="rounded" />
-                                    <p>{{ $user->full_name }}</p>
-                                </div>
+                            @if (auth()->user()->photo)
+                            <div class="image-cropper  text-center">
+                                <img src="{{ auth()->user()->photo}}" class="rounded" />
+                                <p>{{auth()->user()->full_name }}</p>
+                            </div>
                             @else
-                                <div class="icon text-center">
-                                    <i class="icon-user"></i>
-                                    <p>{{ $user->full_name }}</p>
-                                </div>
-                            @endif
+                            <div class="icon text-center">
+                                <i class="icon-user"></i>
+                                <p>{{ auth()->user()->full_name }}</p>
+                            </div>
+                            @endif 
                             <p></p>
                         </a>
                     </div><!-- End .compare-dropdown -->

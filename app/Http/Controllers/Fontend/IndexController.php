@@ -200,7 +200,6 @@ class IndexController extends Controller
                 'email'=>$request->email,
             ]);
             return back()->with('success','Password update successfully');
-
         }else{
             if(Hash::check($request->oldpassword, $hashpassword)){
                 if(!Hash::check($request->newpassword, $hashpassword)){
