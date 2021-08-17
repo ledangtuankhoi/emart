@@ -21,10 +21,7 @@ class CategoryController extends Controller
     }
 
     public function categoryStatus(Request $request)
-    {
-        dd("status",$request->all());
-        // return dd($request);
-        dd($request);
+    { 
         if ($request->mode == true) {
             DB::table('categories')->where('id', $request->id)->update(['status' => 'active']);
         } else {

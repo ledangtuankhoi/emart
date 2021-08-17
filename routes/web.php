@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\Fontend\CartController;
 use App\Http\Controllers\Fontend\IndexController;
 use App\Http\Controllers\ProductController;
@@ -48,6 +49,7 @@ Route::get('product-category/{slug}',[IndexController::class,'productCategory'])
 Route::get('product-detail/{slug}',[IndexController::class,'productDetail'])->name('product.detail');
 
 // cart add
+Route::get('cart/',[CartController::class,'cart'])->name('cart');
 Route::post('cart/store',[CartController::class,'cartStore'])->name('cart.store');
 Route::post('cart/delete',[CartController::class,'cartDelete'])->name('cart.delete');
 // End fontend section
@@ -64,26 +66,31 @@ Route::group(['prefix' => 'admin', 'middelware' => ['auth','admin']], function (
     Route::get('/', [AdminController::class, 'admin'])->name('admin');
 
     // banner section
-    Route::resource('banner', BannerController::class);
+    Route::resource('/banner', BannerController::class);
     Route::post('banner_status',[BannerController::class,'bannerStatus'])->name('banner.status');
     
      // Category section
-     Route::resource('category', CategoryController::class);
+     Route::resource('/category', CategoryController::class);
      Route::post('category/category_status',[CategoryController::class,'categoryStatus'])->name("category.status");
 
      Route::post('category/{id}/child',[CategoryController::class,'getChildByParentID']);
 
      // Brand section
-     Route::resource('brand', BrandController::class);
+     Route::resource('/brand', BrandController::class);
      Route::post('brand_status',[BrandController::class,'brandStatus'])->name('brand.status');
      
      // Product section
-     Route::resource('product', ProductController::class);
+     Route::resource('/product', ProductController::class);
      Route::post('product_status',[ProductController::class,'productStatus'])->name('product.status');
      
      // user section
-     Route::resource('user', UserController::class);
+     Route::resource('/user', UserController::class);
      Route::post('user_status',[UserController::class,'userStatus'])->name('user.status');
+
+     
+     // coupon section
+     Route::resource('/coupon', CouponController::class);
+     Route::post('coupon_status',[CouponController::class,'couponStatus'])->name('coupon.status');
 });
  
 

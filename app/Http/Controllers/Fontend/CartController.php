@@ -11,6 +11,10 @@ use phpDocumentor\Reflection\Types\Null_;
 
 class CartController extends Controller
 {
+
+    public function cart(){
+        return view('fontend.pages.cart.index');
+    }
     public function cartStore(Request $request){
         $product_id = $request->input('product_id');
         $product_qty = $request->input('product_qty');

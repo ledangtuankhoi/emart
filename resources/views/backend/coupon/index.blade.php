@@ -16,8 +16,8 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <div>
-                                        <h4 class="card-title ">Category Table 
-                                            <a class="btn btn-outline-success" href="{{route('category.create')}}" role="button">
+                                        <h4 class="card-title ">Coupon Table 
+                                            <a class="btn btn-outline-success" href="{{route('coupon.create')}}" role="button">
                                                 <span class="material-icons mx-1">
                                                     add_circle_outline
                                                     </span>
@@ -30,7 +30,7 @@
 
 
                                 <div>
-                                    <p>Total anner:{{ App\Models\Category::count() }}</p>
+                                    <p>Total anner:{{ App\Models\Coupon::count() }}</p>
                                 </div>
                             </div>
                         </div>
@@ -39,20 +39,17 @@
                                 <table class="table">
                                     <thead class=" text-primary">
                                         <th>
-                                            ID
+                                            S.N
                                         </th>
                                         <th>
-                                            Title
+                                            Code
                                         </th>
                                         <th>
-                                            photo
+                                            Type
                                         </th>
                                         <th>
-                                            Is parent
-                                        </th>
-                                        <th>
-                                            Parents
-                                        </th>
+                                            Coupon Value
+                                        </th> 
                                         <th>
                                             Status
                                         </th>
@@ -61,31 +58,28 @@
                                         </th>
                                     </thead>
                                     <tbody>
-                                        @foreach ($categories as $item)
+                                        @foreach ($coupons as $item)
                                             <tr>
                                                 <td>
                                                     {{ $loop->iteration }}
                                                 </td>
                                                 <td>
-                                                    {{ $item->title }}
-                                                </td>
-                                                <td class="m-auto">
-                                                    <img src="{{ $item->photo }}" alt="" height="60">
-                                                </td>
+                                                    {{ $item->code }}
+                                                </td> 
                                                 <td>
                                                     @php
-                                                        if ($item->is_parent === 1) {
-                                                            echo "<p class='border border-info rounded text-center text-info mx-1'>Yes</p>";
+                                                        if ($item->type =='fixed') {
+                                                            echo "<p class='border border-info rounded text-center text-info mx-1'>Fixed</p>";
                                                         } else{
-                                                            echo "<p class='border border-danger  rounded text-center  text-danger mx-1'>No</p>";
+                                                            echo "<p class='border border-danger  rounded text-center  text-danger mx-1'>Percent</p>";
                                                         }
                                                     @endphp
                                                 </td>
-                                                <td>
-                                                    {{ App\Models\Category::where('id',$item->parent_id)->value('title') }}
+                                                <td >
+                                                    <p class="text-center">{{ $item->value}}</p>
                                                 </td>
                                                 <td>
-                                                    <input name="toggle" value="{{ $item->id }}" class="toggle-tow"
+                                                    <input name="toggle"  value="{{ $item->id }}" class="toggle-tow"
                                                         type="checkbox" data-toggle="toggle" data-on="Active"
                                                         data-off="InActive" data-onstyle="success" data-offstyle="danger"
                                                         data-size="small"
@@ -93,12 +87,12 @@
 
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('category.edit', $item->id) }}"
+                                                    <a href="{{ route('coupon.edit', $item->id) }}"
                                                         data-toggle="tooltip" title="Edit"
                                                         class=" float-left btn btn-sm btn-outline-warning">
                                                         <span class="material-icons">edit</span>
                                                     </a>
-                                                    <form action="{{ route('category.destroy', $item->id) }}"
+                                                    <form action="{{ route('coupon.destroy', $item->id) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('delete')
@@ -162,8 +156,9 @@
                 var mode = $(this).prop('checked');
                 var id = $(this).val();
                 // alert(mode);
+                var url = "{{route('coupon.status')}}";
                 $.ajax({
-                    URL:"{{route('category.status')}}",  
+                    URL:url,  
                     type:"POST",
                     data:{
                         _token:'{{csrf_token()}}',
@@ -171,7 +166,10 @@
                         mode:mode,
                     },
                     success:function(response){
-                        console.log(response);
+                        console.log("response",response);
+                    },
+                    error:function(err){
+                        console.log("error",err);
                     }
                 })
             });

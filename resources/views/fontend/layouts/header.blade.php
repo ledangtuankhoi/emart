@@ -105,7 +105,7 @@
                             <div class="product">
                                 <div class="product-cart-details">
                                     <h4 class="product-title">
-                                        <a href="product.html">{{ $item->name }}</a>
+                                        <a href="{{route('product.detail',$item->model->slug)}}">{{ $item->name }}</a>
                                     </h4>
 
                                     <span class="cart-product-info">
@@ -133,7 +133,7 @@
                     </div><!-- End .dropdown-cart-total -->
 
                     <div class="dropdown-cart-action">
-                        <a href="{{ route('user.order') }}" class="btn btn-primary">View Cart</a>
+                        <a href="{{ route('cart') }}" class="btn btn-primary">View Cart</a>
                         <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i
                                 class="icon-long-arrow-right"></i></a>
                     </div><!-- End .dropdown-cart-total -->

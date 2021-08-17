@@ -80,6 +80,18 @@
                 </div>
             </li>
             <li class="nav-item ">
+                <div class="show dropend">
+                    <a class="nav-link " href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <i class="material-icons">groups</i>Coupon Management
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="">
+                        <a class="dropdown-item" href="{{route('coupon.index')}}">All Coupons</a>
+                        <a class="dropdown-item" href="{{route('coupon.create')}}">Add Coupon</a>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item ">
                 <a class="nav-link" href="#">
                     <i class="material-icons">library_books</i>
                     <p>Product Management</p>
