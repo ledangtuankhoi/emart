@@ -29,4 +29,8 @@ class Product extends Model
         return $this->hasMany('App\Models\Product','cat_id','cat_id')->where('status','active')->limit(2);
 
     }
+
+    public static function getProductByCart($id){
+        return self::where('id',$id)->get()->toArray();
+    }
 }

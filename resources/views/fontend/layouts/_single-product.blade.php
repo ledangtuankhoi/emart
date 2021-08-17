@@ -12,12 +12,15 @@
                     </a>
 
                     <div class="product-action-vertical">
-                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
-                                wishlist</span></a>
+                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable">
+                            <span>add towishlist</span>
+                        </a>
                     </div><!-- End .product-action -->
 
                     <div class="product-action action-icon-top">
-                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                        <a href="#" class="btn-product add-to-cart" data-quatity="1"
+                            data-product-id="{{ $item->id }}" id="add-to-cart-{{ $item->id }}"><i
+                                class="fa fa-cart-plus"></i></a>
                         <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick
                                 view</span></a>
                         <a href="#" class="btn-product btn-compare" title="Compare"><span>compare</span></a>
@@ -52,3 +55,51 @@
         </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
     @endforeach
 @endif
+
+
+@section('scripts')
+
+    <script>
+        $(document).on('click', '.add-to-cart', function(e) {
+            e.preventDefault();
+            var product_id = $(this).data('product-id');
+            var product_qty = $(this).data('quatity');
+
+            var path = "{{ route('cart.store') }}";
+            var token = "{{ csrf_token() }}"
+
+            $.ajax({
+                type: "POST",
+                url: path,
+                dataType: "JSON",
+                data: {
+                    product_id: product_id,
+                    product_qty: product_qty,
+                    _token: token,
+                },
+                beforeSend: function() {
+                    $('#add-to-cart-' + product_id).html(
+                        "<i class='fas fa-spinner fa-spin'></i><p>Loading...</p>");
+                },
+                complete: function() {
+                    $('#add-to-cart-' + product_id).html("<i class='fa-cart-plus'></i>");
+                },
+                success: function(data) { 
+                    $('body #header').html(data['header_render']);
+                    $('#cart-count').html(data['cart_count']);
+                    if (data['status']) {
+                        swal({
+                            title: "Good job!",
+                            text: data['message'],
+                            icon: "success",
+                            button: "OK",
+                        });
+                    }
+                },
+                error:function (err){
+                    console.log(err);
+                }
+            });
+        });
+    </script>
+@endsection

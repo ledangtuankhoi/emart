@@ -9,6 +9,8 @@
     <script src="{{asset('fontend/assets/js/jquery.plugin.min.js')}}"></script>
     <script src="{{asset('fontend/assets/js/jquery.magnific-popup.min.js')}}"></script>
     <script src="{{asset('fontend/assets/js/jquery.countdown.min.js')}}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <!-- Main JS File -->
     <script src="{{asset('fontend/assets/js/main.js')}}"></script>
     <script src="{{asset('fontend/assets/js/demos/demo-2.js')}}"></script>

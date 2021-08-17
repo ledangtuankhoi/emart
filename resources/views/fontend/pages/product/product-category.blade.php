@@ -2,7 +2,7 @@
 
 @section('content')
 <main class="main">
-    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+    <div class="page-header text-center" style="background-image: url('{{asset('fontend/assets/images/page-header-bg.jpg')}}')">
         <div class="container">
             <h1 class="page-title">{{strtoupper ($categories->title)}}<span>Shop</span></h1>
         </div><!-- End .container -->

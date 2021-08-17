@@ -19,11 +19,13 @@
     <meta name="msapplication-config" content="{{asset('fontend/assets/images/icons/browserconfig.xml')}}">
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="{{asset('fontend/assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" integrity="sha512-P9vJUXK+LyvAzj8otTOKzdfF1F3UYVl13+F8Fof8/2QNb8Twd6Vb+VD52I7+87tex9UXxnzPgWA3rH96RExA7A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Plugins CSS File -->
     <link rel="stylesheet" href="{{asset('fontend/assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('fontend/assets/css/plugins/owl-carousel/owl.carousel.css')}}">
     <link rel="stylesheet" href="{{asset('fontend/assets/css/plugins/magnific-popup/magnific-popup.css')}}">
     <link rel="stylesheet" href="{{asset('fontend/assets/css/plugins/jquery.countdown.css')}}">
+    
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{asset('fontend/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('fontend/assets/css/skins/skin-demo-2.css')}}">

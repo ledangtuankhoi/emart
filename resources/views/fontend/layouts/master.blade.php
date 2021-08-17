@@ -10,7 +10,9 @@
 
 <body>
     <div class="page-wrapper">
-        @include('fontend.layouts.header')
+        <header class="header header-2 header-intro-clearance" id="header">
+            @include('fontend.layouts.header')
+        </header><!-- End .header -->
 
         <div class="container-fluid">
 
@@ -245,9 +247,42 @@
     {{-- END quangr cao --}}
 
     @include('fontend.layouts.script')
+    
+    <script>
+        $(document).on('click', '.cart-del', function(e) {
+            e.preventDefault();
+            var cart_id = $(this).data('id');
+
+            var path = "{{ route('cart.delete') }}";
+            var token = "{{ csrf_token() }}"
+
+            $.ajax({
+                type: "POST",
+                url: path,
+                dataType: "JSON",
+                data: {
+                    cart_id: cart_id, 
+                    _token: token,
+                }, 
+                success: function(data) { 
+                    $('body #header').html(data['header_render']);
+                    $('#cart-count').html(data['cart_count']);
+                    console.log(data,'render');
+                    if (data['status']) {
+                        swal({
+                            title: "Good job!",
+                            text: data['message'],
+                            icon: "success",
+                            button: "OK",
+                        });
+                    }
+                },
+                error:function (err){
+                    console.log('error',err);
+                }
+            });
+        });
+    </script>
+    <!-- molla/index-1.html  22 Nov 2019 09:55:32 GMT -->
 </body>
-
-
-<!-- molla/index-1.html  22 Nov 2019 09:55:32 GMT -->
-
 </html>

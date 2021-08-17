@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Fontend\CartController;
 use App\Http\Controllers\Fontend\IndexController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -45,6 +46,10 @@ Route::get('product-category/{slug}',[IndexController::class,'productCategory'])
 
 // Product Detail
 Route::get('product-detail/{slug}',[IndexController::class,'productDetail'])->name('product.detail');
+
+// cart add
+Route::post('cart/store',[CartController::class,'cartStore'])->name('cart.store');
+Route::post('cart/delete',[CartController::class,'cartDelete'])->name('cart.delete');
 // End fontend section
 
  
