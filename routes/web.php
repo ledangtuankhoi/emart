@@ -59,8 +59,10 @@ Route::post('cart/update',[CartController::class,'cartUpdate'])->name('cart.upda
 Route::post('coupon/add',[CartController::class,'couponAdd'])->name('coupon.add');
 
 // wishlist section
-Route::get('wishlist',[WishlistController::class,'index'])->name('wishlist');
-Route::post('wishlist/store',[WishlistController::class,'store'])->name('wishlist.store');
+Route::get('wishlist',[WishlistController::class,'wishlist'])->name('wishlist');
+Route::post('wishlist/store',[WishlistController::class,'wishlistStore'])->name('wishlist.store');
+Route::post('wishlist/move',[WishlistController::class,'wishlistMoveToCart'])->name('wishlist.move');
+Route::post('wishlist/delete',[WishlistController::class,'wishlistDelete'])->name('wishlist.delete');
 
 // End fontend section
 

@@ -79,7 +79,7 @@
                 <a href="{{route('wishlist')}}" title="Wishlist">
                     <div class="icon">
                         <i class="icon-heart-o"></i>
-                        <span class="wishlist-count badge" id="wishlist-cout">
+                        <span class="wishlist-count badge" id="wishlist-count">
                             {{ Gloudemans\Shoppingcart\Facades\Cart::instance('wishlist')->count() }}
                         </span>
                     </div>
@@ -124,7 +124,7 @@
 
                                     </a>
                                 </figure>
-                                <a href="#" class="btn-remove cart-del" title="Remove Product"
+                                <a href="#" class="btn-remove btn-remove-cart cart-del" title="Remove Product"
                                     data-id="{{ $item->rowId }}"><i class="icon-close"></i></a>
                             </div><!-- End .product -->
                         @endforeach

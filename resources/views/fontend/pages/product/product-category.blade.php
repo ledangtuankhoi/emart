@@ -439,7 +439,7 @@
                 },
                 success: function(data) { 
                     $('body #header').html(data['header_render']);
-                    $('#wishlist-cout').html(data['wishlist_cout']);
+                    $('#wishlist-count').html(data['wishlist_count']);
                     if (data['status']) {
                         swal({
                             title: "Good job!",

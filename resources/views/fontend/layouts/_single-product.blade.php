@@ -7,7 +7,7 @@
             <div class="product">
                 <figure class="product-media">
                     <span class="product-label label-new">{{ ucfirst($item->condition) }}</span>
-                    <a href="product.html">
+                    <a href="{{ route('product.detail', $item->slug) }}">
                         <img src="{{ $photo[0] }}" alt="Product image" class="product-image">
                     </a>
 
