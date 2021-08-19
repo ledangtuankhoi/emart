@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Fontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
@@ -60,5 +61,62 @@ class CartController extends Controller
             $response['header_render']=$header_ajax;
         }
         return json_encode($response); 
+    }
+
+    public function cartUpdate(Request $request){
+
+        $this->validate($request,[
+            'product_qty'=>'required|numeric',
+        ]);
+        $rowId = $request->input('rowId');
+        $request_quatity = $request->input('product_qty');
+        $productQuatity = $request->input('productQuatity');
+        if($request_quatity > $productQuatity){
+            $response['status']=false;
+            $message="Chúng tôi không có đủ sản phẩm yêu cầu";
+        }elseif($request_quatity < 1){
+            $response['status']=false;
+            $message="Số lượng không được nhỏ hơn 1";
+        }else{
+            
+            $result = Cart::instance('shopping')->update($rowId,$request_quatity);
+            if($result){
+                $response['status']=true;
+                $message="Cập nhật giỏ hàng thành công"; 
+                $response['total']=Cart::subtotal();  
+                $response['cart_count'] = Cart::instance('shopping')->count();
+            }else{
+                $message="Cập nhật giỏ hàng KHOONG thành công"; 
+            }
+
+        }
+
+        
+        if($request->ajax()){
+            $header = view('fontend.layouts.header')->render();
+            $cart_list = view('fontend.layouts._cart-list')->render();
+            $response['header_render']=$header;
+            $response['cart_list_render']=$cart_list;
+            $response['message'] = $message;
+        }
+        return $response; 
+
+    }
+
+    public function couponAdd(Request $request){
+        $coupon = Coupon::where('code',$request->input('code'))->first();
+        // return $coupon;
+        if(!$coupon){
+            return back()->with('error','Không tìm thấy mã giảm giá'); 
+        }elseif($coupon){
+            $total_price = Cart::instance('shopping')->subtotal();
+            session()->put('coupon',[
+                'id'=>$coupon->id,
+                'code'=>$coupon->code,
+                'value'=>$coupon->discount($total_price),
+            ]);
+            return back()->with('success','Áp dụng mã thành công'); 
+        }
+        return $coupon;
     }
 }

@@ -90,8 +90,9 @@
                     aria-haspopup="true" aria-expanded="false" data-display="static">
                     <div class="icon">
                         <i class="icon-shopping-cart"></i>
-                        <span
-                            class="cart-count" id="cart-count">{{Gloudemans\Shoppingcart\Facades\Cart::instance('shopping')->count()}}</span>
+                        <span class="cart-count" id="cart-count">
+                            {{ Gloudemans\Shoppingcart\Facades\Cart::instance('shopping')->count() }}
+                        </span>
                     </div>
                     <p>Cart</p>
                 </a>
@@ -100,12 +101,13 @@
                     <div class="dropdown-cart-products">
                         @php
                             use App\Models\Product;
-                        @endphp 
+                        @endphp
                         @foreach (Gloudemans\Shoppingcart\Facades\Cart::instance('shopping')->content() as $item)
                             <div class="product">
                                 <div class="product-cart-details">
                                     <h4 class="product-title">
-                                        <a href="{{route('product.detail',$item->model->slug)}}">{{ $item->name }}</a>
+                                        <a
+                                            href="{{ route('product.detail', $item->model->slug) }}">{{ $item->name }}</a>
                                     </h4>
 
                                     <span class="cart-product-info">
@@ -116,20 +118,39 @@
 
                                 <figure class="product-image-container">
                                     <a href="product.html" class="product-image">
-                                        <img src="{{ $item->model->photo}}" alt="product">
+                                        <img src="{{ $item->model->photo }}" alt="product">
 
                                     </a>
                                 </figure>
-                                <a href="#" class="btn-remove cart-del" title="Remove Product" data-id="{{$item->rowId}}"><i class="icon-close"></i></a>
+                                <a href="#" class="btn-remove cart-del" title="Remove Product"
+                                    data-id="{{ $item->rowId }}"><i class="icon-close"></i></a>
                             </div><!-- End .product -->
                         @endforeach
                     </div><!-- End .cart-product -->
 
                     <div class="dropdown-cart-total">
-                        <span>Total</span>
+                        <ul>
+                            <li>
+                                <span>Sub Total</span>
+                                <span class="cart-total-price">
+                                    {{ Cart::subtotal() }}
+                                </span>
+                            </li>
+                            <li> 
+                                <span>Total</span>
 
-                        <span
-                            class="cart-total-price">{{ Cart::subtotal() }}</span>
+                                <span class="cart-total-price float-right">
+
+                                    @if (session()->has('coupon'))
+                                        {{-- {{dd(gettype(session('coupon')['value']),gettype(Cart::subtotal()))}} --}}
+                                        {{ number_format(filter_var(Cart::subtotal(), FILTER_SANITIZE_NUMBER_INT) - session('coupon')['value'], 2) }}
+                                    @else
+                                        {{ Cart::subtotal() }}
+                                    @endif
+                                </span>
+
+                            </li>
+                        </ul>
                     </div><!-- End .dropdown-cart-total -->
 
                     <div class="dropdown-cart-action">

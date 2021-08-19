@@ -52,13 +52,17 @@ Route::get('product-detail/{slug}',[IndexController::class,'productDetail'])->na
 Route::get('cart/',[CartController::class,'cart'])->name('cart');
 Route::post('cart/store',[CartController::class,'cartStore'])->name('cart.store');
 Route::post('cart/delete',[CartController::class,'cartDelete'])->name('cart.delete');
+Route::post('cart/update',[CartController::class,'cartUpdate'])->name('cart.update');
+
+// coupon section
+Route::post('coupon/add',[CartController::class,'couponAdd'])->name('coupon.add');
+
 // End fontend section
 
  
 
 Auth::routes(["register" => false]);
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+ 
 
 // admin dashboard
 Route::group(['prefix' => 'admin', 'middelware' => ['auth','admin']], function () {
