@@ -79,7 +79,9 @@
                 <a href="{{route('wishlist')}}" title="Wishlist">
                     <div class="icon">
                         <i class="icon-heart-o"></i>
-                        <span class="wishlist-count badge">3</span>
+                        <span class="wishlist-count badge" id="wishlist-cout">
+                            {{ Gloudemans\Shoppingcart\Facades\Cart::instance('wishlist')->count() }}
+                        </span>
                     </div>
                     <p>Wishlist</p>
                 </a>

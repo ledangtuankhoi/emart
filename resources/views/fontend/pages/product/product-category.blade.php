@@ -439,12 +439,26 @@
                 },
                 success: function(data) { 
                     $('body #header').html(data['header_render']);
-                    $('#cart-count').html(data['cart_count']);
+                    $('#wishlist-cout').html(data['wishlist_cout']);
                     if (data['status']) {
                         swal({
                             title: "Good job!",
                             text: data['message'],
                             icon: "success",
+                            button: "OK",
+                        });
+                    }else if (data['present']) {
+                        swal({
+                            title: "Opps!",
+                            text: data['message'],
+                            icon: "warning",
+                            button: "OK",
+                        });
+                    }else{
+                        swal({
+                            title: "Sorry!",
+                            text: " Sorry you don't add product to wishlist",
+                            icon: "warning",
                             button: "OK",
                         });
                     }
