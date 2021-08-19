@@ -12,7 +12,7 @@
                     </a>
 
                     <div class="product-action-vertical">
-                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable">
+                        <a href="javascript:void(0);" class="add_to_wishlist btn-product-icon btn-wishlist btn-expandable" data-qty="1" data-id="{{$item->id}}" id="add_to_wishlist-{{$item->id}}">
                             <span>add towishlist</span>
                         </a>
                     </div><!-- End .product-action -->

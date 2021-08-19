@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\Fontend\CartController;
 use App\Http\Controllers\Fontend\IndexController;
+use App\Http\Controllers\Fontend\WishlistController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
@@ -56,6 +57,9 @@ Route::post('cart/update',[CartController::class,'cartUpdate'])->name('cart.upda
 
 // coupon section
 Route::post('coupon/add',[CartController::class,'couponAdd'])->name('coupon.add');
+
+// wishlist section
+Route::get('wishlist',[WishlistController::class,'index'])->name('wishlist');
 
 // End fontend section
 
