@@ -60,6 +60,7 @@ Route::post('coupon/add',[CartController::class,'couponAdd'])->name('coupon.add'
 
 // wishlist section
 Route::get('wishlist',[WishlistController::class,'index'])->name('wishlist');
+Route::post('wishlist/store',[WishlistController::class,'store'])->name('wishlist.store');
 
 // End fontend section
 

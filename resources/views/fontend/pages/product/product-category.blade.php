@@ -321,14 +321,17 @@
 @endsection
 
 @section('scripts')
+
+    {{-- type sort  --}}
     <script>
         $('#sortBy').change(function (e) { 
             e.preventDefault();
-            var sort = $('#sortBy').val(); 
-            // alert('{{$route}}')
+            var sort = $('#sortBy').val();  
             window.location="{{url(''.$route.'')}}/{{$categories->slug}}?sort="+sort;
         });
     </script>
+
+    {{-- load more product --}}
     <script>
         function loadmoreData (page) {
             $.ajax({
@@ -357,5 +360,99 @@
                 loadmoreData(page);
             }
         })
+    </script>
+
+    {{-- add product cart  --}}
+    <script>
+        $(document).on('click', '.add-to-cart', function(e) {
+            e.preventDefault();
+            var product_id = $(this).data('product-id');
+            var product_qty = $(this).data('quatity');
+
+            var path = "{{ route('cart.store') }}";
+            var token = "{{ csrf_token() }}"
+
+            $.ajax({
+                type: "POST",
+                url: path,
+                dataType: "JSON",
+                data: {
+                    product_id: product_id,
+                    product_qty: product_qty,
+                    _token: token,
+                },
+                beforeSend: function() {
+                    $('#add-to-cart-' + product_id).html(
+                        "<i class='fas fa-spinner fa-spin'></i><p>Loading...</p>");
+                },
+                complete: function() {
+                    $('#add-to-cart-' + product_id).html("<i class='fa-cart-plus'></i>");
+                },
+                success: function(data) { 
+                    $('body #header').html(data['header_render']);
+                    $('#cart-count').html(data['cart_count']);
+                    if (data['status']) {
+                        swal({
+                            title: "Good job!",
+                            text: data['message'],
+                            icon: "success",
+                            button: "OK",
+                        });
+                    }
+                },
+                error:function (err){
+                    console.log(err);
+                }
+            });
+        });
+    </script>
+
+    
+    {{-- add product wishlist  --}}
+    <script>
+        $(document).on('click', '.add-to-wishlist', function(e) {
+            e.preventDefault();
+            var product_id = $(this).data('product-id');
+            var product_qty = $(this).data('quatity');
+            // alert(product_id,product_qty);
+            var path = "{{route('wishlist.store')}} ";
+            var token = "{{ csrf_token() }}"
+
+            $.ajax({
+                type: "POST",
+                url: path,
+                dataType: "JSON",
+                data: {
+                    product_id: product_id,
+                    product_qty: product_qty,
+                    _token: token,
+                },
+                beforeSend: function() {
+                    $('#add-to-wishlist-' + product_id).removeClass('btn-wishlist');
+                    $('#add-to-wishlist-' + product_id).html(
+                        "<i class='fas fa-spinner fa-spin'></i><span>Loading...</span>");
+                },
+                complete: function() {                    
+                    $('#add-to-wishlist-' + product_id).addClass('btn-wishlist');
+                    $('#add-to-wishlist-' + product_id).html(
+                        "<span>add towishlist</span>"); 
+                },
+                success: function(data) { 
+                    $('body #header').html(data['header_render']);
+                    $('#cart-count').html(data['cart_count']);
+                    if (data['status']) {
+                        swal({
+                            title: "Good job!",
+                            text: data['message'],
+                            icon: "success",
+                            button: "OK",
+                        });
+                    }
+                },
+                error:function (err){
+                    console.log(err);
+                }
+            });
+        });
     </script>
 @endsection
