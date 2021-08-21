@@ -55,17 +55,10 @@ class ShippingController extends Controller
             'delivery_time' => 'string|required', 
             'delivery_charge' => 'numeric|required',
             'status' => 'nullable|in:active,inactive',
-        ]);
+        ]); 
 
-        // return $delivery_charge;
-        
-        $data = $request->all(); 
-
-        $delivery_charge = number_format( $request->input('delivery_charge'),2);
-        $data['delivery_charge'] = $delivery_charge;
-
-        $status = Shipping::create($data);
-        // return $data;
+        $data = $request->all();  
+        $status = Shipping::create($data); 
         if ($status) {
             return redirect()->route('shipping.index')->with('success', 'Shipping` Succsessfully create');
         } else {
@@ -94,8 +87,12 @@ class ShippingController extends Controller
      */
     public function edit($id)
     {
-        $shipping = Shipping::where('id',$id)->first();
-        return view('backend.shipping.edit',compact('shipping'));
+        $shipping = Shipping::find($id);
+        if ($shipping) {
+            return view('backend.shipping.edit', compact('shipping'));
+        } else {
+            return back()->with('error', 'data not found');
+        }
     }
 
     /**

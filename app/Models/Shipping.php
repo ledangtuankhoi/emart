@@ -9,5 +9,5 @@ class Shipping extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','shipping_address','delivery_time','delivery_change','status'];
+    protected $fillable = ['id','shipping_address','delivery_time','delivery_charge','status'];
 }

@@ -57,8 +57,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <select class="custom-select" name="status" aria-label="Default select example">
-                                                <option value="active" >Active</option>
-                                                <option value="inactive" >Inactive</option>
+                                                <option value="active" {{old('status')=='active'?'selected':''}} >Active</option>
+                                                <option value="inactive"{{old('status')=='inactive'?'selected':''}}  >Inactive</option>
                                             </select>
                                         </div>
                                     </div>
