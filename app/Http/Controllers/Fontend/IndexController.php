@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 use Laravel\Ui\Presets\React;
 
 class IndexController extends Controller
@@ -76,6 +77,10 @@ class IndexController extends Controller
 
 
     public function userAuth(){
+
+        // Get the full URL for the previous request...
+        // giữ lại những yêu cầu trước đây
+        Session::put('url.intended',URL::previous());
         return view('fontend.auth.auth');
     }
 
