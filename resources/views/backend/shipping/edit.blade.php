@@ -1,6 +1,7 @@
 @section('styles')
     {{-- sumernote --}}
     <link rel="stylesheet" href="{{ asset('backend\assets\summernote\summernote-bs4.min.css') }}">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> --}}
 @endsection
 @extends('backend.layouts.master')
 
@@ -8,11 +9,10 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Edit Profile</h4>
+                            <h4 class="card-title">Edit Shipping</h4>
                             <p class="card-category">Complete your profile</p>
                             {{-- error --}}
                             @if ($errors->any())
@@ -27,78 +27,43 @@
                             
                         </div>
                         <div class="card-body">
-                            <form action="{{route('banner.update',$banner->id)}}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('shipping.update',$shipping->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('patch')
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="bmd-label-floating">Title</label>
-                                            <input type="text" name="title" class="form-control" value="{{$banner->title}}">
+                                            <label class="bmd-label-floating">Shipping Address</label>
+                                            <input type="text" name="shipping_address" value="{{$shipping->shipping_address}}" class="form-control">
                                         </div>
-                                    </div>
-                                </div>
-
-                                {{-- file laravel manager --}}
-                                <div class="row">
-                                    <div class="col-md-10 pe-0">
-                                        <div class="form-group">
-                                            <label>About Me</label>
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <a id="lfm" data-input="thumbnail" data-preview="holder"
-                                                            class="btn btn-primary">
-                                                            <i class="fa fa-picture-o"></i> Choose
-                                                        </a>
-                                                    </span>
-                                                    <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$banner->photo}}">
-                                                    <label class="bmd-label-floating"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 ps-0">
-                                        <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="">condition</label>
-                                            <select class="custom-select" name="condition"
-                                                aria-label="Default select example">
-                                                <option value="promo" {{$banner->condition=='promo'? 'selected':' '}} >Promote</option>
-                                                <option value="banner " {{$banner->condition=='banner'? 'selected':' '}}>Banner</option>
-                                            </select>
+                                            <label class="bmd-label-floating">Delivery Time</label>
+                                            <input type="text" name="delivery_time" value="{{$shipping->delivery_time}}" class="form-control">
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Delivery Charge</label>
+                                            <input type="number" name="delivery_charge" value="{{$shipping->delivery_charge}}" class="form-control" step="any">
+                                        </div>
+                                    </div>
+                                </div> 
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <select class="custom-select" name="status" aria-label="Default select example">
-                                                <option value="active" {{$banner->status=='active'? 'selected':' '}}>Active</option>
-                                                <option value="inactive" {{$banner->status=='inactive'? 'selected':' '}}>Inactive</option>
+                                                <option value="active" {{$shipping->status=='active'? 'selected':' '}}>Active</option>
+                                                <option value="inactive" {{$shipping->status=='inactive'? 'selected':' '}}>Inactive</option>
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                {{-- editor summernote --}}
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Description</label>
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so
-                                                    thirsty, I'm in that two seat Lambo.</label>
-                                                <textarea id="description" name="description" class="form-control"
-                                                    rows="5">{{$banner->description}}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                </div> 
                                 <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
                             </form>
                         </div>

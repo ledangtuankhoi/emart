@@ -12,7 +12,7 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title">Creat Banner</h4>
+                            <h4 class="card-title">Creat Shipping</h4>
                             <p class="card-category">Complete your profile</p>
                             {{-- error --}}
                             @if ($errors->any())
@@ -27,52 +27,32 @@
                             
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('banner.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('shipping.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="bmd-label-floating">Title</label>
-                                            <input type="text" name="title" value="{{old('title')}}" class="form-control">
+                                            <label class="bmd-label-floating">Shipping Address</label>
+                                            <input type="text" name="shipping_address" value="{{old('shipping_address')}}" class="form-control">
                                         </div>
-                                    </div>
-                                </div>
-
-                                {{-- file laravel manager --}}
-                                <div class="row">
-                                    <div class="col-md-10 pe-0">
-                                        <div class="form-group">
-                                            <label>About Me</label>
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <a id="lfm" data-input="thumbnail" data-preview="holder"
-                                                            class="btn btn-primary">
-                                                            <i class="fa fa-picture-o"></i> Choose
-                                                        </a>
-                                                    </span>
-                                                    <input id="thumbnail" class="form-control" type="text" name="photo" value="{{old('photo')}}">
-                                                    <label class="bmd-label-floating"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 ps-0">
-                                        <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="">condition</label>
-                                            <select class="custom-select" name="condition"
-                                                aria-label="Default select example">
-                                                <option value="promo" >Promote</option>
-                                                <option value="banner " >Banner</option>
-                                            </select>
+                                            <label class="bmd-label-floating">Delivery Time</label>
+                                            <input type="text" name="delivery_time" value="{{old('delivery_time')}}" class="form-control">
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Delivery Change</label>
+                                            <input type="number" name="delivery_charge" value="{{old('delivery_charge')}}" class="form-control" step="any">
+                                        </div>
+                                    </div>
+                                </div> 
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -82,22 +62,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                {{-- editor summernote --}}
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Description</label>
-                                            <div class="form-group">
-                                                <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so
-                                                    thirsty, I'm in that two seat Lambo.</label>
-                                                <textarea id="description" name="description" class="form-control"
-                                                    rows="5">{{old('description')}}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                </div> 
                                 <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
                             </form>
                         </div>

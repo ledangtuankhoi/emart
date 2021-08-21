@@ -65,7 +65,7 @@
                                                     {{ $item->delivery_time }}
                                                 </td>  
                                                 <td>
-                                                    {{ $item->delivery_change }}
+                                                    {{ $item->delivery_charge }}
                                                 </td>  
                                                 <td>
                                                     <input name="toggle" value="{{ $item->id }}" class="toggle-tow"

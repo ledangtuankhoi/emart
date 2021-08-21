@@ -38,7 +38,7 @@ class ShippingController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.shipping.create');
     }
 
     /**
@@ -49,7 +49,30 @@ class ShippingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return dd($request->all());
+        $this->validate($request, [
+            'shipping_address' => 'string|required',
+            'delivery_time' => 'string|required', 
+            'delivery_charge' => 'numeric|required',
+            'status' => 'nullable|in:active,inactive',
+        ]);
+
+        // return $delivery_charge;
+        
+        $data = $request->all(); 
+
+        $delivery_charge = number_format( $request->input('delivery_charge'),2);
+        $data['delivery_charge'] = $delivery_charge;
+
+        $status = Shipping::create($data);
+        // return $data;
+        if ($status) {
+            return redirect()->route('shipping.index')->with('success', 'Shipping` Succsessfully create');
+        } else {
+            return back()->with('errors', 'Somthing went wrong');
+        }
+
+        return $request->all();
     }
 
     /**
@@ -71,7 +94,8 @@ class ShippingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $shipping = Shipping::where('id',$id)->first();
+        return view('backend.shipping.edit',compact('shipping'));
     }
 
     /**
@@ -83,7 +107,26 @@ class ShippingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $shipping = Shipping::find($id);
+        if ($shipping) {
+            $this->validate($request, [
+                'shipping_address' => 'string|required',
+                'delivery_time' => 'string|required', 
+                'delivery_charge' => 'numeric|required',
+                'status' => 'nullable|in:active,inactive',
+            ]);
+
+            $data = $request->all();
+             
+            $status = $shipping->fill($data)->save();
+            if ($status) {
+                return redirect()->route('shipping.index')->with('success', 'Succsess  update shipping');
+            } else {
+                return back()->with('errors', 'Somthing went wrong');
+            }
+        } else {
+            return back()->with('error', 'data not found');
+        }
     }
 
     /**
@@ -94,6 +137,16 @@ class ShippingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $shipping = Shipping::find($id);
+        if ($shipping) {
+            $status = $shipping->delete();
+            if ($status) {
+                return redirect()->route('shipping.index')->with('success', 'Succsess  shipping deleted');
+            } else {
+                return back()->with('errors', 'Somthing went wrong');
+            }
+        } else {
+            return back()->with('error', 'data not found');
+        }
     }
 }
