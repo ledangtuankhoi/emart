@@ -16,8 +16,8 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <div>
-                                        <h4 class="card-title ">Banner Table 
-                                            <a class="btn btn-outline-success" href="{{route('banner.create')}}" role="button">
+                                        <h4 class="card-title ">Shipping Table 
+                                            <a class="btn btn-outline-success" href="{{route('shipping.create')}}" role="button">
                                                 <span class="material-icons mx-1">
                                                     add_circle_outline
                                                     </span>
@@ -37,17 +37,14 @@
                                             ID
                                         </th>
                                         <th>
-                                            Title
+                                            Shipping address
                                         </th>
                                         <th>
-                                            Description
+                                            Delivery Time
                                         </th>
                                         <th>
-                                            Photo
-                                        </th>
-                                        <th>
-                                            Condision
-                                        </th>
+                                            Delivery Change
+                                        </th> 
                                         <th>
                                             Status
                                         </th>
@@ -55,50 +52,21 @@
                                             Actions
                                         </th>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                Dakota Rice
-                                            </td>
-                                            <td>
-                                                Niger
-                                            </td>
-                                            <td>
-                                                Oud-Turnhout
-                                            </td>
-                                            <td class="text-primary">
-                                                $36,738
-                                            </td>
-                                            <td class="text-primary">
-                                                $36,738
-                                            </td>
-                                        </tr>
-                                        @foreach ($banners as $item)
+                                    <tbody> 
+                                        @foreach ($shippings as $item)
                                             <tr>
                                                 <td>
                                                     {{ $loop->iteration }}
                                                 </td>
                                                 <td>
-                                                    {{ $item->title }}
+                                                    {{ $item->shipping_address }}
                                                 </td>
                                                 <td>
-                                                    {{ $item->description }}
-                                                </td>
-                                                <td class="m-auto">
-                                                    <img src="{{ $item->photo }}" alt="" height="60">
-                                                </td>
+                                                    {{ $item->delivery_time }}
+                                                </td>  
                                                 <td>
-                                                    @php
-                                                        if ($item->condition == 'promo') {
-                                                            echo "<p class='border border-info rounded text-center text-info mx-1'>promo</p>";
-                                                        } elseif ($item->condition == 'banner') {
-                                                            echo "<p class='border border-primary rounded text-center  text-primary mx-1'>banner</p>";
-                                                        }
-                                                    @endphp
-                                                </td>
+                                                    {{ $item->delivery_change }}
+                                                </td>  
                                                 <td>
                                                     <input name="toggle" value="{{ $item->id }}" class="toggle-tow"
                                                         type="checkbox" data-toggle="toggle" data-on="Active"
@@ -108,11 +76,11 @@
 
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('banner.edit', $item->id) }}" data-toggle="tooltip"
+                                                    <a href="{{ route('shipping.edit', $item->id) }}" data-toggle="tooltip"
                                                         title="Edit" class=" float-left btn btn-sm btn-outline-warning">
                                                         <span class="material-icons">edit</span>
                                                     </a>
-                                                    <form action="{{ route('banner.destroy', $item->id) }}" method="post">
+                                                    <form action="{{ route('shipping.destroy', $item->id) }}" method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <a href="" data-toggle="tooltip" title="delete"
@@ -176,7 +144,7 @@
                 var id = $(this).val();
                 // alert(mode);
                 $.ajax({
-                    URL: "{{route('banner.status')}}",
+                    URL: "{{route('shipping.status')}}",
                     type: "POST",
                     data: {
                         _token: '{{csrf_token()}}',

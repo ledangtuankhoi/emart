@@ -318,7 +318,7 @@
                                                             href="#collapse-5" aria-expanded="false"
                                                             aria-controls="collapse-5">
                                                             Credit Card (Stripe)
-                                                            <img src="assets/images/payments-summary.png"
+                                                            <img src="{{asset('fontend/assets/images/payments-summary.png')}}"
                                                                 alt="payments cards">
                                                         </a>
                                                     </h2>

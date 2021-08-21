@@ -9,6 +9,7 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\Fontend\CartController;
 use App\Http\Controllers\Fontend\CheckoutController;
 use App\Http\Controllers\Fontend\IndexController;
+use App\Http\Controllers\Fontend\ShippingController;
 use App\Http\Controllers\Fontend\WishlistController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -106,6 +107,11 @@ Route::group(['prefix' => 'admin', 'middelware' => ['auth','admin']], function (
      // coupon section
      Route::resource('/coupon', CouponController::class);
      Route::post('coupon_status',[CouponController::class,'couponStatus'])->name('coupon.status');
+          
+     // shipping section
+     Route::resource('/shipping', ShippingController::class);
+     Route::post('shipping_status',[ShippingController::class,'shippingStatus'])->name('shipping.status');
+
 });
  
 
