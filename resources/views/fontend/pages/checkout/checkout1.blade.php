@@ -30,7 +30,8 @@
                                         enter your code</span></label>
                             </form>
                         </div><!-- End .checkout-discount -->
-                        <form action="#">
+                        <form action="{{route('checkout1.store')}}" method="POST">
+                            @csrf
                             <div class="row">
                                 <div class="col-lg-9">
                                     {{-- address-defauft --}}
@@ -171,20 +172,20 @@
 
                                             <div class="col-sm-6">
                                                 <label>Phone *</label>
-                                                <input type="tel" class="form-control" name="sphone"
-                                                    value="{{ $user->sphone }}" required>
+                                                <input type="tel" class="form-control" name="phone"
+                                                    value="{{ $user->phone }}" required>
                                             </div><!-- End .col-sm-6 -->
                                         </div><!-- End .row -->
 
                                         <label>Email address *</label>
-                                        <input type="email" class="form-control" name="semail" value="{{ $user->semail }}"
+                                        <input type="email" class="form-control" name="email" value="{{ $user->email }}"
                                             readonly>
 
 
                                         <label>Order notes (optional)</label>
                                         <textarea class="form-control" cols="30" rows="4"
                                             placeholder="Notes about your order, e.g. special notes for delivery"
-                                            name="snote"></textarea>
+                                            name=" note"></textarea>
                                     </div>{{-- END  address-ship --}}
                                 </div><!-- End .col-lg-9 -->
 
