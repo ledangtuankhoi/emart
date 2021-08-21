@@ -76,7 +76,7 @@
 
             @endauth
             <div class="wishlist">
-                <a href="{{route('wishlist')}}" title="Wishlist">
+                <a href="{{ route('wishlist') }}" title="Wishlist">
                     <div class="icon">
                         <i class="icon-heart-o"></i>
                         <span class="wishlist-count badge" id="wishlist-count">
@@ -99,7 +99,7 @@
                     <p>Cart</p>
                 </a>
                 {{-- {{dd(Gloudemans\Shoppingcart\Facades\Cart::instance('shopping'))}} --}}
-                <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-menu dropdown-menu-right border border-success rounded">
                     <div class="dropdown-cart-products">
                         @php
                             use App\Models\Product;
@@ -138,14 +138,13 @@
                                     {{ Cart::subtotal() }}
                                 </span>
                             </li>
-                            <li> 
+                            <li>
                                 <span>Total</span>
 
                                 <span class="cart-total-price float-right">
 
                                     @if (session()->has('coupon'))
-                                        {{-- {{dd(gettype(session('coupon')['value']),gettype(Cart::subtotal()))}} --}}
-                                        {{ number_format(filter_var(Cart::subtotal(), FILTER_SANITIZE_NUMBER_INT) - session('coupon')['value'], 2) }}
+                                        {{ number_format(filter_var(Cart::subtotal(), FILTER_SANITIZE_NUMBER_INT) / 100 - session('coupon')['value'], 2) }}
                                     @else
                                         {{ Cart::subtotal() }}
                                     @endif
@@ -157,7 +156,7 @@
 
                     <div class="dropdown-cart-action">
                         <a href="{{ route('cart') }}" class="btn btn-primary">View Cart</a>
-                        <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i
+                        <a href="{{route('checkout1')}}" class="btn btn-outline-primary-2"><span>Checkout</span><i
                                 class="icon-long-arrow-right"></i></a>
                     </div><!-- End .dropdown-cart-total -->
                 </div><!-- End .dropdown-menu -->

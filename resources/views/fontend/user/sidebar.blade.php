@@ -15,8 +15,8 @@
         <li class="nav-item">
             <a class="nav-link  {{\Request::is('user/account-detail')?'active':''}}" id="tab-account-link"  href="{{route('user.account')}}" >Account Details</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link   "  onclick="alert('Are sure logout account');" href="{{ route('user.logout') }}" >Sign Out</a>
+        <li class="nav-item  list-group-item-warning">
+            <a class="nav-link" style="color: red"  onclick="alert('Are sure logout account');" href="{{ route('user.logout') }}" >Sign Out</a>
         </li>
     </ul>
 </aside><!-- End .col-lg-3 -->

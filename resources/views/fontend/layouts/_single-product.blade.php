@@ -3,8 +3,8 @@
         @php
             $photo = explode(',', $item->photo);
         @endphp
-        <div class="col-6 col-md-4 col-lg-4 col-xl-3">
-            <div class="product">
+        <div class="col-6 col-md-4 col-lg-4 col-xl-3 ">
+            <div class="product rounded">
                 <figure class="product-media">
                     <span class="product-label label-new">{{ ucfirst($item->condition) }}</span>
                     <a href="{{ route('product.detail', $item->slug) }}">

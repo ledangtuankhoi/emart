@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Laravel\Ui\Presets\React;
 use phpDocumentor\Reflection\Types\Null_;
@@ -13,7 +14,7 @@ use phpDocumentor\Reflection\Types\Null_;
 class CartController extends Controller
 {
 
-    public function cart(){
+    public function cart(){ 
         return view('fontend.pages.cart.index');
     }
     public function cartStore(Request $request){
@@ -113,6 +114,7 @@ class CartController extends Controller
             session()->put('coupon',[
                 'id'=>$coupon->id,
                 'code'=>$coupon->code,
+                'type'=>$coupon->type,
                 'value'=>$coupon->discount($total_price),
             ]);
             return back()->with('success','Áp dụng mã thành công'); 

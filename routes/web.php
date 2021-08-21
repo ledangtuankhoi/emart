@@ -7,6 +7,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\Fontend\CartController;
+use App\Http\Controllers\Fontend\CheckoutController;
 use App\Http\Controllers\Fontend\IndexController;
 use App\Http\Controllers\Fontend\WishlistController;
 use App\Http\Controllers\ProductController;
@@ -63,6 +64,9 @@ Route::get('wishlist',[WishlistController::class,'wishlist'])->name('wishlist');
 Route::post('wishlist/store',[WishlistController::class,'wishlistStore'])->name('wishlist.store');
 Route::post('wishlist/move',[WishlistController::class,'wishlistMoveToCart'])->name('wishlist.move');
 Route::post('wishlist/delete',[WishlistController::class,'wishlistDelete'])->name('wishlist.delete');
+
+// Checkout section
+Route::get('checkout1',[CheckoutController::class,'checkout1'])->name('checkout1')->middleware('user');
 
 // End fontend section
 

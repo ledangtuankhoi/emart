@@ -23,14 +23,17 @@
                     <div class="row">
                         <div class="col-lg-9" id="cart-list">
 
+                    {{-- cart list --}}
                             @include('fontend.layouts._cart-list')
+                    {{-- END cart list --}}
 
                             <div class="cart-bottom">
                                 <div class="cart-discount">
-                                    <form action="{{route('coupon.add')}}" id="coupon-form" method="POST">
+                                    <form action="{{ route('coupon.add') }}" id="coupon-form" method="POST">
                                         @csrf
                                         <div class="input-group">
-                                            <input type="text" name="code" class="form-control" required placeholder="coupon code">
+                                            <input type="text" name="code" class="form-control" required
+                                                placeholder="coupon code">
                                             <div class="input-group-append">
                                                 <button class="btn coupon-btn btn-outline-primary-2" type="submit"><i
                                                         class="icon-long-arrow-right"></i></button>
@@ -56,6 +59,24 @@
                                             <td>Shipping:</td>
                                             <td>&nbsp;</td>
                                         </tr>
+
+                                        <tr class="summary-shipping-row">
+                                            <td>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="free-shipping" name="shipping"
+                                                        class="custom-control-input">
+                                                    <label class="custom-control-label" for="free-shipping">Free
+                                                        Save</label>
+                                                </div><!-- End .custom-control -->
+                                            </td>
+                                            <td>$
+                                                @if (Session::get('coupon'))
+                                                    {{ Session::get('coupon')['value'] }}
+                                                @else
+                                                    0
+                                                @endif
+                                            </td>
+                                        </tr><!-- End .summary-shipping-row -->
 
                                         <tr class="summary-shipping-row">
                                             <td>
@@ -101,12 +122,21 @@
 
                                         <tr class="summary-total">
                                             <td>Total:</td>
-                                            <td>$160.00</td>
+                                            <td>
+                                                @if (session()->has('coupon'))
+                                                    {{-- {{dd(gettype(session('coupon')['value']),gettype(Cart::subtotal()))}} --}}
+                                                    {{ number_format(filter_var(Cart::subtotal(), FILTER_SANITIZE_NUMBER_INT) / 100 - session('coupon')['value'], 2) }}
+                                                    {{ str_replace(',', '', Cart::subtotal()) - Session }}
+                                                @else
+                                                    {{ Cart::subtotal() }}
+                                                @endif
+                                            </td>
                                         </tr><!-- End .summary-total -->
                                     </tbody>
                                 </table><!-- End .table table-summary -->
 
-                                <a href="checkout.html" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO
+                                <a href="{{ route('checkout1') }}"
+                                    class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO
                                     CHECKOUT</a>
                             </div><!-- End .summary -->
 
@@ -123,7 +153,7 @@
 @section('scripts')
 
     <script>
-        $(document).on('click','.coupon-btn',function (e) {
+        $(document).on('click', '.coupon-btn', function(e) {
             e.preventDefault();
             var code = $('input[name=code]').val();
             $('.btn-coupon').html("<i class='fas fa-spinner fa-spin'></i><p>Loading...</p>")
@@ -174,7 +204,8 @@
             // alert(id);
 
             // spinner thay đổi giá trị bằng nút lên xuống
-            var spinner = $(this),input = spinner.closest("div.quatity").find('input[type="number"]');
+            var spinner = $(this),
+                input = spinner.closest("div.quatity").find('input[type="number"]');
             // alert(spinner);
             if (input.val() == 1) {
                 return false;
@@ -214,11 +245,11 @@
                     console.log(data, 'render');
                     if (data['status']) {
                         // alert(data['message']);  
-                    }else{ 
+                    } else {
                         alert(data['message']);
                     }
                 },
-                error:function(err){
+                error: function(err) {
                     console.log(err);;
                 }
             });
