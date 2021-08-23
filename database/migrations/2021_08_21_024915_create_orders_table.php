@@ -17,11 +17,13 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('order_number', 10)->unique();
-            $table->unsignedBigInteger('product_id');
             $table->float('sub_total')->default(0);
             $table->float('total_amout')->default(0);
             $table->float('coupon')->default(0)->nullable();
-            $table->float('delivery_change')->default(0)->nullable();
+            $table->string('payment_method')->default('cod');
+            $table->enum('payment_status',['paid','unpaid'])->default('unpaid');
+            $table->enum('condition',['pending','processing','delivered','cancelled'])->default('pending');
+            $table->float('delivery_charge')->default(0)->nullable();
             $table->integer('quantity')->default(0);
 
             $table->string('first_name');
@@ -32,7 +34,7 @@ class CreateOrdersTable extends Migration
             $table->string('address');
             $table->string('city');
             $table->string('state');
-            $table->string('note'); 
+            $table->string('note')->nullable(); 
 
             $table->string('sfirst_name');
             $table->string('slast_name');

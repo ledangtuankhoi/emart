@@ -23,9 +23,9 @@
                     <div class="row">
                         <div class="col-lg-9" id="cart-list">
 
-                    {{-- cart list --}}
+                            {{-- cart list --}}
                             @include('fontend.layouts._cart-list')
-                    {{-- END cart list --}}
+                            {{-- END cart list --}}
 
                             <div class="cart-bottom">
                                 <div class="cart-discount">
@@ -126,7 +126,6 @@
                                                 @if (session()->has('coupon'))
                                                     {{-- {{dd(gettype(session('coupon')['value']),gettype(Cart::subtotal()))}} --}}
                                                     {{ number_format(filter_var(Cart::subtotal(), FILTER_SANITIZE_NUMBER_INT) / 100 - session('coupon')['value'], 2) }}
-                                                    {{ str_replace(',', '', Cart::subtotal()) - Session }}
                                                 @else
                                                     {{ Cart::subtotal() }}
                                                 @endif

@@ -68,7 +68,8 @@ Route::post('wishlist/delete',[WishlistController::class,'wishlistDelete'])->nam
 
 // Checkout section
 Route::get('checkout1',[CheckoutController::class,'checkout1'])->name('checkout1')->middleware('user');
-Route::post('checkout1/store',[CheckoutController::class,'checkout1Store'])->name('checkout1.store')->middleware('user');
+Route::post('checkout1/review',[CheckoutController::class,'checkoutReview'])->name('checkout.review')->middleware('user');
+Route::post('checkout/store',[CheckoutController::class,'checkoutStore'])->name('checkout.store')->middleware('user');
 
 // End fontend section
 

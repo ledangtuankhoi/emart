@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use GuzzleHttp\Promise\Create;
@@ -155,7 +156,8 @@ class IndexController extends Controller
     }
     public function userOrder (){
         $user = Auth::user(); 
-        return view('fontend.user.order',compact(['user']));
+        $orders =Order::where('user_id',$user->id)->orderBy('id','DESC')->get();
+        return view('fontend.user.order',compact(['user','orders']));
     }
 
     public function billingAddress(Request $request, $id){

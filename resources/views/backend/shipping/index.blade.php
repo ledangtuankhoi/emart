@@ -27,6 +27,9 @@
                                         <p class="card-category"> Here is a subtitle for this table</p>
                                     </div>
                                 </div>
+                                <div>
+                                    <p>Total anner:{{ App\Models\Shipping::count() }}</p>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">

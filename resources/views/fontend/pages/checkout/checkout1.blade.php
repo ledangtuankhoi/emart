@@ -30,10 +30,10 @@
                                         enter your code</span></label>
                             </form>
                         </div><!-- End .checkout-discount -->
-                        <form action="{{route('checkout1.store')}}" method="POST">
+                        <form action="{{ route('checkout.review') }}" method="POST">
                             @csrf
                             <div class="row">
-                                <div class="col-lg-9">
+                                <div class="col-lg-7">
                                     {{-- address-defauft --}}
                                     <div id="address-defauft">
                                         <h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
@@ -43,20 +43,16 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label>First Name *</label>
-                                                <input type="text" class="form-control" value="{{ $name[0] }}"
+                                                <input type="text" class="form-control" name="first_name" value="{{ $name[0] }}"
                                                     readonly>
                                             </div><!-- End .col-sm-6 -->
 
                                             <div class="col-sm-6">
                                                 <label>Last Name *</label>
-                                                <input type="text" class="form-control" value="{{ $name[1] }}"
+                                                <input type="text" class="form-control" name="last_name" value="{{ $name[1] }}"
                                                     readonly>
                                             </div><!-- End .col-sm-6 -->
                                         </div><!-- End .row -->
-
-                                        <label>Company Name (Optional)</label>
-                                        <input type="text" class="form-control">
-
                                         <label>Country *</label>
                                         <input type="text" class="form-control" name="country"
                                             value="{{ $user->country }}" required>
@@ -106,11 +102,14 @@
 
                                     {{-- address-ship --}}
                                     <style>
-                                        #address-ship\  input{
+                                        #address-ship\  input {
                                             border-radius: 25px;
                                         }
+
                                     </style>
-                                    <div id="address-ship " class="list-group-item-success px-2 pb-1 " style="  border-top-style: solid; border-top-color: green; border-radius: 10px ">
+                                    {{-- ship va nhaanj cùng 1 địa điểm --}}
+                                    <div id="address-ship " class="list-group-item-success px-2 pb-1 "
+                                        style="  border-top-style: solid; border-top-color: green; border-radius: 10px ">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" id="checkout-create-acc">
                                             <label class="custom-control-label" for="checkout-create-acc">Create an
@@ -123,21 +122,21 @@
                                                 different
                                                 address?</label>
                                         </div><!-- End .custom-checkbox -->
-                                        <h2 class="checkout-title">Ship Billing Details</h2><!-- End .checkout-title -->
+                                        <h2 class="checkout-title">Ship to a same address </h2><!-- End .checkout-title -->
                                         @php
                                             $sname = explode(' ', $user->full_name);
                                         @endphp
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label>First Name *</label>
-                                                <input type="text" class="form-control" value="{{ $sname[0] }}"
-                                                    readonly>
+                                                <input type="text" class="form-control" name="sfirst_name" value="{{ $sname[0] }}"
+                                                     >
                                             </div><!-- End .col-sm-6 -->
 
                                             <div class="col-sm-6">
                                                 <label>Last Name *</label>
-                                                <input type="text" class="form-control" value="{{ $sname[1] }}"
-                                                    readonly>
+                                                <input type="text" class="form-control" name="slast_name" value="{{ $sname[1] }}"
+                                                     >
                                             </div><!-- End .col-sm-6 -->
                                         </div><!-- End .row -->
 
@@ -172,13 +171,13 @@
 
                                             <div class="col-sm-6">
                                                 <label>Phone *</label>
-                                                <input type="tel" class="form-control" name="phone"
+                                                <input type="number" class="form-control" name="sphone"
                                                     value="{{ $user->phone }}" required>
                                             </div><!-- End .col-sm-6 -->
                                         </div><!-- End .row -->
 
                                         <label>Email address *</label>
-                                        <input type="email" class="form-control" name="email" value="{{ $user->email }}"
+                                        <input type="email" class="form-control" name="semail" value="{{ $user->email }}"
                                             readonly>
 
 
@@ -190,151 +189,233 @@
                                 </div><!-- End .col-lg-9 -->
 
 
-                                <aside class="col-lg-3">
-                                    <div class="summary">
+                                <aside class="col-lg-5">
+                                    <div class="summary p-2">
                                         <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+                                        {{-- chon dichj vuj ship --}}
+                                        <div
+                                            style="  border-top-style: solid; border-top-color: green; border-radius: 10px ">
 
-                                        <table class="table table-summary">
-                                            <thead>
-                                                <tr>
-                                                    <th>Product</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                            </thead>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">First</th>
+                                                        <th scope="col">Last</th>
+                                                        <th scope="col">Handle</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (count($shippings) > 0)
+                                                        @foreach ($shippings as $key => $item)
+                                                            <tr id="tr_{{ $key }}">
+                                                                <div class="form-check">
+                                                                    <th scope="row" class="px-2">
+                                                                        <input class="form-check-input" type="radio"
+                                                                            name="delivery_charge"
+                                                                            id="exampleRadios{{ $key }}"
+                                                                            value="{{ $item->delivery_charge, 2 }}"
+                                                                            required>
+                                                                    <th>
+                                                                        <label class="form-check-label"
+                                                                            for="exampleRadios{{ $key }}">
+                                                                            {{ $item->shipping_address }}
+                                                                        </label>
+                                                                    </th>
+                                                                    <th>
+                                                                        <label class="form-check-label"
+                                                                            for="exampleRadios{{ $key }}">
+                                                                            {{ $item->delivery_time }}
+                                                                        </label>
+                                                                    </th>
+                                                                    <th>
+                                                                        <label class="form-check-label"
+                                                                            for="exampleRadios{{ $key }}">
+                                                                            ${{ number_format($item->delivery_charge, 2) }}
+                                                                        </label>
+                                                                    </th>
+                                                                </div>
+                                                                </th>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <p>No Shipping method found </p>
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        {{-- phuongw thucws thanh toasn --}}
 
-                                            <tbody>
-                                                <tr>
-                                                    <td><a href="#">Beige knitted elastic runner shoes</a></td>
-                                                    <td>$84.00</td>
-                                                </tr>
+                                        <div
+                                            style="  border-top-style: solid; border-top-color: green; border-radius: 10px ">
+                                            <div class="accordion-summary" id="accordion-payment">
 
-                                                <tr>
-                                                    <td><a href="#">Blue utility pinafore denimdress</a></td>
-                                                    <td>$76,00</td>
-                                                </tr>
-                                                <tr class="summary-subtotal">
-                                                    <td>Subtotal:</td>
-                                                    <td>$160.00</td>
-                                                </tr><!-- End .summary-subtotal -->
-                                                <tr>
-                                                    <td>Shipping:</td>
-                                                    <td>Free shipping</td>
-                                                </tr>
-                                                <tr class="summary-total">
-                                                    <td>Total:</td>
-                                                    <td>$160.00</td>
-                                                </tr><!-- End .summary-total -->
-                                            </tbody>
-                                        </table><!-- End .table table-summary -->
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h2 class="card-title">
+                                                            <div>
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="DBT" value="DBT" name="payment_method"
+                                                                        class="custom-control-input" role="button"
+                                                                        data-toggle="collapse" href="#collapse-DBT"
+                                                                        aria-expanded="true" aria-controls="collapse-DBT">
+                                                                    <label class="custom-control-label"
+                                                                        for="DBT">Direct bank transfer
+                                                                    </label> 
+                                                                    <div id="collapse-DBT" class="collapse"
+                                                                        aria-labelledby="heading-3"
+                                                                        data-parent="#accordion-payment">
+                                                                        <div class="card-body p-0">
+                                                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ad quia doloremque odit quam magnam, officiis adipisci? Aperiam non tempore officia, accusantium quia pariatur delectus consequatur quis aspernatur blanditiis excepturi!
 
-                                        <div class="accordion-summary" id="accordion-payment">
-                                            <div class="card">
-                                                <div class="card-header" id="heading-1">
-                                                    <h2 class="card-title">
-                                                        <a role="button" data-toggle="collapse" href="#collapse-1"
-                                                            aria-expanded="true" aria-controls="collapse-1">
-                                                            Direct bank transfer
-                                                        </a>
-                                                    </h2>
-                                                </div><!-- End .card-header -->
-                                                <div id="collapse-1" class="collapse show" aria-labelledby="heading-1"
-                                                    data-parent="#accordion-payment">
-                                                    <div class="card-body">
-                                                        Make your payment directly into our bank account. Please use your
-                                                        Order
-                                                        ID as the payment reference. Your order will not be shipped until
-                                                        the
-                                                        funds have cleared in our account.
-                                                    </div><!-- End .card-body -->
-                                                </div><!-- End .collapse -->
-                                            </div><!-- End .card -->
+                                                                        </div><!-- End .card-body -->
+                                                                    </div><!-- End .collapse -->
+                                                                </div>
 
-                                            <div class="card">
-                                                <div class="card-header" id="heading-2">
-                                                    <h2 class="card-title">
-                                                        <a class="collapsed" role="button" data-toggle="collapse"
-                                                            href="#collapse-2" aria-expanded="false"
-                                                            aria-controls="collapse-2">
-                                                            Check payments
-                                                        </a>
-                                                    </h2>
-                                                </div><!-- End .card-header -->
-                                                <div id="collapse-2" class="collapse" aria-labelledby="heading-2"
-                                                    data-parent="#accordion-payment">
-                                                    <div class="card-body">
-                                                        Ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio.
-                                                        Quisque
-                                                        volutpat mattis eros. Nullam malesuada erat ut turpis.
-                                                    </div><!-- End .card-body -->
-                                                </div><!-- End .collapse -->
-                                            </div><!-- End .card -->
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="CP" value="CP" name="payment_method"
+                                                                        class="custom-control-input" role="button"
+                                                                        data-toggle="collapse" href="#collapse-CP"
+                                                                        aria-expanded="true" aria-controls="collapse-CP">
+                                                                    <label class="custom-control-label"
+                                                                        for="CP">Check payments
+                                                                    </label> 
+                                                                    <div id="collapse-CP" class="collapse"
+                                                                        aria-labelledby="heading-3"
+                                                                        data-parent="#accordion-payment">
+                                                                        <div class="card-body p-0">
+                                                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ad quia doloremque odit quam magnam, officiis adipisci? Aperiam non tempore officia, accusantium quia pariatur delectus consequatur quis aspernatur blanditiis excepturi!
 
-                                            <div class="card">
-                                                <div class="card-header" id="heading-3">
-                                                    <h2 class="card-title">
-                                                        <a class="collapsed" role="button" data-toggle="collapse"
-                                                            href="#collapse-3" aria-expanded="false"
-                                                            aria-controls="collapse-3">
-                                                            Cash on delivery
-                                                        </a>
-                                                    </h2>
-                                                </div><!-- End .card-header -->
-                                                <div id="collapse-3" class="collapse" aria-labelledby="heading-3"
-                                                    data-parent="#accordion-payment">
-                                                    <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor
-                                                        sit
-                                                        amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat
-                                                        mattis
-                                                        eros.
-                                                    </div><!-- End .card-body -->
-                                                </div><!-- End .collapse -->
-                                            </div><!-- End .card -->
+                                                                        </div><!-- End .card-body -->
+                                                                    </div><!-- End .collapse -->
+                                                                </div>
 
-                                            <div class="card">
-                                                <div class="card-header" id="heading-4">
-                                                    <h2 class="card-title">
-                                                        <a class="collapsed" role="button" data-toggle="collapse"
-                                                            href="#collapse-4" aria-expanded="false"
-                                                            aria-controls="collapse-4">
-                                                            PayPal <small class="float-right paypal-link">What is
-                                                                PayPal?</small>
-                                                        </a>
-                                                    </h2>
-                                                </div><!-- End .card-header -->
-                                                <div id="collapse-4" class="collapse" aria-labelledby="heading-4"
-                                                    data-parent="#accordion-payment">
-                                                    <div class="card-body">
-                                                        Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non,
-                                                        semper suscipit, posuere a, pede. Donec nec justo eget felis
-                                                        facilisis
-                                                        fermentum.
-                                                    </div><!-- End .card-body -->
-                                                </div><!-- End .collapse -->
-                                            </div><!-- End .card -->
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="COD" value="COD" name="payment_method" 
+                                                                        class="custom-control-input" role="button"
+                                                                        data-toggle="collapse" href="#collapse-COD"
+                                                                        aria-expanded="true" aria-controls="collapse-COD" checked>
+                                                                        <input  name="payment_status" value="paid" hidden>
+                                                                    <label class="custom-control-label"
+                                                                        for="COD">Cash on delivery
+                                                                    </label> 
+                                                                    <div id="collapse-COD" class="collapse show"
+                                                                        aria-labelledby="heading-3"
+                                                                        data-parent="#accordion-payment">
+                                                                        <div class="card-body p-0">
+                                                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ad quia doloremque odit quam magnam, officiis adipisci? Aperiam non tempore officia, accusantium quia pariatur delectus consequatur quis aspernatur blanditiis excepturi!
 
-                                            <div class="card">
-                                                <div class="card-header" id="heading-5">
-                                                    <h2 class="card-title">
-                                                        <a class="collapsed" role="button" data-toggle="collapse"
-                                                            href="#collapse-5" aria-expanded="false"
-                                                            aria-controls="collapse-5">
-                                                            Credit Card (Stripe)
-                                                            <img src="{{asset('fontend/assets/images/payments-summary.png')}}"
-                                                                alt="payments cards">
-                                                        </a>
-                                                    </h2>
-                                                </div><!-- End .card-header -->
-                                                <div id="collapse-5" class="collapse" aria-labelledby="heading-5"
-                                                    data-parent="#accordion-payment">
-                                                    <div class="card-body"> Donec nec justo eget felis facilisis
-                                                        fermentum.Lorem
-                                                        ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio.
-                                                        Quisque
-                                                        volutpat mattis eros. Lorem ipsum dolor sit ame.
-                                                    </div><!-- End .card-body -->
-                                                </div><!-- End .collapse -->
-                                            </div><!-- End .card -->
-                                        </div><!-- End .accordion -->
+                                                                        </div><!-- End .card-body -->
+                                                                    </div><!-- End .collapse -->
+                                                                </div>
+
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="PIP" value="PIP" name="payment_method"
+                                                                        class="custom-control-input" role="button"
+                                                                        data-toggle="collapse" href="#collapse-PIP"
+                                                                        aria-expanded="true" aria-controls="collapse-PIP">
+                                                                    <label class="custom-control-label"
+                                                                        for="PIP">PayPalWhat is PayPal?
+                                                                    </label> 
+                                                                    <div id="collapse-PIP" class="collapse"
+                                                                        aria-labelledby="heading-3"
+                                                                        data-parent="#accordion-payment">
+                                                                        <div class="card-body p-0">
+                                                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ad quia doloremque odit quam magnam, officiis adipisci? Aperiam non tempore officia, accusantium quia pariatur delectus consequatur quis aspernatur blanditiis excepturi!
+
+                                                                        </div><!-- End .card-body -->
+                                                                    </div><!-- End .collapse -->
+                                                                </div>
+
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="CC" value="CC" name="payment_method"
+                                                                        class="custom-control-input" role="button"
+                                                                        data-toggle="collapse" href="#collapse-CC"
+                                                                        aria-expanded="true" aria-controls="collapse-CC">
+                                                                    <label class="custom-control-label"
+                                                                        for="CC">Credit Card (Stripe)
+                                                                    </label> 
+                                                                    <div id="collapse-CC" class="collapse"
+                                                                        aria-labelledby="heading-3"
+                                                                        data-parent="#accordion-payment">
+                                                                        <div class="card-body p-2">
+                                                                             <div class="form-group">
+                                                                               <label for="card-number">Card number</label>
+                                                                               <input type="number"
+                                                                                 class="form-control" name="card-number" id="card-number" aria-describedby="helpId" placeholder="number">
+
+                                                                                 <label for="card-number">Card number</label>
+                                                                               <input type="number"
+                                                                                 class="form-control" name="card-number" id="card-number" aria-describedby="helpId" placeholder="number">
+
+                                                                                 <label for="card-number">Card number</label>
+                                                                               <input type="number"
+                                                                                 class="form-control" name="card-number" id="card-number" aria-describedby="helpId" placeholder="number">
+
+                                                                             </div>
+                                                                        </div><!-- End .card-body -->
+                                                                    </div><!-- End .collapse -->
+                                                                </div>
+ 
+                                                            </div>
+                                                        </h2>
+                                                    </div>
+                                                </div>
+
+
+                                            </div><!-- End .accordion -->
+                                        </div>
+
+                                        {{-- toongr bill --}}
+                                        <div
+                                            style="  border-top-style: solid; border-top-color: green; border-radius: 10px ">
+                                            <table class="table table-summary">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr class="summary-subtotal">
+                                                        <td>Subtotal:</td>
+                                                        <td id="subtotal">
+                                                            ${{ Gloudemans\Shoppingcart\Facades\Cart::instance('shopping')->subtotal() }}
+                                                        </td>
+                                                    </tr><!-- End .summary-subtotal -->
+                                                    <tr>
+                                                        <td>Shipping:</td>
+                                                        <td id="price_shipping">Free shipping</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Coupon:</td>
+                                                        <td id="coupon">
+                                                            @if (session()->has('coupon'))
+                                                                ${{ number_format(session('coupon')['value'], 2) }}
+                                                            @else
+                                                                <p>Not coupon</p>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="summary-total">
+                                                        <td>Total:</td>
+                                                        <td id="price_total">
+                                                            @if (session()->has('coupon'))
+                                                                @php
+                                                                // Cart::subtotal($decimals, $decimalSeperator, $thousandSeperator);
+
+                                                                    $total = number_format(filter_var(Cart::subtotal(), FILTER_SANITIZE_NUMBER_INT) / 100 - session('coupon')['value'], 2);
+                                                                    echo $total;
+                                                                @endphp
+                                                            @else
+                                                                {{ Cart::subtotal() }}
+                                                            @endif
+                                                        </td>
+                                                    </tr><!-- End .summary-total -->
+                                                </tbody>
+                                            </table><!-- End .table table-summary -->
+                                        </div>
 
                                         <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
                                             <span class="btn-text">Place Order</span>
@@ -358,7 +439,7 @@
         <script>
             $(document).on('change', '#checkout-diff-address', function(e) {
                 e.preventDefault();
-                if($(this).is(':checked')){
+                if ($(this).is(':checked')) {
                     $("[name='sfirst_name']").val($("[name='first_name']").val());
                     $("[name='slast_name']").val($("[name='last_name']").val());
                     $("[name='scountry']").val($("[name='country']").val());
@@ -369,7 +450,7 @@
                     $("[name='sphone']").val($("[name='phone']").val());
                     $("[name='semail']").val($("[name='email']").val());
                     // alert($("[name='city']").val());
-                }else{
+                } else {
                     $("[name='sfirst_name']").val('');
                     $("[name='slast_name']").val('');
                     $("[name='scountry']").val('');
@@ -382,5 +463,63 @@
                 }
 
             });
+        </script>
+
+        {{-- tổng tiền cho total với ship - coupon - subtotal --}}
+        <script>
+            var inputCheck = $("table tbody tr th input").toArray();
+            var array = $("#price_total").text().split(" ");
+            // console.log((Math.round(222.11 * 100) / 100).toFixed(2));
+            var total;
+            // alert(array);
+            array.forEach(item => {
+                if (parseFloat(item)) {
+                    total = item;
+                }
+            });
+
+            total = total.replaceAll(",", "");
+            total = (Math.round(total * 100) / 100).toFixed(2);
+            $(inputCheck).change(function(e) {
+                e.preventDefault();
+                var shipping;
+                $.each(inputCheck, function(key, value) {
+                    // console.log($(value).val() * 100);
+                    if ($(value).prop("checked")) {
+                        $("#tr_" + key).addClass("list-group-item-success");
+                        shipping = (Math.round($(value).val() * 100) / 100).toFixed(2);
+                        $('#price_shipping').html("$" + shipping);
+                        var total_1 = (Math.round((parseFloat(total) + parseFloat(shipping)) * 100) / 100)
+                            .toFixed(2);
+                        total_1 = addCommas(total_1);
+                        $("#price_total").html("$" + total_1);
+                    } else {
+                        $("#tr_" + key).removeClass("list-group-item-success");
+
+                    }
+                });
+            });
+            // them dau thap phan cho soos
+            function addCommas(nStr) {
+                nStr += '';
+                x = nStr.split('.');
+                x1 = x[0];
+                x2 = x.length > 1 ? '.' + x[1] : '';
+                var rgx = /(\d+)(\d{3})/;
+                while (rgx.test(x1)) {
+                    x1 = x1.replace(rgx, '$1' + ',' + '$2');
+                }
+                return x1 + x2;
+            }
+        </script>
+
+        <script>
+            $("#cb").click(function(e) {
+                e.preventDefault();
+                $('#mode').click(function(e) {
+                    e.stopPropagation();
+                })
+                $("#mode").prop("checked", !$("#mode").prop("checked"));
+            })
         </script>
     @endsection

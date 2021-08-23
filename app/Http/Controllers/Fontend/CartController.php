@@ -110,7 +110,7 @@ class CartController extends Controller
         if(!$coupon){
             return back()->with('error','Không tìm thấy mã giảm giá'); 
         }elseif($coupon){
-            $total_price = Cart::instance('shopping')->subtotal();
+            $total_price = Cart::instance('shopping')->subtotal('0');
             session()->put('coupon',[
                 'id'=>$coupon->id,
                 'code'=>$coupon->code,
