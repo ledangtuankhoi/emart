@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Fontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\Shipping;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -16,35 +19,57 @@ class CheckoutController extends Controller
 {
     public function checkout1()
     {
-        // return Session
-        $user = Auth::user();
-        $shippings  = Shipping::where('status', 'active')->orderBy('shipping_address', 'ASC')->get();
-        return view('fontend.pages.checkout.checkout1', compact('user', 'shippings'));
+        if (Cart::instance('shopping')->count() > 0) {
+            // return Session
+            $user = Auth::user();
+            $shippings  = Shipping::where('status', 'active')->orderBy('shipping_address', 'ASC')->get();
+            return view('fontend.pages.checkout.checkout1', compact('user', 'shippings'));
+        } else { 
+            $banners = Banner::where(['status' => 'active', 'condition' => 'banner'])->orderBy('id', 'DESC')->limit('3')->get();
+            $categories = Category::where(['status' => 'active', 'is_parent' => 1])->orderBy('id', 'DESC')->limit('3')->get();
+            $brands = Brand::where(['status' => 'active'])->orderBy('id', 'DESC')->limit('10')->get();
+            // dd($categories);
+
+            $user = Auth::user();
+            return view('fontend.index', compact(['banners', 'brands', 'categories', 'user']));
+        }
     }
 
     public function checkoutReview(Request $request)
     {
 
-        $this->validate($request,[ 
-            'first_name'=>'string|required',
-            'last_name'=>'string|required',
-            'phone'=>'numeric|required',
-            'email'=>'email|required',
-            
-            'sfirst_name'=>'string|required',
-            'slast_name'=>'string|required',
-            'sphone'=>'numeric|required',
-            'semail'=>'email|required',
+        $this->validate($request, [
+            'first_name' => 'string|required',
+            'last_name' => 'string|required',
+            'phone' => 'numeric|required',
+            'email' => 'email|required|exists:users,email',
+            'postcode' => 'numeric|nullable',
+            'country' => 'string|nullable',
+            'address' => 'string|nullable',
+            'city' => 'string|nullable',
+            'state' => 'string|nullable',
+            'note' => 'nullable',
+
+            'sfirst_name' => 'string|required',
+            'slast_name' => 'string|required',
+            'sphone' => 'numeric|required',
+            'semail' => 'email|required|exists:users,email',
+            'spostcode' => 'numeric|nullable',
+            'scountry' => 'string|nullable',
+            'saddress' => 'string|nullable',
+            'scity' => 'string|nullable',
+            'sstate' => 'string|nullable',
 
 
-            'payment_method'=>'required',
-            'delivery_charge'=>'numeric|required',
+            'payment_method' => 'required',
+            'delivery_charge' => 'numeric|required',
+            'sub_total' => 'numeric|required',
         ]);
         // return dd($request->all(),session('coupon')['value']);
         session()->put('checkout', [
 
-            'last_name'=>$request->input('last_name'),
-            'first_name'=>$request->input('first_name'), 
+            'last_name' => $request->input('last_name'),
+            'first_name' => $request->input('first_name'),
             'country' => $request->input('country'),
             'address' => $request->input('address'),
             'city' => $request->input('city'),
@@ -54,9 +79,9 @@ class CheckoutController extends Controller
             'email' => $request->input('email'),
             'note' => $request->input('note'),
 
-            
-            'slast_name'=>$request->input('slast_name'),
-            'sfirst_name'=>$request->input('sfirst_name'), 
+
+            'slast_name' => $request->input('slast_name'),
+            'sfirst_name' => $request->input('sfirst_name'),
             'scountry' => $request->input('scountry'),
             'saddress' => $request->input('saddress'),
             'scity' => $request->input('scity'),
@@ -87,17 +112,19 @@ class CheckoutController extends Controller
         $order['user_id'] = auth()->user()->id;
         $order['order_number'] =  Str::upper("ORD-" . Str::random(6));
         $sub_total = filter_var(Cart::subtotal(), FILTER_SANITIZE_NUMBER_INT) / 100;
-        $order['sub_total'] = $sub_total ; 
+        $order['sub_total'] = $sub_total;
 
         $total_amout = filter_var(
-            Cart::instance('shopping')->subtotal(), FILTER_SANITIZE_NUMBER_INT) / 100
-             -  Session::get('coupon')['value']
-             +  Session::get('checkout')['delivery_charge'];
+            Cart::instance('shopping')->subtotal(),
+            FILTER_SANITIZE_NUMBER_INT
+        ) / 100
+            -  Session::get('coupon')['value']
+            +  Session::get('checkout')['delivery_charge'];
         $order['total_amout'] =  $total_amout;
         // return $order['total_amout'] ;
-        if(Session::has('coupon')){
+        if (Session::has('coupon')) {
             $order['coupon'] =  Session::get('coupon')['value'];
-        }else{
+        } else {
             $order['coupon'] = 0;
         }
         $order['payment_method'] =  Session::get('checkout')['payment_method'];
@@ -115,7 +142,7 @@ class CheckoutController extends Controller
         $order['city'] =  Session::get('checkout')['city'];
         $order['state'] =  Session::get('checkout')['state'];
         $order['note'] =  Session::get('checkout')['note'];
- 
+
         $order['sfirst_name'] =  Session::get('checkout')['sfirst_name'];
         $order['slast_name'] =  Session::get('checkout')['slast_name'];
         $order['semail'] =  Session::get('checkout')['semail'];
@@ -123,16 +150,16 @@ class CheckoutController extends Controller
         $order['scountry'] =  Session::get('checkout')['scountry'];
         $order['saddress'] =  Session::get('checkout')['saddress'];
         $order['scity'] =  Session::get('checkout')['scity'];
-        $order['sstate'] =  Session::get('checkout')['sstate']; 
+        $order['sstate'] =  Session::get('checkout')['sstate'];
 
-         
-        
+
+
         $status = $order->save();
         if ($status) {
             return redirect()->route('user.order')->with('success', 'order Succsessfully create');
         } else {
             return back()->with('errors', 'Somthing went wrong');
         }
-        return dd($request->all(), Session::get('checkout'),$order); 
+        return dd($request->all(), Session::get('checkout'), $order);
     }
 }
