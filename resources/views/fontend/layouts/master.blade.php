@@ -283,6 +283,57 @@
             });
         });
     </script>
+    
+<script>
+    $(document).on('click', '.btn-remove-wishlist', function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        // alert(id);
+        var path = "{{ route('wishlist.delete') }}";
+        var token = "{{ csrf_token() }}";
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            // dataType: "JSON",
+            data: {
+                _token: token,
+                id: id,
+            },
+            success: function(data) {
+                $('body #header').html(data['header_render']);
+                $('body #wishlist').html(data['wishlist_render']);
+                $('#wishlist-count').html(data['wishlist_count']); 
+                console.log(data['status']);
+                if (data['status']) {
+                console.log('as 4');
+                    swal({
+                        title: "Good job!",
+                        text: data['message'],
+                        icon: "success",
+                        button: "OK",
+                    });
+                }else{
+                    swal({
+                        title: "Opps!",
+                        text: data['message'],
+                        icon: "warning",
+                        button: "OK",
+                    });
+                }
+            },
+            error: function(err) {
+                swal({
+                        title: "Good job!",
+                        text: "Đợi xúi",
+                        icon: "info",
+                        button: "OK",
+                    });
+                console.log('error', err);
+            }
+        });
+    });
+</script>
     <!-- molla/index-1.html  22 Nov 2019 09:55:32 GMT -->
 </body>
 </html>

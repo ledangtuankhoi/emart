@@ -222,7 +222,7 @@
                                         </a>
 
                                         <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist"><span>add to
+                                            <a href="#" class="btn-product-icon btn-wishlist btn-expandable add-to-wishlist " data-quatity="1" data-product-id="{{$item->id}}" id="add-to-wishlist-{{$item->id}}"><span>add to
                                                     wishlist</span></a>
                                         </div><!-- End .product-action-vertical -->
 
@@ -239,7 +239,8 @@
                                         </div><!-- End .product-price -->
                                     </div><!-- End .product-body -->
                                     <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                        <a href="#" class="btn-product add-to-cart" data-quatity="1"
+                                        data-product-id="{{ $item->id }}" id="add-to-cart-{{ $item->id }}"><span>add to cart</span></a>
                                     </div><!-- End .product-action -->
                                 </div><!-- End .product -->
 
@@ -1618,4 +1619,113 @@
             </div><!-- End .container -->
         </div><!-- End .blog-posts -->
     </main><!-- End .main -->
+@endsection
+
+@section('scripts')
+<script>
+    $(document).on('click', '.add-to-cart', function(e) {
+        e.preventDefault();
+        var product_id = $(this).data('product-id');
+        var product_qty = $(this).data('quatity');
+
+        var path = "{{ route('cart.store') }}";
+        var token = "{{ csrf_token() }}"
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            dataType: "JSON",
+            data: {
+                product_id: product_id,
+                product_qty: product_qty,
+                _token: token,
+            },
+            beforeSend: function() {
+                $('#add-to-cart-' + product_id).html(
+                    "<i class='fas fa-spinner fa-spin'></i><p>Loading...</p>");
+            },
+            complete: function() {
+                $('#add-to-cart-' + product_id).html("<i class='fa-cart-plus'></i>");
+            },
+            success: function(data) { 
+                $('body #header').html(data['header_render']);
+                $('#cart-count').html(data['cart_count']);
+                if (data['status']) {
+                    swal({
+                        title: "Good job!",
+                        text: data['message'],
+                        icon: "success",
+                        button: "OK",
+                    });
+                }
+            },
+            error:function (err){
+                console.log(err);
+            }
+        });
+    });
+</script>
+
+
+{{-- add product wishlist  --}}
+<script>
+    $(document).on('click', '.add-to-wishlist', function(e) {
+        e.preventDefault();
+        var product_id = $(this).data('product-id');
+        var product_qty = $(this).data('quatity');
+        // alert(product_id,product_qty);
+        var path = "{{route('wishlist.store')}} ";
+        var token = "{{ csrf_token() }}"
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            dataType: "JSON",
+            data: {
+                product_id: product_id,
+                product_qty: product_qty,
+                _token: token,
+            },
+            beforeSend: function() {
+                $('#add-to-wishlist-' + product_id).removeClass('btn-wishlist');
+                $('#add-to-wishlist-' + product_id).html(
+                    "<i class='fas fa-spinner fa-spin'></i><span>Loading...</span>");
+            },
+            complete: function() {                    
+                $('#add-to-wishlist-' + product_id).addClass('btn-wishlist');
+                $('#add-to-wishlist-' + product_id).html(
+                    "<span>add towishlist</span>"); 
+            },
+            success: function(data) { 
+                $('body #header').html(data['header_render']);
+                $('#wishlist-count').html(data['wishlist_count']);
+                if (data['status']) {
+                    swal({
+                        title: "Good job!",
+                        text: data['message'],
+                        icon: "success",
+                        button: "OK",
+                    });
+                }else if (data['present']) {
+                    swal({
+                        title: "Opps!",
+                        text: data['message'],
+                        icon: "warning",
+                        button: "OK",
+                    });
+                }else{
+                    swal({
+                        title: "Sorry!",
+                        text: " Sorry you don't add product to wishlist",
+                        icon: "warning",
+                        button: "OK",
+                    });
+                }
+            },
+            error:function (err){
+                console.log(err);
+            }
+        });
+    });
+</script>
 @endsection

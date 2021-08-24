@@ -17,6 +17,10 @@
 
     </style>
 @endsection
+
+@php
+use App\Models\Product;
+@endphp
 <div class="header-middle">
     <div class="container">
         <div class="header-left">
@@ -74,19 +78,54 @@
                     </a>
                 </div><!-- End .compare-dropdown -->
 
-            @endauth
+            @endauth 
             <div class="wishlist">
-                <a href="{{ route('wishlist') }}" title="Wishlist">
-                    <div class="icon">
-                        <i class="icon-heart-o"></i>
-                        <span class="wishlist-count badge" id="wishlist-count">
-                            {{ Gloudemans\Shoppingcart\Facades\Cart::instance('wishlist')->count() }}
-                        </span>
-                    </div>
-                    <p>Wishlist</p>
-                </a>
-            </div><!-- End .compare-dropdown -->
+                    <div class="dropdown cart-dropdown">
+                    <a href="{{ route('wishlist') }}" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false" data-display="static">
+                        <div class="icon">
+                            <i class="icon-heart-o"></i>
+                            <span class="wishlist-count badge" id="wishlist-count">
+                                {{ Gloudemans\Shoppingcart\Facades\Cart::instance('wishlist')->count() }}
+                            </span>
+                        </div>
+                        <p>Wishlist</p>
+                    </a>
+                    {{-- {{dd(Gloudemans\Shoppingcart\Facades\Cart::instance('shopping'))}} --}}
+                    <div class="dropdown-menu dropdown-menu-right border border-success rounded">
+                        <div class="dropdown-cart-products">
+                            @foreach (Gloudemans\Shoppingcart\Facades\Cart::instance('wishlist')->content() as $item)
+                                <div class="product">
+                                    <div class="product-cart-details">
+                                        <h4 class="product-title">
+                                            <a
+                                                href="{{ route('product.detail', $item->model->slug) }}" style="font-size:1.3rem">{{ $item->name }}</a>
+                                        </h4>
 
+                                        <span class="cart-product-info">
+                                            <span class="cart-product-qty">{{ $item->qty }}</span>
+                                            x {{ $item->price }}
+                                        </span>
+                                    </div><!-- End .product-cart-details -->
+
+                                    <figure class="product-image-container">
+                                        <a href="product.html" class="product-image">
+                                            <img src="{{ $item->model->photo }}" alt="product">
+
+                                        </a>
+                                    </figure>
+                                    <a href="#" class="btn-remove btn-remove-wishlist" title="Remove Product"
+                                        data-id="{{ $item->rowId }}"><i class="icon-close"></i></a>
+                                </div><!-- End .product -->
+                            @endforeach
+                        </div><!-- End .cart-product -->
+                        <div class="dropdown-cart-action">
+                            <a href="{{ route('wishlist') }}" class="btn btn-primary float-right" style="font-size:1.3rem"> View Wishlist</a> 
+                        </div><!-- End .dropdown-cart-total -->
+ 
+                    </div><!-- End .dropdown-menu -->
+                </div><!-- End .Wishlist-dropdown -->
+            </div>
             <div class="dropdown cart-dropdown">
                 <a href="{{ route('user.order') }}" class="dropdown-toggle" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" data-display="static">
@@ -101,9 +140,6 @@
                 {{-- {{dd(Gloudemans\Shoppingcart\Facades\Cart::instance('shopping'))}} --}}
                 <div class="dropdown-menu dropdown-menu-right border border-success rounded">
                     <div class="dropdown-cart-products">
-                        @php
-                            use App\Models\Product;
-                        @endphp
                         @foreach (Gloudemans\Shoppingcart\Facades\Cart::instance('shopping')->content() as $item)
                             <div class="product">
                                 <div class="product-cart-details">
@@ -156,7 +192,7 @@
 
                     <div class="dropdown-cart-action">
                         <a href="{{ route('cart') }}" class="btn btn-primary">View Cart</a>
-                        <a href="{{route('checkout1')}}" class="btn btn-outline-primary-2"><span>Checkout</span><i
+                        <a href="{{ route('checkout1') }}" class="btn btn-outline-primary-2"><span>Checkout</span><i
                                 class="icon-long-arrow-right"></i></a>
                     </div><!-- End .dropdown-cart-total -->
                 </div><!-- End .dropdown-menu -->
