@@ -166,11 +166,11 @@ use App\Models\Product;
                         @endforeach
                     </div><!-- End .cart-product -->
 
-                    <div class="dropdown-cart-total">
+                    <div class=" m-3">
                         <ul>
                             <li>
                                 <span>Sub Total</span>
-                                <span class="cart-total-price">
+                                <span class="cart-total-price  float-right">
                                     {{ Cart::subtotal() }}
                                 </span>
                             </li>

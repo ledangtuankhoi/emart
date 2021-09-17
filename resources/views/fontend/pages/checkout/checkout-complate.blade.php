@@ -142,7 +142,10 @@
                                                                 echo $total;
                                                             @endphp
                                                         @else
-                                                            {{ Cart::subtotal() }}
+                                                            @php
+                                                                 $total = number_format(filter_var(Cart::subtotal(), FILTER_SANITIZE_NUMBER_INT) / 100   + session('checkout')['delivery_charge'], 2);
+                                                                echo ("$ ".$total);
+                                                            @endphp
                                                         @endif
                                                     </td>
                                                 </tr><!-- End .summary-total -->

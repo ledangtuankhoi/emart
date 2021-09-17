@@ -62,8 +62,7 @@ class CheckoutController extends Controller
 
 
             'payment_method' => 'required',
-            'delivery_charge' => 'numeric|required',
-            'sub_total' => 'numeric|required',
+            'delivery_charge' => 'numeric|required', 
         ]);
         // return dd($request->all(),session('coupon')['value']);
         session()->put('checkout', [

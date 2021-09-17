@@ -79,9 +79,10 @@ Auth::routes(["register" => false]);
  
 
 // admin dashboard
-Route::group(['prefix' => 'admin', 'middelware' => ['auth','admin']], function () {
+// Route::group(['prefix' => 'admin', 'middelware' => ['auth','admin']], function () {
+Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
     // dd(auth());
-    Route::get('/', [AdminController::class, 'admin'])->name('admin');
+    Route::get('/', [AdminController::class, 'admin'])->name('admin') ;
 
     // banner section
     Route::resource('/banner', BannerController::class);
@@ -117,9 +118,9 @@ Route::group(['prefix' => 'admin', 'middelware' => ['auth','admin']], function (
 });
  
 
-// seller dashboard
-Route::group(['prefix' => 'seller', 'middelware' => ['auth','seller']], function () {
-    Route::get('/', [AdminController::class, 'admin'])->name('seller');
+// seller dashboard 
+Route::prefix('seller')->middleware(['auth','seller'])->group(function(){ 
+    Route::get('/', [AdminController::class, 'admin'])->name('admin');
 });
 
 
