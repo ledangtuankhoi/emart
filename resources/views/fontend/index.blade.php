@@ -55,7 +55,7 @@
 
             @if (count($brands) > 0)
                 @foreach ($brands as $brand)
-                    <a href="#" class="brand">
+                    <a href="{{route('product.category',"$brand->slug")}}" class="brand">
                         <img src="{{ $brand->photo }}" alt="{{ $brand->title }}">
                     </a>
                 @endforeach

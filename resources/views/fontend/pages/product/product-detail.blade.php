@@ -379,7 +379,11 @@
                                     </div><!-- End .product-action-vertical -->
 
                                     <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                        {{-- <a href="#" class="btn-product btn-cart"><span>add to cart</span></a> --}}
+                                        <a href="#" class="btn-product btn-cart add-to-cart" data-quatity="1"
+                                            data-product-id="{{ $item->id }}" id="add-to-cart-{{ $item->id }}">
+                                            <span>add to cart</span>
+                                        </a>
                                     </div><!-- End .product-action -->
                                 </figure><!-- End .product-media -->
 
@@ -430,7 +434,13 @@
         $(document).on('click', '.add-to-cart', function(e) {
             e.preventDefault();
             var product_id = $(this).data('product-id');
-            var product_qty = $("#qty").val();
+            console.log(product_id);
+
+            if($(this).data('quatity')){
+                var product_qty = $(this).data('quatity');
+            }else{
+                var product_qty = $("#qty").val();
+            }
 
             var path = "{{ route('cart.store') }}";
             var token = "{{ csrf_token() }}"
@@ -476,6 +486,7 @@
         $(document).on('click', '.add-to-wishlist', function(e) {
             e.preventDefault();
             var product_id = $(this).data('product-id');
+            console.log(product_id);
             var product_qty = $(this).data('quatity');
             // alert(product_id,product_qty);
             var path = "{{ route('wishlist.store') }} ";
