@@ -11,7 +11,7 @@
                             </thead>
 
                             <tbody>
-                                @foreach (Gloudemans\Shoppingcart\Facades\Cart::instance('shopping')->content() as $item)
+                                @foreach (Gloudemans\Shoppingcart\Facades\Cart::instance('shopping')->  ntent() as $item)
                                     
                                 <tr>
                                     <td class="product-col">

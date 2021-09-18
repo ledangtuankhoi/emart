@@ -28,9 +28,10 @@ class CreateOrdersTable extends Migration
 
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('phone');
             $table->string('country');
+            $table->string('postcode');
             $table->string('address');
             $table->string('city');
             $table->string('state');
@@ -38,9 +39,10 @@ class CreateOrdersTable extends Migration
 
             $table->string('sfirst_name');
             $table->string('slast_name');
-            $table->string('semail')->unique();
+            $table->string('semail') ;
             $table->string('sphone');
             $table->string('scountry');
+            $table->string('spostcode');
             $table->string('saddress');
             $table->string('scity');
             $table->string('sstate'); 

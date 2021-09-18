@@ -37,7 +37,7 @@ class CheckoutController extends Controller
 
     public function checkoutReview(Request $request)
     {
-
+        // dd($request->all(),Cart::instance('shpping')->content(),Session('coupon'),Session('cart'));
         $this->validate($request, [
             'first_name' => 'string|required',
             'last_name' => 'string|required',
@@ -106,6 +106,8 @@ class CheckoutController extends Controller
     public function checkoutStore(Request $request)
     {
         //  return Session::get('checkout');
+        // dd($request->all(), $request->session()->all());
+
         $order = new Order();
 
         $order['user_id'] = auth()->user()->id;
@@ -113,12 +115,7 @@ class CheckoutController extends Controller
         $sub_total = filter_var(Cart::subtotal(), FILTER_SANITIZE_NUMBER_INT) / 100;
         $order['sub_total'] = $sub_total;
 
-        $total_amout = filter_var(
-            Cart::instance('shopping')->subtotal(),
-            FILTER_SANITIZE_NUMBER_INT
-        ) / 100
-            -  Session::get('coupon')['value']
-            +  Session::get('checkout')['delivery_charge'];
+        $total_amout = filter_var(Cart::instance('shopping')->subtotal(),FILTER_SANITIZE_NUMBER_INT) / 100-  Session::get('coupon')['value']+  Session::get('checkout')['delivery_charge'];
         $order['total_amout'] =  $total_amout;
         // return $order['total_amout'] ;
         if (Session::has('coupon')) {
@@ -137,6 +134,7 @@ class CheckoutController extends Controller
         $order['email'] =  Session::get('checkout')['email'];
         $order['phone'] =  Session::get('checkout')['phone'];
         $order['country'] =  Session::get('checkout')['country'];
+        $order['postcode'] =  Session::get('checkout')['postcode'];
         $order['address'] =  Session::get('checkout')['address'];
         $order['city'] =  Session::get('checkout')['city'];
         $order['state'] =  Session::get('checkout')['state'];
@@ -147,6 +145,7 @@ class CheckoutController extends Controller
         $order['semail'] =  Session::get('checkout')['semail'];
         $order['sphone'] =  Session::get('checkout')['sphone'];
         $order['scountry'] =  Session::get('checkout')['scountry'];
+        $order['spostcode'] =  Session::get('checkout')['spostcode'];
         $order['saddress'] =  Session::get('checkout')['saddress'];
         $order['scity'] =  Session::get('checkout')['scity'];
         $order['sstate'] =  Session::get('checkout')['sstate'];
@@ -155,10 +154,10 @@ class CheckoutController extends Controller
 
         $status = $order->save();
         if ($status) {
+            Cart::instance('shopping')->destroy();
             return redirect()->route('user.order')->with('success', 'order Succsessfully create');
         } else {
             return back()->with('errors', 'Somthing went wrong');
-        }
-        return dd($request->all(), Session::get('checkout'), $order);
+        } 
     }
 }

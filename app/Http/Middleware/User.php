@@ -16,6 +16,7 @@ class User
      */
     public function handle(Request $request, Closure $next)
     {
+        // dd($request);
         if(empty(session('user'))){
             return redirect()->route('user.auth');
         }else{
