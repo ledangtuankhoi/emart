@@ -13,5 +13,6 @@
 
     <!-- Main JS File -->
     <script src="{{asset('fontend/assets/js/main.js')}}"></script>
-    <script src="{{asset('fontend/assets/js/demos/demo-2.js')}}"></script>
+    <script src="{{asset('fontend/assets/js/demos/demo-2.js')}}"></script>\
+    <script src="{{asset('fontend/assets/js/spinner.js')}}"></script>
     @yield('scripts')

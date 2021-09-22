@@ -114,8 +114,14 @@ class CheckoutController extends Controller
         $order['order_number'] =  Str::upper("ORD-" . Str::random(6));
         $sub_total = filter_var(Cart::subtotal(), FILTER_SANITIZE_NUMBER_INT) / 100;
         $order['sub_total'] = $sub_total;
+        // dd(Session::has('coupon'));
+        if(Session::has('coupon')){
+            $coupon = Session::get('coupon')['value'];
+            $total_amout = filter_var(Cart::instance('shopping')->subtotal(),FILTER_SANITIZE_NUMBER_INT) / 100 - $coupon +  Session::get('checkout')['delivery_charge'];
+        }else{
+            $total_amout = filter_var(Cart::instance('shopping')->subtotal(),FILTER_SANITIZE_NUMBER_INT) / 100 +  Session::get('checkout')['delivery_charge'];
+        }
 
-        $total_amout = filter_var(Cart::instance('shopping')->subtotal(),FILTER_SANITIZE_NUMBER_INT) / 100-  Session::get('coupon')['value']+  Session::get('checkout')['delivery_charge'];
         $order['total_amout'] =  $total_amout;
         // return $order['total_amout'] ;
         if (Session::has('coupon')) {

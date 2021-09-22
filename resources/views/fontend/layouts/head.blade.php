@@ -30,5 +30,7 @@
     <link rel="stylesheet" href="{{asset('fontend/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('fontend/assets/css/skins/skin-demo-2.css')}}">
     <link rel="stylesheet" href="{{asset('fontend/assets/css/demos/demo-2.css')}}">
+        {{-- spinner --}}
+        <link rel="stylesheet" href="{{asset('fontend/assets/css/spinner.css')}}">
 
     @yield('styles')

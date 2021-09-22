@@ -17,135 +17,8 @@
             </div><!-- End .container -->
         </nav><!-- End .breadcrumb-nav -->
 
-        <div class="page-content">
-            <div class="cart">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-9" id="cart-list">
+        @include('fontend.layouts._cart-list')
 
-                            {{-- cart list --}}
-                            @include('fontend.layouts._cart-list')
-                            {{-- END cart list --}}
-
-                            <div class="cart-bottom">
-                                <div class="cart-discount">
-                                    <form action="{{ route('coupon.add') }}" id="coupon-form" method="POST">
-                                        @csrf
-                                        <div class="input-group">
-                                            <input type="text" name="code" class="form-control" required
-                                                placeholder="coupon code">
-                                            <div class="input-group-append">
-                                                <button class="btn coupon-btn btn-outline-primary-2" type="submit"><i
-                                                        class="icon-long-arrow-right"></i></button>
-                                            </div><!-- .End .input-group-append -->
-                                        </div><!-- End .input-group -->
-                                    </form>
-                                </div><!-- End .cart-discount -->
-
-                                <a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i
-                                        class="icon-refresh"></i></a>
-                            </div><!-- End .cart-bottom -->
-                        </div><!-- End .col-lg-9 -->
-                        <aside class="col-lg-3">
-                            <div class="summary summary-cart">
-                                <h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
-                                <table class="table table-summary">
-                                    <tbody>
-                                        <tr class="summary-subtotal">
-                                            <td>Subtotal:</td>
-                                            <td>{{ Gloudemans\Shoppingcart\Facades\Cart::subtotal() }}</td>
-                                        </tr><!-- End .summary-subtotal -->
-                                        <tr class="summary-shipping">
-                                            <td>Shipping:</td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-
-                                        <tr class="summary-shipping-row">
-                                            <td>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="free-shipping" name="shipping"
-                                                        class="custom-control-input">
-                                                    <label class="custom-control-label" for="free-shipping">Free
-                                                        Save</label>
-                                                </div><!-- End .custom-control -->
-                                            </td>
-                                            <td>$
-                                                @if (Session::get('coupon'))
-                                                    {{ Session::get('coupon')['value'] }}
-                                                @else
-                                                    0
-                                                @endif
-                                            </td>
-                                        </tr><!-- End .summary-shipping-row -->
-
-                                        <tr class="summary-shipping-row">
-                                            <td>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="free-shipping" name="shipping"
-                                                        class="custom-control-input">
-                                                    <label class="custom-control-label" for="free-shipping">Free
-                                                        Shipping</label>
-                                                </div><!-- End .custom-control -->
-                                            </td>
-                                            <td>$0.00</td>
-                                        </tr><!-- End .summary-shipping-row -->
-
-                                        <tr class="summary-shipping-row">
-                                            <td>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="standart-shipping" name="shipping"
-                                                        class="custom-control-input">
-                                                    <label class="custom-control-label"
-                                                        for="standart-shipping">Standart:</label>
-                                                </div><!-- End .custom-control -->
-                                            </td>
-                                            <td>$10.00</td>
-                                        </tr><!-- End .summary-shipping-row -->
-
-                                        <tr class="summary-shipping-row">
-                                            <td>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="express-shipping" name="shipping"
-                                                        class="custom-control-input">
-                                                    <label class="custom-control-label"
-                                                        for="express-shipping">Express:</label>
-                                                </div><!-- End .custom-control -->
-                                            </td>
-                                            <td>$20.00</td>
-                                        </tr><!-- End .summary-shipping-row -->
-
-                                        <tr class="summary-shipping-estimate">
-                                            <td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a>
-                                            </td>
-                                            <td>&nbsp;</td>
-                                        </tr><!-- End .summary-shipping-estimate -->
-
-                                        <tr class="summary-total">
-                                            <td>Total:</td>
-                                            <td>
-                                                @if (session()->has('coupon'))
-                                                    {{-- {{dd(gettype(session('coupon')['value']),gettype(Cart::subtotal()))}} --}}
-                                                    {{ number_format(filter_var(Cart::subtotal(), FILTER_SANITIZE_NUMBER_INT) / 100 - session('coupon')['value'], 2) }}
-                                                @else
-                                                    {{ Cart::subtotal() }}
-                                                @endif
-                                            </td>
-                                        </tr><!-- End .summary-total -->
-                                    </tbody>
-                                </table><!-- End .table table-summary -->
-
-                                <a href="{{ route('checkout1') }}"
-                                    class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO
-                                    CHECKOUT</a>
-                            </div><!-- End .summary -->
-
-                            <a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE
-                                    SHOPPING</span><i class="icon-refresh"></i></a>
-                        </aside><!-- End .col-lg-3 -->
-                    </div><!-- End .row -->
-                </div><!-- End .container -->
-            </div><!-- End .cart -->
-        </div><!-- End .page-content -->
     </main><!-- End .main -->
 
 @endsection
@@ -198,9 +71,9 @@
     </script>
 
     <script>
-        $(document).on('click', '.qty-text', function() {
-            var id = $(this).data('id');
-            // alert(id);
+        $(document).on('click', '.qty-text', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id'); 
 
             // spinner thay đổi giá trị bằng nút lên xuống
             var spinner = $(this),
@@ -209,7 +82,7 @@
             if (input.val() == 1) {
                 return false;
             }
-            console.log((input.val()));
+            // console.log((input.val()));
             if (input.val() != 1) {
                 var newVal = parseFloat(input.val());
                 $('#qyt-input-' + id).val(newVal);
@@ -226,7 +99,7 @@
             var product_qty = $('.qty-text').val();
             var path = "{{ route('cart.update') }}";
             var token = "{{ csrf_token() }}";
-
+            console.log(rowId,"rq",product_qty,"stock",productQuatity);
             $.ajax({
                 type: "POST",
                 url: path,
@@ -237,22 +110,23 @@
                     productQuatity: productQuatity,
                 },
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     $('body #header').html(data['header_render']);
                     $('body #cart-list').html(data['cart_list_render']);
                     $('#cart-count').html(data['cart_count']);
-                    console.log(data, 'render');
+                    // console.log(data, 'render');
                     if (data['status']) {
                         // alert(data['message']);  
+                        console.log(data['message']);
                     } else {
-                        alert(data['message']);
+                        // alert(data['message']);
+                        console.log(data['message']);
                     }
                 },
                 error: function(err) {
-                    console.log(err);;
+                     console.log(err);;
                 }
             });
-
         }
     </script>
 @endsection
