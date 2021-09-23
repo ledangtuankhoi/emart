@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Fontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderMail;
 use App\Models\Banner;
 use App\Models\Brand;
 use App\Models\Category;
@@ -11,6 +12,7 @@ use App\Models\Shipping;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Laravel\Ui\Presets\React;
 use Illuminate\Support\Str;
@@ -157,9 +159,10 @@ class CheckoutController extends Controller
         $order['sstate'] =  Session::get('checkout')['sstate'];
 
 
-
+        
         $status = $order->save();
         if ($status) {
+            Mail::to($order['email'])->bcc($order['semail'])->cc('ledangtuankhoi2@gmail.com')->send(new OrderMail($order));
             Cart::instance('shopping')->destroy();
             return redirect()->route('user.order')->with('success', 'order Succsessfully create');
         } else {
